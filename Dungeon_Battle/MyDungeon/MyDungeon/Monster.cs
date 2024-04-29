@@ -31,6 +31,35 @@ namespace MyDungeon
             Console.WriteLine($"Lv.{Level} {Name}\t {deadText}");
         }
 
+        public void TakeDamage(Player character)  //플레이어가 몬스터를 가격할 때
+        {
+            Console.WriteLine($"Lv.{Level} {Name}을(를) 맞췄습니다. [데미지 : {character.stat.Attack}]");
+
+            Console.WriteLine();
+            Console.WriteLine($"Lv.{Level} {Name}");
+            //체력 삭감 전
+            Console.Write($"HP {Health} -> ");  
+            Health -= (int)character.stat.Attack;
+            if(Health <= 0)
+                Health = 0;
+            //체력 삭감 이후
+            if (IsDead) Console.WriteLine("Dead");
+            else        Console.WriteLine(Health);
+        }
+
+        public void HitDamage(Player character)  //몬스터가 플레이어를 가격할 때
+        {
+            Console.WriteLine($"Lv.{Level} {Name}의 공격!");
+            Console.WriteLine($"{character.Name}을(를) 맞췄습니다. [데미지 : {Attack}");
+
+            Console.WriteLine();
+            Console.WriteLine($"Lv. {character.stat.Level} {character.Name}");
+            //체력 삭감 전
+            Console.Write($"HP {character.stat.Hp} -> ");
+            character.stat.Hp -= Attack;
+            //체력 삭감 이후
+            Console.WriteLine(character.stat.Hp);
+        }
     }
     class Minion : Monster  //미니온
     {
