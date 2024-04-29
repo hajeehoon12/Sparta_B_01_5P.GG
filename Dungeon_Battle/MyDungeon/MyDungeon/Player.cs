@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,7 +65,8 @@ namespace MyDungeon
             if (avoidProb < avoid + increaseAvoid) // 공격 회피
             {
                 damage = 0;
-                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..");
+                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..\n\n");
+                Wait();
                 return 0; // 데미지를 회피함
             }
 
@@ -72,6 +74,7 @@ namespace MyDungeon
             Health -= damage;
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            
             return 1; // 데미지를 받음
         }
 
@@ -109,7 +112,29 @@ namespace MyDungeon
 
         }
 
-        
+        public void Wait() // 0번 입력대기용 함수
+        {
+            int input;
+            bool IsinputNum;
+
+            do
+            {
+                Console.WriteLine("0. 다음");
+                IsinputNum = int.TryParse(Console.ReadLine(), out input);
+
+            } while (IsinputNum);
+
+            switch (input)
+            {
+                case 1: // 상태보기
+
+                    break;
+                default:
+                    Console.WriteLine("올바른 입력을 해주세요.");
+                    Wait();
+                    break;
+            }
+        }
 
 
         
