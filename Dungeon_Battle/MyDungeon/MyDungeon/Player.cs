@@ -13,7 +13,7 @@ namespace MyDungeon
         int Health { get; set; }
         int Attack { get; }
         bool IsDead { get; }
-        void TakeDamage(Player player, int damage);
+        int TakeDamage(Player player, int damage);
 
         
     
@@ -38,6 +38,9 @@ namespace MyDungeon
         public int increaseCritical = 0;         // 크리티컬 확률 추가
         public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
 
+        public int avoid = 30;
+        public int increaseAvoid = 0;
+
         
 
 
@@ -52,14 +55,27 @@ namespace MyDungeon
         int definc = 0;// name, stat, market, 
 
 
-        public void TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음
+        public int TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음 (Damage 값)
         {
+            int avoidProb;
+            
+            avoidProb = new Random().Next(0, 100);
+
+            if (avoidProb < avoid + increaseAvoid) // 공격 회피
+            {
+                damage = 0;
+                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..");
+                return 0; // 데미지를 회피함
+            }
+
+
             Health -= damage;
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            return 1; // 데미지를 받음
         }
 
-        public int Critical() // 크리티컬 계산식 및 데미지 넣기
+        public int Critical() // 크리티컬 계산식 및 데미지 계산식 (int 값 출력)
         {
             int dmgresult;
             int criticalProb;
