@@ -18,3 +18,7 @@ B- 01 group name 5P.GG Team Project / Dungeon Battle
 
   19:04 _하지훈 : 게임 시작 시 직업 입력 기능 및 스테이터스에 표시, 회복 아이템 추가 및 사용함수 구현
 
+  20:03 _하지훈 : 공격 치명타 기능 추가 (int Critical() 함수)
+
+  20:43 _하지훈 : 공격 회피 기능 추가 (Player.cs -> int TakeDamage(Player player, int damage) 함수)
+
