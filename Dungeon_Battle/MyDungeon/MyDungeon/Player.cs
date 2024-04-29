@@ -1,29 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MyDungeon
 {
-    [Serializable]public class Player
+
+    public interface ICharacter
+    { 
+        string Name { get; }
+        int Health { get; set; }
+        int Attack { get; }
+        bool IsDead { get; }
+        void TakeDamage(Player player, int damage);
+
+        
+    
+    
+    }
+
+
+    [Serializable]public class Player:ICharacter
     {
-        public string Name; // 이름 저장용
+        public string Name { get; } // 저장용
         public Status stat; // 상태창 저장용
         Market market;
         Dungeon dungeon;
         Camp camp;
         Program program;
         public Inventory inven; // 플레이어 인벤토리
+        Stage stage;
+
+
+        public int critical = 15;                  // 크리티컬 확률
+        public float criticalDmg = 1.6f;          // 크리티컬 데미지
+        public int increaseCritical = 0;         // 크리티컬 확률 추가
+        public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
+
+        public int avoid = 10;
+        public int increaseAvoid = 0;
+
+        
+
+
+
+        public int Health { get; set; }
+        public int AttackPower { get; set; }
+        public bool IsDead => Health <= 0;
+        public int Attack => Critical();    // 신던전에서 사용할 공격력 적용 방싱
+                                                                                                    // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
 
         int atkinc = 0;
         int definc = 0;// name, stat, market, 
+
+
+        public void TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음 (Damage 값)
+        {
+            int avoidProb;
+            
+            avoidProb = new Random().Next(0, 100);
+
+            if (avoidProb < avoid + increaseAvoid) // 공격 회피
+            {
+                damage = 0;
+                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..\n\n");
+            }
+            else
+            {
+
+                Health -= damage;
+                if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
+                else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            }
+            Wait();
+        }
+
+        public int Critical() // 크리티컬 계산식 및 데미지 계산식 (int 값 출력)
+        {
+            int dmgresult;
+            int criticalProb;
+            dmgresult = new Random().Next((int)(AttackPower + stat.Attack + stat.AttackInc), (int)(AttackPower + stat.Attack + stat.AttackInc)); 
+            criticalProb = new Random().Next(0, 100);
+
+            if (criticalProb < critical + increaseCritical)
+            {
+                // 크리티컬이 터진다.
+                dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
+            }
+            
+            return dmgresult; // 최종 데미지
+        }
+
 
         public Player(string name)
         {
             Name = name;
             stat = new Status(Name); 
             inven = new Inventory(name);
+            stage = new Stage();
 
             market = new Market("초보자상점");
             dungeon = new Dungeon();
@@ -31,9 +107,34 @@ namespace MyDungeon
             program = new Program();
 
             Console.WriteLine("생성된 캐릭터의 정보를 출력합니다.");
-            stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력
+            //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
         }
+
+        public void Wait() // 0번 입력대기용 함수
+        {
+            int input;
+            bool IsinputNum;
+
+            do
+            {
+                Console.WriteLine("0. 다음");
+                IsinputNum = int.TryParse(Console.ReadLine(), out input);
+
+            } while (IsinputNum);
+
+            switch (input)
+            {
+                case 1: // 상태보기
+
+                    break;
+                default:
+                    Console.WriteLine("올바른 입력을 해주세요.");
+                    Wait();
+                    break;
+            }
+        }
+
 
         
 
@@ -85,7 +186,7 @@ namespace MyDungeon
             inven.ItemInfo.Add(itemData);
 
         }
-        public void GoDungeon(Player player, int level)
+        public void GoDungeon(Player player)
         {
             dungeon.Dungeon_Menu(player);
         }
@@ -93,6 +194,11 @@ namespace MyDungeon
         {
             camp.Camping(player);
             
+        }
+
+        public void BattleDungeon(Player player)
+        {
+            stage.Start(player);
         }
         
 
