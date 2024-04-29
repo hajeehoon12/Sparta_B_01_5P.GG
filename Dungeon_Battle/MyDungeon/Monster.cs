@@ -15,7 +15,7 @@ namespace MyDungeon
         public string Name { get; }
         public int Level { get; }
         public int Health { get; set; }
-        public int Attack { get; }
+        public float Attack { get; }
         public bool IsDead => Health <= 0;  //전투 중에서 죽었는지
         public Monster(string name, int level, int health, int attack)
         {

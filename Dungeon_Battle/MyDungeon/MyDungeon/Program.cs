@@ -169,6 +169,7 @@ namespace MyDungeon
             Console.SetWindowSize(120, 35); // 콘솔창 크기 조절
 
             string playerName;
+            string playerjob;
 
             Console.WriteLine("              ..######..########.....##.....#######...########....##...." +
                          "\r\n             .##.....#.##.....##...##.##...##.....##....##......##.##.." +
@@ -189,11 +190,16 @@ namespace MyDungeon
 
             Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             playerName = Console.ReadLine();
+            Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            playerjob = Console.ReadLine();
 
 
             Console.WriteLine($"\n\n=======당신의 플레이어 닉네임 : {playerName}======= \n\n");
 
             Player player = new Player(playerName);
+            player.stat.job = playerjob; // 캐릭터 직업설정
+            
+
             Program program = new Program();
             program.SelectAct(player);
         }

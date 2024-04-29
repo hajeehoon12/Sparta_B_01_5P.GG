@@ -29,13 +29,15 @@ namespace MyDungeon
         Program program;
         public Inventory inven; // 플레이어 인벤토리
         Stage stage;
+        
 
 
 
         public int Health { get; set; }
         public int AttackPower { get; set; }
         public bool IsDead => Health <= 0;
-        public int Attack => new Random().Next(AttackPower - 5, AttackPower + 5);
+        public int Attack => new Random().Next((int)(AttackPower+stat.Attack+stat.AttackInc - 5), (int)(AttackPower + stat.Attack + stat.AttackInc + 5));    // 신던전에서 사용할 공격력 적용 방싱
+                                                                                                    // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
 
         int atkinc = 0;
         int definc = 0;// name, stat, market, 
@@ -63,9 +65,12 @@ namespace MyDungeon
             program = new Program();
 
             Console.WriteLine("생성된 캐릭터의 정보를 출력합니다.");
-            stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력
+            //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
         }
+
+        
+
 
         
 

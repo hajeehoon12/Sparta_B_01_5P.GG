@@ -24,9 +24,10 @@ namespace MyDungeon
 
         public int AttackInc { get; set; }
         public int DefInc { get; set; }
+        public string job { get; set; }
 
 
-        string job = "전사";
+        
 
         public Status(string name)
         {
