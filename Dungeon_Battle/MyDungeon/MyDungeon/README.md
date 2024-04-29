@@ -6,3 +6,5 @@
 //Market.cs = 상점
 //Player.cs = 플레이어 전체 - 에서 나머지것들로 연결됨
 //Program.cs = 메인 동작 부분 - Player.cs 로 연결됨
+
+
