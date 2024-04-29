@@ -38,7 +38,7 @@ namespace MyDungeon
         public int increaseCritical = 0;         // 크리티컬 확률 추가
         public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
 
-        public int avoid = 30;
+        public int avoid = 10;
         public int increaseAvoid = 0;
 
         
