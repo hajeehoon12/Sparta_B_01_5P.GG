@@ -90,7 +90,7 @@ namespace MyDungeon
                 Console.WriteLine($"탐험가 ★{player.Name}★님 REDSTAR 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
 
-                Console.WriteLine("\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 던전 \n5. 휴식하기 \n6. 저장하기 \n7. 불러오기 \n8. 게임종료");
+                Console.WriteLine("\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료");
                 Console.Write("\n★원하시는 행동을 숫자로 입력해주세요★ : ");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
                 Console.Clear();
@@ -114,23 +114,27 @@ namespace MyDungeon
                     SelectAct(player);
                     break;
                 case 4:
-                    Console.WriteLine("\n☆던전이 선택되었습니다.☆");
-                    player.GoDungeon(player, 1);
+                    Console.WriteLine("\n☆탐험 던전이 선택되었습니다.☆");
+                    player.GoDungeon(player);
                     break;
                 case 5:
-                    Console.WriteLine("\n☆휴식이 선택되었습니다.☆");
-                    player.DoCamping(player);
+                    Console.WriteLine("\n☆몬스터 던전이 선택되었습니다.☆");
+                    player.BattleDungeon(player);
                     break;
                 case 6:
+                    Console.WriteLine("\n☆이 선택되었습니다.☆");
+                    player.DoCamping(player);
+                    break;
+                case 7:
                     Console.WriteLine("\n☆저장이 선택되었습니다.☆");
                     // 저장하기 코드 입력할것
                     SavePlayerInfo(player);
                     SelectAct(player); // 저장하고 메인메뉴로 다시
                     break;
-                case 7:
+                case 8:
                     LoadGameData(player);
                     break;
-                case 8:
+                case 9:
                     Console.WriteLine("\r\n ######      ###    ##     ## ########    ######## ##    ## ########  \r\n##    ##    ## ##   ###   ### ##          ##       ###   ## ##     ## \r\n##         ##   ##  #### #### ##          ##       ####  ## ##     ## \r\n##   #### ##     ## ## ### ## ######      ######   ## ## ## ##     ## \r\n##    ##  ######### ##     ## ##          ##       ##  #### ##     ## \r\n##    ##  ##     ## ##     ## ##          ##       ##   ### ##     ## \r\n ######   ##     ## ##     ## ########    ######## ##    ## ########  \r\n");
                     Console.WriteLine("\n☆게임 종료를 선택하셨습니다! 2초후에 종료됩니다!!☆");
                     
@@ -165,6 +169,7 @@ namespace MyDungeon
             Console.SetWindowSize(120, 35); // 콘솔창 크기 조절
 
             string playerName;
+            string playerjob;
 
             Console.WriteLine("              ..######..########.....##.....#######...########....##...." +
                          "\r\n             .##.....#.##.....##...##.##...##.....##....##......##.##.." +
@@ -185,11 +190,16 @@ namespace MyDungeon
 
             Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             playerName = Console.ReadLine();
+            Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            playerjob = Console.ReadLine();
 
 
             Console.WriteLine($"\n\n=======당신의 플레이어 닉네임 : {playerName}======= \n\n");
 
             Player player = new Player(playerName);
+            player.stat.job = playerjob; // 캐릭터 직업설정
+            
+
             Program program = new Program();
             program.SelectAct(player);
         }
