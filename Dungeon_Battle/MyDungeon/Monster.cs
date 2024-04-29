@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace MyDungeon
 {
-    public class Monster : ICharacter
+    internal class Monster
     {
         //몬스터 정보 (이름, 레벨, 체력, 공격 등)
         public string Name { get; }
@@ -31,7 +31,7 @@ namespace MyDungeon
             Console.WriteLine($"Lv.{Level} {Name}\t {deadText}");
         }
 
-        public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때
+        public void TakeDamage(Player character)  //플레이어가 몬스터를 가격할 때
         {
             Console.WriteLine($"Lv.{Level} {Name}을(를) 맞췄습니다. [데미지 : {character.stat.Attack}]");
 

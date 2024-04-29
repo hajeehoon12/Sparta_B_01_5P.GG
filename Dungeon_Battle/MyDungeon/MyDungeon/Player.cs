@@ -6,24 +6,56 @@ using System.Threading.Tasks;
 
 namespace MyDungeon
 {
-    [Serializable]public class Player
+
+    public interface ICharacter
+    { 
+        string Name { get; }
+        int Health { get; set; }
+        int Attack { get; }
+        bool IsDead { get; }
+        void TakeDamage(Player player, int damage);
+    
+    
+    }
+
+
+    [Serializable]public class Player:ICharacter
     {
-        public string Name; // 이름 저장용
+        public string Name { get; } // 저장용
         public Status stat; // 상태창 저장용
         Market market;
         Dungeon dungeon;
         Camp camp;
         Program program;
         public Inventory inven; // 플레이어 인벤토리
+        Stage stage;
+
+
+
+        public int Health { get; set; }
+        public int AttackPower { get; set; }
+        public bool IsDead => Health <= 0;
+        public int Attack => new Random().Next(AttackPower - 5, AttackPower + 5);
 
         int atkinc = 0;
         int definc = 0;// name, stat, market, 
+
+
+        public void TakeDamage(Player player, int damage)
+        {
+            Health -= damage;
+            if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
+            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+        }
+
+
 
         public Player(string name)
         {
             Name = name;
             stat = new Status(Name); 
             inven = new Inventory(name);
+            stage = new Stage();
 
             market = new Market("초보자상점");
             dungeon = new Dungeon();
@@ -85,7 +117,7 @@ namespace MyDungeon
             inven.ItemInfo.Add(itemData);
 
         }
-        public void GoDungeon(Player player, int level)
+        public void GoDungeon(Player player)
         {
             dungeon.Dungeon_Menu(player);
         }
@@ -93,6 +125,11 @@ namespace MyDungeon
         {
             camp.Camping(player);
             
+        }
+
+        public void BattleDungeon(Player player)
+        {
+            stage.Start(player);
         }
         
 
