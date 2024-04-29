@@ -12,4 +12,4 @@ B- 01 group name 5P.GG Team Project / Dungeon Battle
 
 04-29 
 
-  12:03 -하지훈: 베이스 코드 업로드 및 작업 브랜치 나눔
+  12:03 _하지훈: 베이스 코드 업로드 및 작업 브랜치 나눔
