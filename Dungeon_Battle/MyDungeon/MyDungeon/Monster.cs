@@ -16,6 +16,7 @@ namespace MyDungeon
         public int Level { get; }
         public int Health { get; set; }
         public int Attack { get; }
+        public bool IsDead => Health <= 0;  //전투 중에서 죽었는지
         public Monster(string name, int level, int health, int attack)
         {
             Name = name;
@@ -26,7 +27,8 @@ namespace MyDungeon
 
         public void PrintMonster()  //몬스터 정보 출력
         {
-            Console.WriteLine($"Lv.{Level} {Name}\t HP {Health}");
+            string deadText = IsDead ? "Dead" : $"HP {Health}"; //몬스터가 죽으면 Dead로 아님 체력표시
+            Console.WriteLine($"Lv.{Level} {Name}\t {deadText}");
         }
 
     }
