@@ -14,6 +14,8 @@ namespace MyDungeon
         int Attack { get; }
         bool IsDead { get; }
         void TakeDamage(Player player, int damage);
+
+        
     
     
     }
@@ -29,6 +31,13 @@ namespace MyDungeon
         Program program;
         public Inventory inven; // 플레이어 인벤토리
         Stage stage;
+
+
+        public int critical = 15;                  // 크리티컬 확률
+        public float criticalDmg = 1.6f;          // 크리티컬 데미지
+        public int increaseCritical = 0;         // 크리티컬 확률 추가
+        public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
+
         
 
 
@@ -36,20 +45,35 @@ namespace MyDungeon
         public int Health { get; set; }
         public int AttackPower { get; set; }
         public bool IsDead => Health <= 0;
-        public int Attack => new Random().Next((int)(AttackPower+stat.Attack+stat.AttackInc - 5), (int)(AttackPower + stat.Attack + stat.AttackInc + 5));    // 신던전에서 사용할 공격력 적용 방싱
+        public int Attack => Critical();    // 신던전에서 사용할 공격력 적용 방싱
                                                                                                     // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
 
         int atkinc = 0;
         int definc = 0;// name, stat, market, 
 
 
-        public void TakeDamage(Player player, int damage)
+        public void TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음
         {
             Health -= damage;
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
         }
 
+        public int Critical() // 크리티컬 계산식 및 데미지 넣기
+        {
+            int dmgresult;
+            int criticalProb;
+            dmgresult = new Random().Next((int)(AttackPower + stat.Attack + stat.AttackInc), (int)(AttackPower + stat.Attack + stat.AttackInc)); 
+            criticalProb = new Random().Next(0, 100);
+
+            if (criticalProb < critical + increaseCritical)
+            {
+                // 크리티컬이 터진다.
+                dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
+            }
+            
+            return dmgresult; // 최종 데미지
+        }
 
 
         public Player(string name)
