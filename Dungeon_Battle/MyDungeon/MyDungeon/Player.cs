@@ -13,7 +13,7 @@ namespace MyDungeon
         string Name { get; }
         int Health { get; set; }
         int Attack { get; }
-        bool IsDead { get; }
+        bool IsDead { get;}
         void TakeDamage(Player player, int damage);
 
         
@@ -22,7 +22,7 @@ namespace MyDungeon
     }
 
 
-    [Serializable]public class Player:ICharacter
+    [Serializable] public class Player : ICharacter
     {
         public string Name { get; } // 저장용
         public Status stat; // 상태창 저장용
@@ -42,7 +42,7 @@ namespace MyDungeon
         public int avoid = 10;
         public int increaseAvoid = 0;
 
-        
+
 
 
 
@@ -105,6 +105,8 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
+
+            
 
             Console.WriteLine("생성된 캐릭터의 정보를 출력합니다.");
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
