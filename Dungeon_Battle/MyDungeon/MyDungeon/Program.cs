@@ -87,7 +87,7 @@ namespace MyDungeon
 
                 
 
-                Console.WriteLine($"탐험가 ★{player.Name}★님 REDSTAR 마을에 오신 여러분 환영합니다!!" +
+                Console.WriteLine($"탐험가 ★{player.Name}★님 5P.GG 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
 
                 Console.WriteLine("\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료");
