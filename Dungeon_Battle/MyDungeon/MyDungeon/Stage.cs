@@ -17,10 +17,13 @@ namespace MyDungeon
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
         int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
+        
+        
 
         private int select; //선택지
 
         public bool stageSelect;
+        public bool inFight = false; // 싸우는 도중인가?
         
 
         public void Start(Player player)
@@ -56,6 +59,7 @@ namespace MyDungeon
         // 3스테이지는 (대포 최대 2마리 나머지는 미니온이나 공허충)
         public void StageStart(int stage)
         {
+            inFight = false; // 초기화
             monsterInStage.Clear(); //스테이지 선택하기전 리스트 비워놓기
             for (int i = 0; i < monstersCount.Length; i++)
                 monstersCount[i] = 0;   //몬스터 종류 수 초기
@@ -102,8 +106,13 @@ namespace MyDungeon
             int actNum; // 입력용
             bool IsactNum;
 
-            
-            Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
+            if (!inFight) // Battle!!
+                Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
+            else // Your Turn!!
+            {
+                Console.WriteLine("\r\n##    ##  #######  ##     ## ########     ######## ##     ## ########  ##    ## #### #### \r\n ##  ##  ##     ## ##     ## ##     ##       ##    ##     ## ##     ## ###   ## #### #### \r\n  ####   ##     ## ##     ## ##     ##       ##    ##     ## ##     ## ####  ## #### #### \r\n   ##    ##     ## ##     ## ########        ##    ##     ## ########  ## ## ##  ##   ##  \r\n   ##    ##     ## ##     ## ##   ##         ##    ##     ## ##   ##   ##  ####           \r\n   ##    ##     ## ##     ## ##    ##        ##    ##     ## ##    ##  ##   ### #### #### \r\n   ##     #######   #######  ##     ##       ##     #######  ##     ## ##    ## #### #### \r\n");
+            }
+
 
             Console.WriteLine();
             foreach (Monster monster in monsterInStage)
@@ -140,15 +149,26 @@ namespace MyDungeon
         }
         public void BattleTurn(int actNum) // 입력받은 값을 통해 플레이어와 몬스터의 턴이 진행됨 // 플레이어의 행동값 1.공격 2.스킬 3. 소모품 사용 등
         {
+            inFight = true; // 전투중 (첫턴이아님)
             PlayerTurn(actNum); // 플레이어 턴 진행
                                 // 몬스터 턴 진행
-            
+            MonsterTurn();
             BattleStart();
         }
 
         public void MonsterTurn()
-        { 
-            
+        {
+            foreach (Monster monster in monsterInStage)
+            {
+                if (monster.Health <= 0) // 몬스터가 죽은상태면 공격을 안함
+                {
+                }
+                else
+                {
+                    monster.HitDamage(player1, monster);
+                    IsEnd();
+                }
+            }
         }
         
         public void PlayerTurn(int actNum)
@@ -172,7 +192,7 @@ namespace MyDungeon
                         IntroNum++;
                     }
                     Console.WriteLine("\n[내 정보]");
-                    Console.WriteLine($"Lv.{player1.stat.Level}     {player1.Name}   ({player1.stat.job}) ");
+                    Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
                     Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
 
                     do
@@ -221,8 +241,14 @@ namespace MyDungeon
                     break;
 
             }
-
+            IsEnd(); // 끝났는지 검사
             // 플레이어 공격 적용
+            
+        }
+
+
+        public void IsEnd() // 끝났는지 검사 단계
+        {
             switch (IsBattleEnd())
             {
                 case 1:
@@ -232,7 +258,7 @@ namespace MyDungeon
                     Console.WriteLine("\r\n##     ## ####  ######  ########  #######  ########  ##    ## #### #### \r\n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##  ##  #### #### \r\n##     ##  ##  ##          ##    ##     ## ##     ##   ####   #### #### \r\n##     ##  ##  ##          ##    ##     ## ########     ##     ##   ##  \r\n ##   ##   ##  ##          ##    ##     ## ##   ##      ##              \r\n  ## ##    ##  ##    ##    ##    ##     ## ##    ##     ##    #### #### \r\n   ###    ####  ######     ##     #######  ##     ##    ##    #### #### \r\n");
                     Console.WriteLine("플레이어 승리");
                     BattleResult();
-                    Console.ReadLine(); // 입력대기용
+                    Console.ReadLine(); // 출력확인용 입력대기
                     Start(player1);
                     break;
                 default: // 0
@@ -241,6 +267,8 @@ namespace MyDungeon
 
             }
         }
+
+
 
         public int IsBattleEnd() // 배틀이 끝났는지 여부 알아보기 및 승자가 누구인지 //1.플레이어 패배 2. 플레이어 승리 0. 전투가안끝남
         {
@@ -268,7 +296,7 @@ namespace MyDungeon
             {
                 //monsterInStage에 인덱스에 맞는 종류를 추가하고 카운트 증가
                 case MonsterSpices.Minion:
-                    monsterInStage.Add(new Minion("미니온"));
+                    monsterInStage.Add(new Minion("미니언"));
                     monstersCount[(int)MonsterSpices.Minion]++;
                     break;
                 case MonsterSpices.Worm:
@@ -276,7 +304,7 @@ namespace MyDungeon
                     monstersCount[(int)MonsterSpices.Worm]++;
                     break;
                 case MonsterSpices.CanonMinion:
-                    monsterInStage.Add(new CannonMinion("대포 미니온"));
+                    monsterInStage.Add(new CannonMinion("머포 미니언"));
                     monstersCount[(int)MonsterSpices.CanonMinion]++;
                     break;
             }
@@ -284,7 +312,7 @@ namespace MyDungeon
 
         void BattleResult() //전투 결과
         {
-            Console.WriteLine("Battle - Result");
+            Console.WriteLine("\r\n########     ###    ######## ######## ##       ########               ########  ########  ######  ##     ## ##       ######## \r\n##     ##   ## ##      ##       ##    ##       ##                     ##     ## ##       ##    ## ##     ## ##          ##    \r\n##     ##  ##   ##     ##       ##    ##       ##                     ##     ## ##       ##       ##     ## ##          ##    \r\n########  ##     ##    ##       ##    ##       ######      #######    ########  ######    ######  ##     ## ##          ##    \r\n##     ## #########    ##       ##    ##       ##                     ##   ##   ##             ## ##     ## ##          ##    \r\n##     ## ##     ##    ##       ##    ##       ##                     ##    ##  ##       ##    ## ##     ## ##          ##    \r\n########  ##     ##    ##       ##    ######## ########               ##     ## ########  ######   #######  ########    ##    \r\n");
 
             if (player1.stat.Hp <= 0) //플레이어가 죽으면
             {
@@ -302,7 +330,8 @@ namespace MyDungeon
                 Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.");
             }
 
-
+            Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
+            Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine(">>");

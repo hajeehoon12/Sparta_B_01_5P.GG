@@ -56,16 +56,16 @@ namespace MyDungeon
 
         public void HitDamage(Player character, Monster monster)  //몬스터가 플레이어를 가격할 때
         {
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
-            Console.WriteLine($"{character.Name}을(를) 맞췄습니다. [데미지 : {monster.Attack}");
+            Console.WriteLine($"\nLv.{monster.Level} {monster.Name} 의 공격!");
+            Console.WriteLine($"{character.Name} 을(를) 공격했습니다. [데미지 : {monster.Attack}]");
 
             Console.WriteLine();
-            Console.WriteLine($"Lv. {character.stat.Level} {character.Name}");
+            Console.WriteLine($"\nLv.{character.stat.Level} {character.Name}");
             //체력 삭감 전
             Console.Write($"HP {character.stat.Hp} -> ");
             character.stat.Hp -= Attack;
             //체력 삭감 이후
-            Console.WriteLine(character.stat.Hp);
+            Console.WriteLine(character.stat.Hp + "\n");
         }
 
         public void GiveDamage(Player character)
