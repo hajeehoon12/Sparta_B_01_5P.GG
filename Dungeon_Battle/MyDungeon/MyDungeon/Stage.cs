@@ -19,6 +19,7 @@ namespace MyDungeon
         private int select; //선택지
 
         public bool stageSelect;
+        
 
         public void Start(Player player)
         {
@@ -102,6 +103,32 @@ namespace MyDungeon
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
             Console.ReadLine();
+        }
+
+        void BattleResult() //전투 결과
+        {
+            Console.WriteLine("Battle - Result");
+
+            if (player1.IsDead) //플레이어가 죽으면
+            {
+                //Lose
+                Console.WriteLine();
+                Console.WriteLine("You Lose");
+            }
+            else
+            {
+                //Victory
+                Console.WriteLine();
+                Console.WriteLine("Victory");
+
+                Console.WriteLine();
+                Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.");
+            }
+
+
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine(">>");
         }
     }
 }
