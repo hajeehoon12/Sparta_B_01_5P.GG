@@ -106,10 +106,6 @@ namespace MyDungeon
             camp = new Camp();
             program = new Program();
             
-
-            
-
-            Console.WriteLine("생성된 캐릭터의 정보를 출력합니다.");
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
         }

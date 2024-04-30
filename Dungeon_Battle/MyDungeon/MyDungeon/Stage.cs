@@ -120,7 +120,7 @@ namespace MyDungeon
                 monster.PrintMonster();
             }
             Console.WriteLine("\n[내 정보]");
-            Console.WriteLine($"Lv.{player1.stat.Level}     {player1.Name}   ({player1.stat.job}) ");
+            Console.WriteLine($"Lv.{player1.stat.Level} {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
 
 

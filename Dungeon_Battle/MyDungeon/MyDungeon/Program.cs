@@ -193,7 +193,7 @@ namespace MyDungeon
             Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
             playerjob = Console.ReadLine();
 
-
+            Console.Clear();
             Console.WriteLine($"\n\n=======당신의 플레이어 닉네임 : {playerName}======= \n\n");
 
             Player player = new Player(playerName);
