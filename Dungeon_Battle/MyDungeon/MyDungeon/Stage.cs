@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MyDungeon
 {
@@ -131,6 +132,19 @@ namespace MyDungeon
         }
         public void BattleTurn(int actNum) // 입력받은 값을 통해 플레이어와 몬스터의 턴이 진행됨 // 플레이어의 행동값 1.공격 2.스킬 3. 소모품 사용 등
         {
+            PlayerTurn(actNum); // 플레이어 턴 진행
+                                // 몬스터 턴 진행
+            
+            BattleStart();
+        }
+
+        public void MonsterTurn()
+        { 
+            
+        }
+        
+        public void PlayerTurn(int actNum)
+        {
             bool IsRightEnemy; // 적을 알맞게 지정하였는가?
             int EnemyNum;  // 지정한 적 번호
             int IntroNum = 0; // 적앞에 표시될 번호
@@ -144,8 +158,8 @@ namespace MyDungeon
                 case 1: // 플레이어 공격
                     foreach (Monster monster in monsterInStage)
                     {
-                        
-                        Console.Write(IntroNum + "  "); 
+
+                        Console.Write(IntroNum + "  ");
                         monster.PrintMonster();
                         IntroNum++;
                     }
@@ -173,12 +187,15 @@ namespace MyDungeon
                             BattleTurn(actNum); // 다시 원상복귀
                         }
                         Console.Clear(); // 지저분한 앞내용 지움
-                        Console.Write($"Lv.{player1.stat.Level} {player1.Name}이(가)  {monsterInStage[EnemyNum].Name} 을(를) 공격했습니다."); //
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"Lv.{player1.stat.Level} {player1.Name} 이(가)  {monsterInStage[EnemyNum].Name} 을(를) 공격했습니다."); //                     
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                     while (!IsRightEnemy);
 
-                    
-                    monsterInStage[EnemyNum].TakeDamage(player1, player1.Critical()); // 몬스터[번호] 가 데미지를 입음(player에게, player 데미지)
+
+                    monsterInStage[EnemyNum].TakeDamage(player1, player1.Critical()); // Player 가 몬스터에게 입힌 데미지 계산
 
 
 
@@ -194,7 +211,7 @@ namespace MyDungeon
                 default: // 잘못된 값 입력
                     BattleStart(); // 플레이어 입력턴으로 원상복귀
                     break;
-            
+
             }
 
             // 플레이어 공격 적용
@@ -212,13 +229,9 @@ namespace MyDungeon
                     break;
                 default: // 0
                     break;
-            
-            
-            }
-            
 
-            
-            BattleStart();
+
+            }
         }
 
         public int IsBattleEnd() // 배틀이 끝났는지 여부 알아보기 및 승자가 누구인지 //1.플레이어 패배 2. 플레이어 승리 0. 전투가안끝남
