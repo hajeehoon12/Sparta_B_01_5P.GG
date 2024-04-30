@@ -13,7 +13,7 @@ namespace MyDungeon
         string Name { get; }
         int Health { get; set; }
         int Attack { get; }
-        bool IsDead { get;}
+        bool IsDead  { get; }
         void TakeDamage(Player player, int damage);
 
     }
@@ -43,9 +43,9 @@ namespace MyDungeon
 
 
 
-        public int Health { get; set; } 
+        public int Health { get; set; }
         public int AttackPower { get; set; }
-        public bool IsDead => Health <= 0;
+        public bool IsDead =>Health <= 0; 
         public int Attack => Critical();    // 신던전에서 사용할 공격력 적용 방법
                                       // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
 
@@ -105,6 +105,7 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
+            
 
             
 

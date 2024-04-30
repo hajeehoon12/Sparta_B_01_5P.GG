@@ -286,7 +286,7 @@ namespace MyDungeon
         {
             Console.WriteLine("Battle - Result");
 
-            if (player1.IsDead) //플레이어가 죽으면
+            if (player1.stat.Hp <= 0) //플레이어가 죽으면
             {
                 //Lose
                 Console.WriteLine();
