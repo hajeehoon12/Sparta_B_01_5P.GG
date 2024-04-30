@@ -31,7 +31,7 @@ namespace MyDungeon
         Stage stage;
 
 
-        public int critical = 50;                  // 크리티컬 확률 // 기본은 15지만 테스트를 위해 50으로 적용
+        public int critical = 15;                  // 크리티컬 확률 // 기본은 15%
         public float criticalDmg = 1.6f;          // 크리티컬 데미지
         public int increaseCritical = 0;         // 크리티컬 확률 추가
         public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
@@ -50,7 +50,7 @@ namespace MyDungeon
         int definc = 0;// name, stat, market, 
 
 
-        public void TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음 (Damage 값)
+        public void TakeDamage(Player player, int damage) // 현재로서는 적용안하는 함수 나중에 쓰일지도.. Monster.HitDamage 로 대체됨 매개변수 이슈로
         {
             int avoidProb;
             
@@ -65,7 +65,12 @@ namespace MyDungeon
             {
 
                 Health -= damage;
-                if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
+                if (Health <= 0)
+                {
+                    Health = 0; // 0이하로 떨어질 경우 0으로고정
+
+                } 
+                
                 else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
             }
             Wait(); // 다음 버튼용 함수

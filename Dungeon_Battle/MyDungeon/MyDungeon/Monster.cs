@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MyDungeon
 {
@@ -29,7 +30,7 @@ namespace MyDungeon
             Level = level;
             Health = health;
             Attack = attack;
-            Avoid = 10; // 회피율
+            Avoid = 10;// 원래 회피율 10%; // 테스트를 위해 회피율 임시 조정
         }
 
         public void PrintMonster()  //몬스터 정보 출력
@@ -47,7 +48,9 @@ namespace MyDungeon
             if (avoidProb < Avoid + increaseAvoid) // 공격 회피
             {
                 damage = 0;
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"{Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             else // 공격 적중
             {
@@ -82,20 +85,43 @@ namespace MyDungeon
 
         public void HitDamage(Player character, Monster monster)  //몬스터가 플레이어를 가격할 때
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\nLv.{monster.Level} {monster.Name} 의 공격!");
-            Console.WriteLine($"{character.Name} 을(를) 공격했습니다. [데미지 : {monster.Attack}]");
-            Console.ForegroundColor = ConsoleColor.White;
 
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"\nLv.{character.stat.Level} {character.Name}");
-            //체력 삭감 전
-            Console.Write($"HP {character.stat.Hp} -> ");
-            character.stat.Hp -= Attack;
-            //체력 삭감 이후
-            Console.WriteLine(character.stat.Hp + "\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            int avoidProb;
+            int damage = 0;
+
+            avoidProb = new Random().Next(0, 100);
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\nLv.{monster.Level} {monster.Name} 의 공격!");
+            
+
+            if (avoidProb < character.avoid + increaseAvoid) // 공격 회피
+            {
+                damage = 0;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{character.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다.. [데미지 : 0]\n");
+                
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"\nLv.{character.stat.Level} {character.Name}");
+                //체력 삭감 전
+                Console.WriteLine($"HP {character.stat.Hp} -> {character.stat.Hp}");
+            }
+            else // 몬스터의 공격 적중
+            {
+                Console.WriteLine($"{character.Name} 을(를) 공격했습니다. [데미지 : {monster.Attack}]");
+
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"\nLv.{character.stat.Level} {character.Name}");
+                //체력 삭감 전
+                Console.Write($"HP {character.stat.Hp} -> ");
+                character.stat.Hp -= Attack;
+                if (character.stat.Hp <= 0) character.stat.Hp = 0; // 0미만으로 떨어지면 0으로고정
+                //체력 삭감 이후
+                Console.WriteLine(character.stat.Hp + "\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
         }
 
         public void GiveDamage(Player character)

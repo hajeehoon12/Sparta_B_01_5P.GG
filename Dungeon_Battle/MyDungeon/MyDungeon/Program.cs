@@ -168,7 +168,7 @@ namespace MyDungeon
 
         static void Main()
         {
-            Console.SetWindowSize(120, 35); // 콘솔창 크기 조절
+            Console.SetWindowSize(120, 55); // 콘솔창 크기 조절
 
             string playerName;
             string playerjob;

@@ -202,7 +202,7 @@ namespace MyDungeon
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.Write(IntroNum);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        //Console.BackgroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.Write("  ");
                         monster.PrintMonster();
                         IntroNum++;
