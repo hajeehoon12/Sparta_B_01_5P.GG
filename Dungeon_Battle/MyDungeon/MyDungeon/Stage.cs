@@ -31,12 +31,13 @@ namespace MyDungeon
             player1 = player;   // 실제 스테이터스에도 반영되는 것을 확인
 
             monsterInStage = new List<Monster>(4);
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             //스테이지 선택
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             for (int i = 0; i < 3; i++)
                 Console.WriteLine($"{i + 1} 스테이지");
-
+            Console.ForegroundColor = ConsoleColor.Green;
             do
             {
                 Console.Write(">> ");
@@ -49,7 +50,7 @@ namespace MyDungeon
                 }
             }
             while (!stageSelect);
-
+            Console.ForegroundColor = ConsoleColor.White;
             StageStart(select);
         }
 
@@ -141,6 +142,7 @@ namespace MyDungeon
 
             do
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
 
@@ -152,7 +154,7 @@ namespace MyDungeon
                 }
             }
             while (!IsactNum);
-
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
             
             BattleTurn(actNum);
@@ -196,8 +198,12 @@ namespace MyDungeon
                 case 1: // 플레이어의 일반 공격
                     foreach (Monster monster in monsterInStage)
                     {
+                        //Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write(IntroNum);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(IntroNum + "  ");
+                        //Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Write("  ");
                         monster.PrintMonster();
                         IntroNum++;
                         Console.ForegroundColor = ConsoleColor.White;
@@ -207,7 +213,7 @@ namespace MyDungeon
                     Console.WriteLine("\n[내 정보]");
                     Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
                     Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Green;
 
                     do
                     {
@@ -215,7 +221,7 @@ namespace MyDungeon
                         Console.Write(">> ");
 
                         IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);
-
+                        Console.ForegroundColor = ConsoleColor.White;
                         if (!IsRightEnemy) // 숫자가 입력되지 않으면
                         {
                             Console.Clear();

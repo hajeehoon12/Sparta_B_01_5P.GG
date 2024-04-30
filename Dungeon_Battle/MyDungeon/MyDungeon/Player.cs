@@ -40,9 +40,6 @@ namespace MyDungeon
         public int increaseAvoid = 0;
 
 
-
-
-
         public int Health { get; set; }
         public int AttackPower { get; set; }
         public bool IsDead =>Health <= 0; 
