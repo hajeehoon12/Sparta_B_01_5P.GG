@@ -87,20 +87,20 @@ namespace MyDungeon
 
                                 if (player.stat.Hp + 50 < player.stat.MaxHp)
                                 {
-                                    Console.WriteLine($"{player.inven.ItemInfo[i].ItemName} 을(를) 사용하여 체력을 50 만큼 회복했습니다.");
+                                    Console.WriteLine($"{player.inven.ItemInfo[i].ItemName} 을(를) 사용하여 체력을 50 만큼 회복했습니다. (남은 포션 : {player.inven.ItemInfo[i].Amount})");
                                     player.stat.Hp += 50;
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"{player.inven.ItemInfo[i].ItemName} 을(를) 사용하여 체력을 {player.stat.MaxHp - player.stat.Hp} 만큼 회복했습니다.");
+                                    Console.WriteLine($"{player.inven.ItemInfo[i].ItemName} 을(를) 사용하여 체력을 {player.stat.MaxHp - player.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player.inven.ItemInfo[i].Amount})");
                                     player.stat.Hp = player.stat.MaxHp;
                                 }
                                 Console.Write($"현재 체력 : {player.stat.Hp}, 최대 체력 : {player.stat.MaxHp}");
                                 Camping(player); // 물약 사용후 종료
                             }
-                            else
+                            else // 물약개수 동남
                             {
-                                Console.WriteLine($"현재 인벤토리에 {player.inven.ItemInfo[i].ItemName} 이(가) 모자랍니다. {player.inven.ItemInfo[i].ItemName} 사용이 취소됩니다.");
+                                break;
                             }
                         }
                         

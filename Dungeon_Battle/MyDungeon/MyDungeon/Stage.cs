@@ -133,9 +133,12 @@ namespace MyDungeon
             Console.WriteLine("\n[내 정보]");
             Console.WriteLine($"Lv.{player1.stat.Level} {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
-            Console.ForegroundColor = ConsoleColor.White;
+            
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
+            Console.WriteLine("2. 스킬(미구현 입력X)");
+            Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
 
@@ -251,7 +254,43 @@ namespace MyDungeon
                     break;
                 case 3: // 플레이어 소모품 사용
 
+                    bool usePotion = false; // 포션 사용검사
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    for (int i = 0; i < player1.inven.ItemInfo.Count; i++)
+                    {
+                        if (player1.inven.ItemInfo[i].ItemType == 4)
+                        {
+                            if (player1.inven.ItemInfo[i].Amount >= 1)
+                            {
+                                Console.WriteLine($"{player1.Name} 이(가) 현재 회복물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
+                                player1.inven.ItemInfo[i].Amount -= 1;
+                                usePotion = true; // 포션사용
+                                if (player1.stat.Hp + 50 < player1.stat.MaxHp)
+                                {
+                                    Console.WriteLine($"회복물약 을(를) 사용하여 체력을 50 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                    player1.stat.Hp += 50;
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"회복물약 을(를) 사용하여 체력을 {player1.stat.MaxHp - player1.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                    player1.stat.Hp = player1.stat.MaxHp;
+                                }
+                                Console.Write($"플레이어 HP : {player1.stat.Hp} / {player1.stat.MaxHp}\n");
+                                break;
+                            }
+                            else // 물약개수 동남
+                            {
+                                
+                                break;
+                            }
+                        }
 
+                    }
+                    if (!usePotion) // 물약사용 실패
+                    {
+                        Console.WriteLine($"현재 인벤토리에 회복물약 이(가) 없습니다. 회복물약 사용이 취소됩니다.");
+                        BattleStart(); 
+                    } 
                     break;
                 default: // 잘못된 값 입력
                     BattleStart(); // 플레이어 입력턴으로 원상복귀
