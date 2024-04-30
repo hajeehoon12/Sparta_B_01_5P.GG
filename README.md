@@ -22,3 +22,9 @@ B- 01 group name 5P.GG Team Project / Dungeon Battle
 
   20:43 _하지훈 : 공격 회피 기능 추가 (Player.cs -> int TakeDamage(Player player, int damage) 함수)
 
+  23:43 _하지훈 : Merge Fatal Error 해결 전체 Branch 삭제 및 재생성
+
+04-30
+
+  00:31 _하지훈: 오차범위 10% 공격력 설정, Battle 부분 출력 수정
+

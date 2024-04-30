@@ -81,7 +81,7 @@ namespace MyDungeon
         {
             int dmgresult;
             int criticalProb;
-            dmgresult = new Random().Next((int)(AttackPower + stat.Attack + stat.AttackInc), (int)(AttackPower + stat.Attack + stat.AttackInc)); 
+            dmgresult = new Random().Next((int)((AttackPower + stat.Attack + stat.AttackInc)*0.9), (int)((AttackPower + stat.Attack + stat.AttackInc)*1.1)); 
             criticalProb = new Random().Next(0, 100);
 
             if (criticalProb < critical + increaseCritical)
