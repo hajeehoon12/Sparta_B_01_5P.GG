@@ -140,7 +140,7 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬(미구현 입력X)");
+            Console.WriteLine("2. 스킬(광역베기<임시>)");
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
