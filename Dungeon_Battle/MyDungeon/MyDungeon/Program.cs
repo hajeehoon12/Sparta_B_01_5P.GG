@@ -171,6 +171,8 @@ namespace MyDungeon
             string playerName;
             string playerjob;
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
             Console.WriteLine("              ..######..########.....##.....#######...########....##...." +
                          "\r\n             .##.....#.##.....##...##.##...##.....##....##......##.##.." +
                          "\r\n            .##.......##.....##..##...##..##.....##....##.....##...##." +
@@ -187,11 +189,15 @@ namespace MyDungeon
                               "\r\n .##.....##.##.....##.##...###.##....##..##.......##.....##.##...###" +
                               "\r\n.########...#######..##....##..######...########..#######..##....## \r\n\n");
 
+            
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             playerName = Console.ReadLine();
             Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
             playerjob = Console.ReadLine();
+
+            Console.ForegroundColor = ConsoleColor.White;
 
             Console.Clear();
             Console.WriteLine($"\n\n=======당신의 플레이어 닉네임 : {playerName}======= \n\n");

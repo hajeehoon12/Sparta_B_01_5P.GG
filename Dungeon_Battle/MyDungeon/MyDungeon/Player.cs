@@ -86,8 +86,8 @@ namespace MyDungeon
                 // 크리티컬이 터진다.
                 dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n{Name} 이 적의 급소를 노려 치명적인 일격이 적용!!");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write($"\n{Name} 이 적의 급소를 노려 치명적인 일격이 적용!!");
+                
             }
             
             return dmgresult; // 최종 데미지

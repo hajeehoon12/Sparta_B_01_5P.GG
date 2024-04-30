@@ -106,24 +106,34 @@ namespace MyDungeon
             int actNum; // 입력용
             bool IsactNum;
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             if (!inFight) // Battle!!
                 Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
             else // Your Turn!!
             {
                 Console.WriteLine("\r\n##    ##  #######  ##     ## ########     ######## ##     ## ########  ##    ## #### #### \r\n ##  ##  ##     ## ##     ## ##     ##       ##    ##     ## ##     ## ###   ## #### #### \r\n  ####   ##     ## ##     ## ##     ##       ##    ##     ## ##     ## ####  ## #### #### \r\n   ##    ##     ## ##     ## ########        ##    ##     ## ########  ## ## ##  ##   ##  \r\n   ##    ##     ## ##     ## ##   ##         ##    ##     ## ##   ##   ##  ####           \r\n   ##    ##     ## ##     ## ##    ##        ##    ##     ## ##    ##  ##   ### #### #### \r\n   ##     #######   #######  ##     ##       ##     #######  ##     ## ##    ## #### #### \r\n");
             }
-
+            Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine();
             foreach (Monster monster in monsterInStage)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                if(monster.Health <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed; // 몬스터가 죽은 상태면 검은 빨강으로 색상변경
+                }
+       
                 monster.PrintMonster();
+                
+                Console.ForegroundColor = ConsoleColor.White;
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\n[내 정보]");
             Console.WriteLine($"Lv.{player1.stat.Level} {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
-
-
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
             Console.WriteLine("1. 공격");
 
             Console.WriteLine();
@@ -177,27 +187,31 @@ namespace MyDungeon
             int EnemyNum;  // 지정한 적 번호
             int IntroNum = 0; // 적앞에 표시될 번호
 
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
-
+            Console.ForegroundColor = ConsoleColor.White;
 
             switch (actNum) // 플레이어가 공격 혹은 스킬 혹은 소모품을 사용
             {
-                case 1: // 플레이어 공격
+                case 1: // 플레이어의 일반 공격
                     foreach (Monster monster in monsterInStage)
                     {
-
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(IntroNum + "  ");
                         monster.PrintMonster();
                         IntroNum++;
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("\n[내 정보]");
                     Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
                     Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
+                    Console.ForegroundColor = ConsoleColor.White;
 
                     do
                     {
-                        Console.WriteLine("대상을 지정하세요");
+                        Console.WriteLine("\n대상을 지정하세요");
                         Console.Write(">> ");
 
                         IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);
@@ -216,17 +230,14 @@ namespace MyDungeon
                         }
                         Console.Clear(); // 지저분한 앞내용 지움
 
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.Write($"Lv.{player1.stat.Level} {player1.Name} 이(가)  {monsterInStage[EnemyNum].Name} 을(를) 공격했습니다."); //                     
-                        Console.ForegroundColor = ConsoleColor.White;
+                        
                     }
                     while (!IsRightEnemy);
 
 
                     monsterInStage[EnemyNum].TakeDamage(player1, player1.Critical()); // Player 가 몬스터에게 입힌 데미지 계산
-
-
-
 
                     break;
                 case 2: // 플레이어 스킬
