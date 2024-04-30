@@ -26,9 +26,11 @@ namespace MyDungeon
         Market market;
         Dungeon dungeon;
         Camp camp;
-        Program program;
+        public Program program;
         public Inventory inven; // 플레이어 인벤토리
         Stage stage;
+
+        public bool skillUsing = false; // 스킬사용중 여부
 
 
         public int critical = 15;                  // 크리티컬 확률 // 기본은 15%
@@ -59,7 +61,7 @@ namespace MyDungeon
             if (avoidProb < avoid + increaseAvoid) // 공격 회피
             {
                 damage = 0;
-                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..\n\n");
+                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다!!\n\n");
             }
             else
             {
@@ -88,7 +90,7 @@ namespace MyDungeon
                 // 크리티컬이 터진다.
                 dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"\n{Name} 이 적의 급소를 노려 치명적인 일격이 적용!!");
+                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!");
                 
             }
             

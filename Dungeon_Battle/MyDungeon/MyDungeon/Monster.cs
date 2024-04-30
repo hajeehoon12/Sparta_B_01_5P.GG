@@ -54,7 +54,8 @@ namespace MyDungeon
             }
             else // 공격 적중
             {
-                Console.WriteLine($" [데미지 : {damage}]");
+                if (!character.skillUsing) Console.WriteLine($" [데미지 : {damage}]"); // 스킬 사용중에는 다른양식
+                
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;

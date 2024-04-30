@@ -29,14 +29,17 @@ namespace MyDungeon
         public void Start(Player player)
         {
             player1 = player;   // 실제 스테이터스에도 반영되는 것을 확인
-
             monsterInStage = new List<Monster>(4);
             Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine("\r\n ######  ########    ###     ######   ######## \r\n##    ##    ##      ## ##   ##    ##  ##       \r\n##          ##     ##   ##  ##        ##       \r\n ######     ##    ##     ## ##   #### ######   \r\n      ##    ##    ######### ##    ##  ##       \r\n##    ##    ##    ##     ## ##    ##  ##       \r\n ######     ##    ##     ##  ######   ######## \r\n");
+
             //스테이지 선택
+            Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
             Console.ForegroundColor = ConsoleColor.Cyan;
             for (int i = 0; i < 3; i++)
-                Console.WriteLine($"{i + 1} 스테이지");
+                Console.WriteLine($"Stage {i + 1}\n");
             Console.ForegroundColor = ConsoleColor.Green;
             do
             {
@@ -249,8 +252,20 @@ namespace MyDungeon
                     monsterInStage[EnemyNum].TakeDamage(player1, player1.Critical()); // Player 가 몬스터에게 입힌 데미지 계산
 
                     break;
-                case 2: // 플레이어 스킬
+                case 2: // 플레이어 스킬 사용 // 임시 광역기
 
+                    int skilldamage = 0; // 스킬데미지 통일
+                    skilldamage = (int)(player1.Critical() * 1.5f);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write($"{player1.Name} 의 광역베기!! [데미지 : {skilldamage}]");
+                    player1.skillUsing = true;
+                    foreach (Monster monster in monsterInStage)
+                    {
+                        monster.TakeDamage(player1, skilldamage);
+                    }
+                    player1.skillUsing = false;
                     break;
                 case 3: // 플레이어 소모품 사용
 
@@ -309,10 +324,11 @@ namespace MyDungeon
             {
                 case 1:
                     Console.WriteLine("플레이어 패배");
+                    BattleStart(); // 일단은 재시작으로 설정 나중에 GameOver Scene 만들예정
                     break;
                 case 2:
                     Console.WriteLine("\r\n##     ## ####  ######  ########  #######  ########  ##    ## #### #### \r\n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##  ##  #### #### \r\n##     ##  ##  ##          ##    ##     ## ##     ##   ####   #### #### \r\n##     ##  ##  ##          ##    ##     ## ########     ##     ##   ##  \r\n ##   ##   ##  ##          ##    ##     ## ##   ##      ##              \r\n  ## ##    ##  ##    ##    ##    ##     ## ##    ##     ##    #### #### \r\n   ###    ####  ######     ##     #######  ##     ##    ##    #### #### \r\n");
-                    Console.WriteLine("플레이어 승리");
+                    //Console.WriteLine("플레이어 승리");
                     BattleResult();
                     Console.ReadLine(); // 출력확인용 입력대기
                     Start(player1);
@@ -368,7 +384,9 @@ namespace MyDungeon
 
         void BattleResult() //전투 결과
         {
-            Console.WriteLine("\r\n########     ###    ######## ######## ##       ########               ########  ########  ######  ##     ## ##       ######## \r\n##     ##   ## ##      ##       ##    ##       ##                     ##     ## ##       ##    ## ##     ## ##          ##    \r\n##     ##  ##   ##     ##       ##    ##       ##                     ##     ## ##       ##       ##     ## ##          ##    \r\n########  ##     ##    ##       ##    ##       ######      #######    ########  ######    ######  ##     ## ##          ##    \r\n##     ## #########    ##       ##    ##       ##                     ##   ##   ##             ## ##     ## ##          ##    \r\n##     ## ##     ##    ##       ##    ##       ##                     ##    ##  ##       ##    ## ##     ## ##          ##    \r\n########  ##     ##    ##       ##    ######## ########               ##     ## ########  ######   #######  ########    ##    \r\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n########  ########  ######  ##     ## ##       ######## \r\n##     ## ##       ##    ## ##     ## ##          ##    \r\n##     ## ##       ##       ##     ## ##          ##    \r\n########  ######    ######  ##     ## ##          ##    \r\n##   ##   ##             ## ##     ## ##          ##    \r\n##    ##  ##       ##    ## ##     ## ##          ##    \r\n##     ## ########  ######   #######  ########    ##    \r\n");
+            Console.ForegroundColor = ConsoleColor.White;
 
             if (player1.stat.Hp <= 0) //플레이어가 죽으면
             {
@@ -380,17 +398,22 @@ namespace MyDungeon
             {
                 //Victory
                 Console.WriteLine();
-                Console.WriteLine("Victory");
+                Console.ForegroundColor = ConsoleColor.Cyan;
 
                 Console.WriteLine();
-                Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.");
+                Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
+                Console.ForegroundColor= ConsoleColor.White;
             }
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine(">>");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+            player1.program.SelectAct(player1); // 메인메뉴로 되돌아가기
         }
     }
 }
