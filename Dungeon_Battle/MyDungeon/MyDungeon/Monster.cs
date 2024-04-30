@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -16,6 +18,10 @@ namespace MyDungeon
         public int Level { get; }
         public int Health { get; set; }
         public int Attack { get; }
+
+        public int Avoid { get; set; } // 몬스터 회피율
+
+        public int increaseAvoid { get; set; } // 몬스터 회피율 증가 난이도에따라 상승, 기본0
         public bool IsDead => Health <= 0;  //전투 중에서 죽었는지
         public Monster(string name, int level, int health, int attack)
         {
@@ -23,6 +29,7 @@ namespace MyDungeon
             Level = level;
             Health = health;
             Attack = attack;
+            Avoid = 10; // 회피율
         }
 
         public void PrintMonster()  //몬스터 정보 출력
@@ -34,30 +41,43 @@ namespace MyDungeon
         public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때
         {
             
-            Console.WriteLine($" [데미지 : {damage}]");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"Lv.{Level} {Name}");
-            //체력 삭감 전
-            Console.Write($"HP {Health} -> ");  
-            Health -= damage;
-            if(Health <= 0)
-                Health = 0;
-            //체력 삭감 이후
-            if (IsDead)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Dead");
+            int avoidProb;
+            avoidProb = new Random().Next(0, 100);
 
-                Console.WriteLine($"{Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            else
+            if (avoidProb < Avoid + increaseAvoid) // 공격 회피
             {
-                Console.WriteLine(Health);
-                Console.ForegroundColor = ConsoleColor.White;
+                damage = 0;
+                Console.WriteLine($"{Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");
             }
+            else // 공격 적중
+            {
+                Console.WriteLine($" [데미지 : {damage}]");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"Lv.{Level} {Name}");
+                //체력 삭감 전
+                Console.Write($"HP {Health} -> ");
+                Health -= damage;
+                if (Health <= 0)
+                    Health = 0;
+                //체력 삭감 이후
+                if (IsDead)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Dead");
+
+                    Console.WriteLine($"{Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.WriteLine(Health);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                
+            }
+
         }
 
         public void HitDamage(Player character, Monster monster)  //몬스터가 플레이어를 가격할 때
