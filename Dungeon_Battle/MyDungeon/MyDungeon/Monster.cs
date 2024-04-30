@@ -27,8 +27,8 @@ namespace MyDungeon
 
         public void PrintMonster()  //몬스터 정보 출력
         {
-            string deadText = IsDead ? "Dead" : $"HP {Health}"; //몬스터가 죽으면 Dead로 아님 체력표시
-            Console.WriteLine($"Lv.{Level} {Name}\t {deadText}");
+            string deadText = IsDead ? "Dead" : $"HP : {Health}"; //몬스터가 죽으면 Dead로 아님 체력표시
+            Console.WriteLine($"Lv.{Level} {Name}   {deadText}");
         }
 
         public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때
