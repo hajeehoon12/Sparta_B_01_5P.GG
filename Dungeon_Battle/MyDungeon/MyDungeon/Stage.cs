@@ -259,7 +259,7 @@ namespace MyDungeon
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write($"{player1.Name} 의 광역베기!! [데미지 : {skilldamage}]");
+                    Console.WriteLine($"{player1.Name} 의 광역베기!! [데미지 : {skilldamage}]");
                     player1.skillUsing = true;
                     foreach (Monster monster in monsterInStage)
                     {
@@ -409,11 +409,13 @@ namespace MyDungeon
             Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
             Console.WriteLine();
-            Console.WriteLine("0. 다음");
+            Console.WriteLine("0. 마을로 돌아가기");
             Console.WriteLine(">>");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
+            
             player1.program.SelectAct(player1); // 메인메뉴로 되돌아가기
+
         }
     }
 }

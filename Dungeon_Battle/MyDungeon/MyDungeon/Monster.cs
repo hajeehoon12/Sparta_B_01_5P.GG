@@ -49,7 +49,10 @@ namespace MyDungeon
             {
                 damage = 0;
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"{Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");
+                Console.WriteLine($"\nLv. {Level} {Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");
+                Console.WriteLine($"Lv.{Level} {Name}");
+                //체력 삭감 전
+                Console.WriteLine($"HP {Health} -> {Health}");
                 Console.ForegroundColor = ConsoleColor.White;
             }
             else // 공격 적중
@@ -71,7 +74,7 @@ namespace MyDungeon
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
 
-                    Console.WriteLine($"{Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!");
+                    Console.WriteLine($"Lv. {Level} {Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
