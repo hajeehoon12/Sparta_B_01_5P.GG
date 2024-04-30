@@ -31,7 +31,7 @@ namespace MyDungeon
         public int increaseAvoid { get; set; } // 몬스터 회피율 증가 난이도에따라 상승, 기본0
         public bool IsDead => Health <= 0;  //전투 중에서 죽었는지
 
-        protected List<ItemData> Drop_Item = new List<ItemData>();
+        protected List<ItemData> Drop_Item = new List<ItemData>(); // 이렇게 안하면 아래서 Base를 쓸수가없음
         public Monster(string name, int level, int health, int attack)
         {
             Name = name;
@@ -170,8 +170,7 @@ namespace MyDungeon
     class Minion : Monster  //미니언
     {
         public Minion(string name) : base(name, 2, 15, 5)
-        {
-            
+        {    
             add_Drop_Item();
         }
 
@@ -180,19 +179,36 @@ namespace MyDungeon
             Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0 , 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
             Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
         }
-
-        
     }
 
     class Worm : Monster   //공허충
     {
-        List<ItemData> Drop_Item = new List<ItemData>();
-        public Worm(string name) : base(name, 3, 10, 9) { }
+       
+        public Worm(string name) : base(name, 3, 10, 9) 
+        {    
+            add_Drop_Item();
+        }
+
+        public void add_Drop_Item()
+        {
+            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼")); // 추가하고 싶은 아이템 추가
+            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+        }
     }
 
     class CannonMinion : Monster  //대포 미니언
     {
-        List<ItemData> Drop_Item = new List<ItemData>();
-        public CannonMinion(string name) : base(name, 5, 25, 8) { }
+        
+        public CannonMinion(string name) : base(name, 5, 25, 8)
+        {
+            add_Drop_Item();
+        }
+
+        public void add_Drop_Item()
+        {
+            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
+            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+        }
+
     }
 }
