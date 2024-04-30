@@ -19,7 +19,7 @@ namespace MyDungeon
 
         public ItemData(int _itemType, string _itemName, int _itemAtk, int _itemDef,  int _itemPrice, int _Amount, string _itemExp)
         {
-            ItemType = _itemType;
+            ItemType = _itemType; // 0 주무기, 1 보조무기 2 악세서리 3 방어구 4 소모품 5 퀘스트 아이템(잡템)
             ItemName = FormatAndPad(_itemName, 10 );// 8글자로 고정 패딩실시
             ItemAtk = _itemAtk;
             ItemDef = _itemDef;
