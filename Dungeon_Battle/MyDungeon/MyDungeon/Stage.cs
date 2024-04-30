@@ -58,7 +58,14 @@ namespace MyDungeon
             monsterInStage.Clear(); //스테이지 선택하기전 리스트 비워놓기
             for (int i = 0; i < monstersCount.Length; i++)
                 monstersCount[i] = 0;   //몬스터 종류 수 초기
-            for (int i = 0; i < 4; i++)
+            
+            int randomLength;
+            if (stage == 3) //스테이지가 3이면
+                randomLength = new Random().Next(2, 5); //2~4마리의 랜덤한 몬스터 생성
+            else
+                randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
+
+            for (int i = 0; i < randomLength; i++)
             {
                 switch (stage)  //몬스터 리스트에 몬스터 추가
                 {
@@ -69,7 +76,7 @@ namespace MyDungeon
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
                         break;
                     case 2: //스테이지 2
-                        if (i == 3 && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면
+                        if (i == (randomLength - 1) && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면
                             CreateMonster(MonsterSpices.CanonMinion);
                         else if (monstersCount[(int)MonsterSpices.CanonMinion] >= 1) //대포가 1마리 있으면
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
