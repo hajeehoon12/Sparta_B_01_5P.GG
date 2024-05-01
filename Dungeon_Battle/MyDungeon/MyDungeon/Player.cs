@@ -103,7 +103,8 @@ namespace MyDungeon
         public Player(string name)
         {
             Name = name;
-            stat = new Status(Name); 
+            stat = new Status(Name);
+            stat.player = this;
             inven = new Inventory(name);
             stage = new Stage();
 
@@ -181,6 +182,10 @@ namespace MyDungeon
         public void CharInfo() // 캐릭터 상태창 정보
         {
             // 캐릭터 상태창을 띄우기전에 장비한 아이템의 정보가 반영되어야함
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######  ########    ###    ######## ##     ##  ######  \r\n##    ##    ##      ## ##      ##    ##     ## ##    ## \r\n##          ##     ##   ##     ##    ##     ## ##       \r\n ######     ##    ##     ##    ##    ##     ##  ######  \r\n      ##    ##    #########    ##    ##     ##       ## \r\n##    ##    ##    ##     ##    ##    ##     ## ##    ## \r\n ######     ##    ##     ##    ##     #######   ######  \r\n");
+
 
             (atkinc,definc) = inven.Item_Ability_Total(); // 상태창을 보여주기 전에 아이템 능력치의 총합을 반영함
 

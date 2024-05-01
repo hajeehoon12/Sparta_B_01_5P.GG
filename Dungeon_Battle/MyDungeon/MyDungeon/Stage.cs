@@ -35,6 +35,13 @@ namespace MyDungeon
             Console.WriteLine("\r\n ######  ########    ###     ######   ######## \r\n##    ##    ##      ## ##   ##    ##  ##       \r\n##          ##     ##   ##  ##        ##       \r\n ######     ##    ##     ## ##   #### ######   \r\n      ##    ##    ######### ##    ##  ##       \r\n##    ##    ##    ##     ## ##    ##  ##       \r\n ######     ##    ##     ##  ######   ######## \r\n");
 
             //스테이지 선택
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            int atkinc, definc;
+            (atkinc, definc) = player1.inven.Item_Ability_Total();
+            player1.stat.Show_stat(atkinc,definc);  // 플레이어 상태 표시
+            
+
             Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
             
@@ -74,6 +81,12 @@ namespace MyDungeon
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("미해금된 스테이지입니다.");
+                Start(player1);
+            }
+            else if (select <= 0)
+            {
+                Console.Clear();
+                Console.WriteLine("존재하지 않는 스테이지입니다.");
                 Start(player1);
             }
             Console.ForegroundColor = ConsoleColor.White;

@@ -96,7 +96,7 @@ namespace MyDungeon
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
                 Console.Clear();
             } while (!actIsNum);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Green;
             switch (act)
             {
                 case 1: // 상태보기
