@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MyDungeon
 {
-    
+
     public class Program
     {
 
@@ -73,7 +73,6 @@ namespace MyDungeon
 
         public void SelectAct(Player player) // 메뉴 선택
         {
-           
 
             int act; //메뉴
             bool actIsNum;
@@ -137,8 +136,8 @@ namespace MyDungeon
                 case 9:
                     Console.WriteLine("\r\n ######      ###    ##     ## ########    ######## ##    ## ########  \r\n##    ##    ## ##   ###   ### ##          ##       ###   ## ##     ## \r\n##         ##   ##  #### #### ##          ##       ####  ## ##     ## \r\n##   #### ##     ## ## ### ## ######      ######   ## ## ## ##     ## \r\n##    ##  ######### ##     ## ##          ##       ##  #### ##     ## \r\n##    ##  ##     ## ##     ## ##          ##       ##   ### ##     ## \r\n ######   ##     ## ##     ## ########    ######## ##    ## ########  \r\n");
                     Console.WriteLine("\n☆게임 종료를 선택하셨습니다! 2초후에 종료됩니다!!☆");
+
                     
-                    Thread.Sleep(2000);
                     if (false) // 게임 종료 취소 조건 넣을 예정
                     {
                         Console.WriteLine("\n☆게임 종료를 취소했습니다!☆"); // 취소 후 메인화면으로 복귀
