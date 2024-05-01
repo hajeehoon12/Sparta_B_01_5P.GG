@@ -411,6 +411,7 @@ namespace MyDungeon
 
                 Console.WriteLine();
                 Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
+                // 아이템 나열
                 Console.ForegroundColor= ConsoleColor.White;
             }
 

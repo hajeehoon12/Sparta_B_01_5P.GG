@@ -52,6 +52,8 @@ namespace MyDungeon
                     Console.WriteLine($"{Name} 이(가) {items.ItemName} 을(를) 드랍했습니다.");
                 }
             }
+            //경험치
+            //골드
         }
 
 
