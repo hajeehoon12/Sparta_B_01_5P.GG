@@ -119,9 +119,40 @@ namespace MyDungeon
         }
 
 
+        //도적 스킬
+        public static void CriticalThrow(Player player, List<Monster> Monsters) // 스킬 크리티컬 스로우
+        {
+            int skillDamage = (int)(player.Critical() * 1.2f);
 
+            //연출...
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]");
+            player.skillUsing = true;
+            foreach(Monster monster in Monsters)
+            {
+                if(monster.Health > 0)  //몬스터가 죽지 않으면
+                    monster.TakeDamage(player, skillDamage);
+            }
+            player.skillUsing = false;
+        }
 
+        public static void Avenger(Player player, List<Monster> Monsters)   // 스킬 어벤져
+        {
+            int skillDamage = (int)(player.Critical() * 1.8f + 0.5f);
+
+            //연출...
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 어벤져!! [데미지 : {skillDamage}]");
+            player.skillUsing = true;
+            foreach(Monster monster in Monsters)
+            {
+                if(monster.Health > 0)
+                    monster.TakeDamage(player, skillDamage);
+            }
+            player.skillUsing = false;
+        }
 
 
 
