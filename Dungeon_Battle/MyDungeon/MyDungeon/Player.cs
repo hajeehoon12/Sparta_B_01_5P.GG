@@ -191,7 +191,7 @@ namespace MyDungeon
 
             if (atkinc == 0 && definc == 0) // 아이템으로 인한 능력치 변화가 없을 때
             {
-                stat.Show_stat();   // 상태창
+                stat.Show_stat(0, 0);   // 상태창
             }
             else
             {

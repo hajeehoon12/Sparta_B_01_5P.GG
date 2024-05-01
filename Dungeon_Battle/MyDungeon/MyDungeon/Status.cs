@@ -76,6 +76,9 @@ namespace MyDungeon
             Console.WriteLine($"공격력 : {Attack}");
             Console.WriteLine($"방어력 : {Defense}");
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
+            Console.WriteLine($"치명타 확률 : {player.critical} + ({player.increaseCritical}) %");
+            Console.WriteLine($"치명타 데미지 : {player.criticalDmg * 100} + ({player.increaseCritical}) %");
+            Console.WriteLine($"회피율 : {player.avoid} + ({player.increaseAvoid}) %");
             Console.WriteLine($"Gold : {Gold}");
             Console.WriteLine("=================================\n\n");
 
@@ -87,7 +90,7 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n☆캐릭터의 정보가 표시됩니다.☆\n");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("=================================");
+            Console.WriteLine("==================================================================");
             Console.WriteLine("             [현재 플레이어 상태]           \n");
             Console.WriteLine($"Lv. {Level}");
             Console.WriteLine($"{Name} ({job})");
@@ -141,7 +144,7 @@ namespace MyDungeon
             }
 
             Console.WriteLine($"Gold : {Gold} G");
-            Console.WriteLine("=================================\n\n");
+            Console.WriteLine("==================================================================\n\n");
 
 
         }

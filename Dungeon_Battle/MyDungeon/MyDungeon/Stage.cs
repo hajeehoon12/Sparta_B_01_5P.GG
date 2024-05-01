@@ -17,7 +17,7 @@ namespace MyDungeon
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
         int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
-        
+
         
 
         private int select; //선택지
@@ -44,7 +44,8 @@ namespace MyDungeon
 
             Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
-            
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("0. 마을로 돌아가기\n");
             for (int i = 0; i < 3; i++)
             {
 
@@ -76,27 +77,36 @@ namespace MyDungeon
                 }
             }
             while (!stageSelect);
-            if (select >= player1.CurStage)
+            if (select > player1.CurStage) // 해금된 스테이지보다 높은수 입력
             {
+                
                 Console.Clear();
+                Console.WriteLine(player1.CurStage);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("미해금된 스테이지입니다.");
                 Start(player1);
             }
-            else if (select <= 0)
+            else if (select < 0) // 0이하의 수를 입력
             {
                 Console.Clear();
                 Console.WriteLine("존재하지 않는 스테이지입니다.");
                 Start(player1);
+            }
+            else if (select ==0) //0입력 마을귀환
+            {
+                Console.Clear();
+                Console.WriteLine("마을로 귀환합니다.");
+                player1.program.SelectAct(player1);
+
             }
             Console.ForegroundColor = ConsoleColor.White;
             StageStart(select);
         }
 
         //stage를 만들어서
-        // 1스테이지는 (공허충 최대 2마리 나머지 미니온)
-        // 2스테이지는 (대포 1마리 나머지는 미니온이나 공허충)
-        // 3스테이지는 (대포 최대 2마리 나머지는 미니온이나 공허충)
+        // 1스테이지는 (공허충 최대 2마리 나머지 미니언)
+        // 2스테이지는 (대포 1마리 나머지는 미니언이나 공허충)
+        // 3스테이지는 (대포 최대 2마리 나머지는 미니언이나 공허충)
         public void StageStart(int stage)
         {
             inFight = false; // 초기화
@@ -183,7 +193,7 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬(광역베기<임시>)");
+            Console.WriteLine("2. 오버히트");
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
@@ -300,18 +310,7 @@ namespace MyDungeon
                     break;
                 case 2: // 플레이어 스킬 사용 // 임시 광역기
 
-                    int skilldamage = 0; // 스킬데미지 통일
-                    skilldamage = (int)(player1.Critical() * 1.5f);
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.WriteLine($"{player1.Name} 의 광역베기!! [데미지 : {skilldamage}]");
-                    player1.skillUsing = true;
-                    foreach (Monster monster in monsterInStage)
-                    {
-                        monster.TakeDamage(player1, skilldamage);
-                    }
-                    player1.skillUsing = false;
+                    PlayerSkill.OverHit(player1, monsterInStage);
                     break;
                 case 3: // 플레이어 소모품 사용
 
