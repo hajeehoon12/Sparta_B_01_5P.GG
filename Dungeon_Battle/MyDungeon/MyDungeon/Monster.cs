@@ -21,7 +21,8 @@ namespace MyDungeon
         public int Attack { get; }
 
         //List<ItemData> Drop_Item;
-
+        public int DropGold { get; set; }   //보상 골드
+        public int DropExp { get; set; }    //보상 경험치
         
 
         public int Avoid { get; set; } // 몬스터 회피율
@@ -52,8 +53,10 @@ namespace MyDungeon
                     Console.WriteLine($"{Name} 이(가) {items.ItemName} 을(를) 드랍했습니다.");
                 }
             }
-            //경험치
-            //골드
+            //경험치 = (레벨) * ((공격10%) + 1)
+            DropExp = Level * ((Attack / 10) + 1);
+            //골드 = (20 * ((레벨 / 2) + 1)) + ((레벨 / 2)+1)
+            DropGold = (20 * ((Level / 2) + 1)) + ((Level / 2) + 1);
         }
 
 
