@@ -51,12 +51,28 @@ namespace MyDungeon
                 {
                     player.ItemAmount_Change(items, 1);
                     Console.WriteLine($"{Name} 이(가) {items.ItemName} 을(를) 드랍했습니다.");
+                    if (!player.stage.Drop_Items.ContainsKey(items.ItemName))
+                    {
+                        player.stage.Drop_Items.Add(items.ItemName, 1); // 없을 경우 드랍 아이템 추가
+                    }
+                    else
+                    {
+                        player.stage.Drop_Items[items.ItemName] += 1; // 이미 같은 이름의 아이템이 존재할 경우 수량 추가
+                    }
+                    
                 }
             }
             //경험치 = (레벨) * ((공격10%) + 1)
-            DropExp = Level * ((Attack / 10) + 1);
+            DropExp = Level * ((Attack / 10) + 1); // 드랍된 경험치
+            player.stat.Exp += DropExp; // 드랍된 경험치를 플레이어게 준다.
+            player.stat.isLevelUp(); // 레벨업 검사
+
             //골드 = (20 * ((레벨 / 2) + 1)) + ((레벨 / 2)+1)
-            DropGold = (20 * ((Level / 2) + 1)) + ((Level / 2) + 1);
+            DropGold = (20 * ((Level / 2) + 1)) + ((Level / 2) + 1); // 몬스터가 드랍한 골드
+            player.stat.Gold += DropGold;
+
+            player.stage.stageExp += DropExp;
+            player.stage.stageGold += DropGold;
         }
 
 

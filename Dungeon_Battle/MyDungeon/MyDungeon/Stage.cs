@@ -18,6 +18,9 @@ namespace MyDungeon
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
         int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
 
+        public int stageExp = 0;
+        public int stageGold = 0;
+        public Dictionary<string, int> Drop_Items = new Dictionary<string, int>();
         
 
         private int select; //선택지
@@ -193,7 +196,7 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 오버히트");
+            Console.WriteLine("2. 스킬 - 심판");
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
@@ -444,18 +447,44 @@ namespace MyDungeon
                 player1.CurStage += 1; // 현재 스테이지 클리어 다음에 실행하면 다음 스테이지로 업데이트
                 //Victory
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("=============================================================");
                 Console.WriteLine();
-                Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
-                // 아이템 나열
-                Console.ForegroundColor= ConsoleColor.White;
+                Console.WriteLine("                       [던전 탐험 결과]");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n              던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
+                
+            }
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            Console.WriteLine("                            [캐릭터 정보]");
+            Console.WriteLine($"                     Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
+            Console.WriteLine($"                     HP {player1.stat.Hp} / {player1.stat.MaxHp}");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("                      [던전에서 획득한 총 보상]");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"                             {stageGold} Gold"); // 이번 스테이지 획득한 총골드의 양
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.WriteLine($"                            +{stageExp}  Exp"); // 이번 스테이지 획득한 총경험치 양
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            foreach (KeyValuePair<string, int> earn_item in Drop_Items)
+            {
+                Console.WriteLine($"                      {earn_item.Key} X {earn_item.Value}"); // 이번 스테이지에서 획득한 아이템 나열
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
-            Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
-            Console.WriteLine();
+            Console.WriteLine("=============================================================");
+
             Console.WriteLine("0. 마을로 돌아가기");
             Console.WriteLine(">>");
             Console.ForegroundColor = ConsoleColor.White;

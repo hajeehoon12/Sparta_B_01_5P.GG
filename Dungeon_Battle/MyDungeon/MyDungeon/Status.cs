@@ -187,6 +187,9 @@ namespace MyDungeon
                 Level += 1;
                 Exp = 0;
                 MaxHp += 20;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("레벨업!!");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

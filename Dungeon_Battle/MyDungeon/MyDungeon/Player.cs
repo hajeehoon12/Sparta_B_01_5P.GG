@@ -28,7 +28,7 @@ namespace MyDungeon
         Camp camp;
         public Program program;
         public Inventory inven; // 플레이어 인벤토리
-        Stage stage;
+        public Stage stage;
 
         public bool skillUsing = false; // 스킬사용중 여부
 

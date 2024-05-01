@@ -31,7 +31,7 @@ namespace MyDungeon
             player.skillUsing = true;
             foreach (Monster monster in Monsters)
             {
-                if (monster.Health > 0)
+                if (monster.Health > 0) // 몬스터가 죽지않았을 경우
                 {
                     monster.TakeDamage(player, skilldamage);
                 }
