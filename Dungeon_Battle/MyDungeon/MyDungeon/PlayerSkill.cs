@@ -18,16 +18,12 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
 
-            
-
             for (int i = 40; i > 0; i--)
             {
-                
                 OverHitAction(i);
                 Thread.Sleep(25);
             }
             Console.Clear();
-
 
 
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -35,7 +31,10 @@ namespace MyDungeon
             player.skillUsing = true;
             foreach (Monster monster in Monsters)
             {
-                monster.TakeDamage(player, skilldamage);
+                if (monster.Health > 0)
+                {
+                    monster.TakeDamage(player, skilldamage);
+                }
             }
             player.skillUsing = false;
         }

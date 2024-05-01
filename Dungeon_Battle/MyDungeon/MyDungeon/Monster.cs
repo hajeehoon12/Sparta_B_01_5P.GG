@@ -173,7 +173,7 @@ namespace MyDungeon
 
         public virtual void add_Drop_Item()
         {
-
+            //Drop_Item.Add(new ItemData(0, "도란의 검", 10, 0, 450, 1, "도란의 검"));
         }
 
     }
