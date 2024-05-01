@@ -13,28 +13,27 @@ namespace MyDungeon
         string Name { get; }
         int Health { get; set; }
         int Attack { get; }
-        bool IsDead { get; }
+        bool IsDead  { get; }
         void TakeDamage(Player player, int damage);
 
-        
-    
-    
     }
 
 
-    [Serializable]public class Player:ICharacter
+    [Serializable] public class Player : ICharacter
     {
         public string Name { get; } // 저장용
         public Status stat; // 상태창 저장용
         Market market;
         Dungeon dungeon;
         Camp camp;
-        Program program;
+        public Program program;
         public Inventory inven; // 플레이어 인벤토리
         Stage stage;
 
+        public bool skillUsing = false; // 스킬사용중 여부
 
-        public int critical = 15;                  // 크리티컬 확률
+
+        public int critical = 15;                  // 크리티컬 확률 // 기본은 15%
         public float criticalDmg = 1.6f;          // 크리티컬 데미지
         public int increaseCritical = 0;         // 크리티컬 확률 추가
         public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
@@ -42,21 +41,20 @@ namespace MyDungeon
         public int avoid = 10;
         public int increaseAvoid = 0;
 
-        
-
+        public int CurStage = 1; // 플레이어가 현재 해금가능한 스테이지 저장용
 
 
         public int Health { get; set; }
         public int AttackPower { get; set; }
-        public bool IsDead => Health <= 0;
-        public int Attack => Critical();    // 신던전에서 사용할 공격력 적용 방싱
-                                                                                                    // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
+        public bool IsDead =>Health <= 0; 
+        public int Attack => Critical();    // 신던전에서 사용할 공격력 적용 방법
+                                      // AttackPower = 임시공격력 상승, AttackInc =  플레이어 장비 총합, Attack.stat = 플레이어 기본 공격력
 
         int atkinc = 0;
         int definc = 0;// name, stat, market, 
 
 
-        public void TakeDamage(Player player, int damage) // 회피기능 및 데미지 받음 (Damage 값)
+        public void TakeDamage(Player player, int damage) // 현재로서는 적용안하는 함수 나중에 쓰일지도.. Monster.HitDamage 로 대체됨 매개변수 이슈로
         {
             int avoidProb;
             
@@ -65,29 +63,37 @@ namespace MyDungeon
             if (avoidProb < avoid + increaseAvoid) // 공격 회피
             {
                 damage = 0;
-                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다..\n\n");
+                Console.WriteLine($"{player.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다!!\n\n");
             }
             else
             {
 
                 Health -= damage;
-                if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
+                if (Health <= 0)
+                {
+                    Health = 0; // 0이하로 떨어질 경우 0으로고정
+
+                } 
+                
                 else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
             }
-            Wait();
+            Wait(); // 다음 버튼용 함수
         }
 
         public int Critical() // 크리티컬 계산식 및 데미지 계산식 (int 값 출력)
         {
             int dmgresult;
             int criticalProb;
-            dmgresult = new Random().Next((int)(AttackPower + stat.Attack + stat.AttackInc), (int)(AttackPower + stat.Attack + stat.AttackInc)); 
+            dmgresult = new Random().Next((int)((AttackPower + stat.Attack + stat.AttackInc)*0.9), (int)((AttackPower + stat.Attack + stat.AttackInc)*1.1)); 
             criticalProb = new Random().Next(0, 100);
 
             if (criticalProb < critical + increaseCritical)
             {
                 // 크리티컬이 터진다.
                 dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!");
+                
             }
             
             return dmgresult; // 최종 데미지
@@ -106,9 +112,43 @@ namespace MyDungeon
             camp = new Camp();
             program = new Program();
 
-            Console.WriteLine("생성된 캐릭터의 정보를 출력합니다.");
+            
+
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
+        }
+
+        public void PlayerSet()
+        {
+            if (stat.job == "전사") // 전사일 경우 세팅
+            {
+                stat.MaxHp += 20;
+                stat.Hp += 20;
+                stat.Defense += 3;
+            }
+            else if (stat.job == "마법사") // 마법사일 경우 세팅
+            {
+                stat.Attack += 10;
+                critical += 10;
+                stat.Hp -= 20;
+                stat.MaxHp -= 20;
+            }
+            else if (stat.job == "도적") // 도적일 경우 세팅
+            {
+                critical += 10;
+                criticalDmg += 10;
+                avoid += 10;
+            }
+            else if (stat.job == "궁수") // 궁수일 경우 세팅
+            {
+                stat.Attack += 5;
+                critical += 15;
+                criticalDmg += 15;
+            }
+            else
+            {
+                Console.WriteLine("직업선택오류발생 수정바람");
+            }
         }
 
         public void Wait() // 0번 입력대기용 함수
