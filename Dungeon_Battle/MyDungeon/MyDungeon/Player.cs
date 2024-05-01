@@ -41,6 +41,8 @@ namespace MyDungeon
         public int avoid = 10;
         public int increaseAvoid = 0;
 
+        public int CurStage = 1; // 플레이어가 현재 해금가능한 스테이지 저장용
+
 
         public int Health { get; set; }
         public int AttackPower { get; set; }
