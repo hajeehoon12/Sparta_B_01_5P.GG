@@ -300,17 +300,33 @@ namespace MyDungeon
 
             switch(itemIndex)
             {
-                case 0: //무기 : 
+                case 0: //무기 : 단검, 나보리 신속검
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(0, "단검", 12, 0, 300, 1, "빠르게 공격할 수 있는 단검"));
+                    else if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(0, "나보리 신속검", 65, 0, 3300, 1, "무기중 제일 빠른 공격을 자랑하는 검"));
                     break;
-                case 1: //보조무기 : 
+                case 1: //보조무기 : 란두인의 예언
+                    if (dropPercent > 65)
+                        Drop_Item.Add(new ItemData(1, "란두인의 예언", 0, 55, 2700, 1, "데미지를 입을 때 피해량을 크게 감소시킨다."));
                     break;
-                case 2: //악세사리 : 
+                case 2: //악세사리 : 원기 회복의 구슬
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(2, "원기 회복의 구슬", 0, 30, 300, 1, "체력을 보호해 주는 구슬"));
                     break;
-                case 3: //방어구 : 
+                case 3: //방어구 : 기사의 맹세, 
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(3, "기사의 맹세", 0, 45, 2200, 1, "쇠사슬 조끼와 점화석을 조합한 투구"));
                     break;
-                case 4: //소모아이템 : 
+                case 4: //소모아이템 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
                     break;
-                case 5: //잡템 : 
+                case 5: //잡템 : 새끼 이끼 쿵쿵이, 새끼 화염발톱
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(5, "새끼 이끼 쿵쿵이", 0, 0, 450, new Random().Next(1, 3), "플레이어를 도와주는 이끼쿵쿵이 소환"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(5, "새끼 화염발톱", 0, 0, 450, new Random().Next(1, 3), "플레이어를 도와주는 화염발톱 소환"));
                     break;
             }
         }
@@ -330,8 +346,40 @@ namespace MyDungeon
         }
         public void add_Drop_Item()
         {
-            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
-            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+            int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류
+            int dropPercent = new Random().Next(0, 100);    //드랍할 각 아이템종류의 확률
+
+            switch (itemIndex)
+            {
+                case 0: //무기 : 단검, 그림자 검
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(0, "단검", 12, 0, 300, 1, "빠르게 공격할 수 있는 단검"));
+                    else if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(0, "그림자 검", 50, 0, 2600, 1, "근처의 투명한 덫과 와드를 드러내고 무력화 시킴"));
+                    break;
+                case 1: //보조무기 : 불경한 히드라
+                    if (dropPercent > 65)
+                        Drop_Item.Add(new ItemData(1, "불경한 히드라", 60, 0, 3300, 1, "티아맷과 야수화를 조합한 무기"));
+                    break;
+                case 2: //악세사리 : 오만
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(2, "오만", 18, 60, 3000, 1, "몬스터를 관통할 수 있는 머리장식"));
+                    break;
+                case 3: //방어구 : 파수꾼의 갑옷
+                    if (dropPercent > 50)
+                        Drop_Item.Add(new ItemData(3, "파수꾼의 갑옷", 0, 40, 1000, 1, "공격을 받는 피해량이 감소"));
+                    break;
+                case 4: //소모아이템 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
+                    break;
+                case 5: //잡템 : 여신의 눈물, 에테르 환영
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(5, "여신의 눈물", 0, 0, 400, new Random().Next(1, 5), "여신의 눈물"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(5, "에테르 환영", 0, 0, 850, new Random().Next(1, 3), "에테르 환영"));
+                    break;
+            }
         }
 
 
