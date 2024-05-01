@@ -174,7 +174,7 @@ namespace MyDungeon
             BattleStart();
         }
 
-        public void MonsterTurn()
+        public void MonsterTurn() // 몬스터가 턴이 돌아오는 부분
         {
             foreach (Monster monster in monsterInStage)
             {
@@ -183,8 +183,10 @@ namespace MyDungeon
                 }
                 else
                 {
-                    monster.HitDamage(player1, monster);
-                    IsEnd();
+                    // if(monster.currentCoolTime != 0) monster.skilluse
+                    // else
+                    monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
+                    IsEnd(); // 끝났는지 검사
                 }
             }
         }

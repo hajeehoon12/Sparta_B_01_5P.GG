@@ -91,7 +91,7 @@ namespace MyDungeon
                 if (Health <= 0)
                     Health = 0;
                 //체력 삭감 이후
-                if (IsDead)
+                if (IsDead) // 몬스터가 사망시
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
@@ -211,4 +211,26 @@ namespace MyDungeon
         }
 
     }
+
+
+    class baron : Monster // 바론
+    {
+        public baron(string name) : base(name, 10, 50, 10)
+        {
+
+            add_Drop_Item();
+            // 디버프 스킬 추가
+            Skills debuffSkill = new Skills("남작의 시선", 0, 3, player => player.stat.Attack -= 5);
+            //this.skills.Add(debuffSkill);
+        }
+        public void add_Drop_Item()
+        {
+            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
+            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+        }
+
+
+    }
+
+
 }
