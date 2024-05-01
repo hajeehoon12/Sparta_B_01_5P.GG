@@ -111,9 +111,44 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
+
             
+
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
+        }
+
+        public void PlayerSet()
+        {
+            if (stat.job == "전사") // 전사일 경우 세팅
+            {
+                stat.MaxHp += 20;
+                stat.Hp += 20;
+                stat.Defense += 3;
+            }
+            else if (stat.job == "마법사") // 마법사일 경우 세팅
+            {
+                stat.Attack += 10;
+                critical += 10;
+                stat.Hp -= 20;
+                stat.MaxHp -= 20;
+            }
+            else if (stat.job == "도적") // 도적일 경우 세팅
+            {
+                critical += 10;
+                criticalDmg += 10;
+                avoid += 10;
+            }
+            else if (stat.job == "궁수") // 궁수일 경우 세팅
+            {
+                stat.Attack += 5;
+                critical += 15;
+                criticalDmg += 15;
+            }
+            else
+            {
+                Console.WriteLine("직업선택오류발생 수정바람");
+            }
         }
 
         public void Wait() // 0번 입력대기용 함수
