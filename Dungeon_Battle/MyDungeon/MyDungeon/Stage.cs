@@ -37,9 +37,25 @@ namespace MyDungeon
             //스테이지 선택
             Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            
             for (int i = 0; i < 3; i++)
-                Console.WriteLine($"Stage {i + 1}\n");
+            {
+
+                if (player1.CurStage > i)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write($"Stage {i + 1}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write($"Stage {i + 1}");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write($" (잠김) "); // 미해금 스테이지
+                }
+                Console.WriteLine("\n"); // 줄바꿈용
+
+            }
             Console.ForegroundColor = ConsoleColor.Green;
             do
             {
@@ -53,6 +69,13 @@ namespace MyDungeon
                 }
             }
             while (!stageSelect);
+            if (select >= player1.CurStage)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("미해금된 스테이지입니다.");
+                Start(player1);
+            }
             Console.ForegroundColor = ConsoleColor.White;
             StageStart(select);
         }
@@ -237,9 +260,10 @@ namespace MyDungeon
 
                         IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);
                         Console.ForegroundColor = ConsoleColor.White;
-                        if (!IsRightEnemy) // 숫자가 입력되지 않으면
+                        if (!IsRightEnemy || !(EnemyNum <= monsterInStage.Count-1)) // 숫자가 입력되지 않으면
                         {
                             Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("숫자를 제대로 입력해주세요.");
                             BattleTurn(actNum);
                         }
@@ -405,6 +429,7 @@ namespace MyDungeon
             }
             else
             {
+                player1.CurStage += 1; // 현재 스테이지 클리어 다음에 실행하면 다음 스테이지로 업데이트
                 //Victory
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Cyan;

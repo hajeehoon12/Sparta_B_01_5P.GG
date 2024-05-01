@@ -193,10 +193,13 @@ namespace MyDungeon
 
             
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             playerName = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             playerjob = Console.ReadLine();
 
             Console.ForegroundColor = ConsoleColor.White;
