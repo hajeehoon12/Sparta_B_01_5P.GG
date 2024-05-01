@@ -178,8 +178,32 @@ namespace MyDungeon
 
         public void add_Drop_Item()
         {
+            int index = new Random().Next(0, 100);
 
-            Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0 , 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼")); 
+            //미니언이 드랍할 적절한 아이템 (랜덤으로 생성)
+
+            // 무기 : 칠흑의 양날도끼, 낡은 단검, 방망이형 몽둥이
+            if (index > 60) 
+                Drop_Item.Add(new ItemData(0, "방망이형 몽둥이", 10, 0, 800, 1, "나무를 깎아 방망이처럼 만든 몽둥이 맞으면 좀 아프다"));
+            else if (index > 20) 
+                Drop_Item.Add(new ItemData(0, "낡은 단검", 10, 0, 1000, 1, "칼날을 고철로 갈아 만들어 오래 사용한 느낌의 단검"));
+            else 
+                Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
+            // 보조무기 : 
+            // 악세서리 : 이빨 목걸이, 황동 팔찌
+            if (index > 25)
+                Drop_Item.Add(new ItemData(2, "이빨 목걸이", 0, 5, 200, 1, "동물의 치아로 만들어 엮은 목걸이"));
+            else
+                Drop_Item.Add(new ItemData(2, "황동 팔찌", 5, 10, 3500, 1, "황동으로 만들었으나 전투에 쓸만한 팔찌"));
+            // 방어구 : 가죽 조끼, 가죽 너클
+            if(index > 50)
+                Drop_Item.Add(new ItemData(3, "가죽 조끼", 0, 8, 1200, 1, "두꺼운 가죽으로 만든 조끼 찢어질 우려가 없다"));
+            else
+                Drop_Item.Add(new ItemData(3, "가죽 너클", 2, 4, 700, 1, "가죽으로 만든 너클형 장갑이며 전투할 때 다칠 우려가 없다"));
+            // 소모품 : 체력 포션, 공격 포션(?)
+            Drop_Item.Add(new ItemData(4, "체력 포션", 0, 0, 500, 1, "마시면 체력을 10만큼 회복"));
+            Drop_Item.Add(new ItemData(4, "공격 포션", 0, 0, 300, 1, "마시면 전투중에 공격력 증가"));
+            // 잡템 : 미니언의 거적떼기
             Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
 
             // 아이템 양식 , (아이템타입(0:무기, 1:보조무기 2:악세서리 3: 방어구 4:소모품 5:잡템), 아이템 이름, 공격력, 방어력, 골드, 수량)
