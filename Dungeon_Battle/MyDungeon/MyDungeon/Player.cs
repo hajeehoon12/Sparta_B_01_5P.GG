@@ -106,8 +106,8 @@ namespace MyDungeon
         public Player(string name)
         {
             Name = name;
-            stat = new Status(Name);
-            stat.player = this;
+            stat = new Status(Name, this);
+            
             inven = new Inventory(name);
             stage = new Stage();
 

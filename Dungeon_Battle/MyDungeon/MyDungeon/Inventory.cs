@@ -191,6 +191,7 @@ namespace MyDungeon
                         {
                             if (ItemInfo[act].ItemType == 4) // 소모품일 경우 명력 거부
                             {
+
                                 Console.WriteLine("☆소모품은 장착할 수 없습니다.☆");
                             }
                             else // 장착 가능한 용품일 경우

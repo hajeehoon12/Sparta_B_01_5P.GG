@@ -8,7 +8,7 @@ namespace MyDungeon
 {
     public class Status
     {
-        public Player player;
+        Player player;
 
 
         public int Level { get; set; }
@@ -29,7 +29,7 @@ namespace MyDungeon
 
         
 
-        public Status(string name)
+        public Status(string name, Player player1)
         {
             Name = name;
             Level = 1;
@@ -39,6 +39,8 @@ namespace MyDungeon
             Gold = 1000;
             Exp = 0;
             MaxHp = 100;
+            player = player1;
+            
         }
 
         public void Show_dungeon_stat()
@@ -180,16 +182,17 @@ namespace MyDungeon
 
         public void isLevelUp() // 레벨업 검사
         {
-            if (Exp == 2 * Level) // 경험치가 최대치에 도달하면 레벨업 진행
+            if (Exp >= 2 * Level) // 경험치가 최대치에 도달하면 레벨업 진행
             {
                 Attack += 0.5f;
                 Defense += 1;
+                Exp -= 2* Level;
                 Level += 1;
-                Exp = 0;
+                
                 MaxHp += 20;
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("레벨업!!");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("레벨업!!\n");
+                
             }
         }
 

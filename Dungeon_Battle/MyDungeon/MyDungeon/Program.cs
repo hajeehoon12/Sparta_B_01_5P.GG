@@ -12,6 +12,9 @@ namespace MyDungeon
 
         public void SavePlayerInfo(Player player) // 현재 플레이어 데이터 저장
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######     ###    ##     ## ######## \r\n##    ##   ## ##   ##     ## ##       \r\n##        ##   ##  ##     ## ##       \r\n ######  ##     ## ##     ## ######   \r\n      ## #########  ##   ##  ##       \r\n##    ## ##     ##   ## ##   ##       \r\n ######  ##     ##    ###    ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             string _fileName = player.Name+".json"; // 저장할 파일명 지정
             //string _itemFileName = "itemData.json"; // 이후 추가 직렬화 할 데이터가 있으면 쓸 양식
 
@@ -26,6 +29,7 @@ namespace MyDungeon
             
             Console.WriteLine("저장이 완료되었습니다.");
             Console.WriteLine($"플레이어의 정보가 해당 경로로 지정되었습니다. :{_filePath}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 
         }
@@ -79,13 +83,34 @@ namespace MyDungeon
             bool actIsNum;
 
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            
             do
             {
-
-                Console.WriteLine("\r\n##     ## #### ##       ##          ###     ######   ######## \r\n##     ##  ##  ##       ##         ## ##   ##    ##  ##       \r\n##     ##  ##  ##       ##        ##   ##  ##        ##       \r\n##     ##  ##  ##       ##       ##     ## ##   #### ######   \r\n ##   ##   ##  ##       ##       ######### ##    ##  ##       \r\n  ## ##    ##  ##       ##       ##     ## ##    ##  ##       \r\n   ###    #### ######## ######## ##     ##  ######   ######## \r\n");
-
+                switch (player.stat.Level) // 플레이어의 레벨에 따라 색상 변경
+                {
+                    case 1:
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        break;
+                    case 3:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case 4:
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        break;
+                    case 5:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        break;
                 
+                }
+                Console.WriteLine("\r\n\r\n    ;:     . .   .@@-            .    . \r\n  .#$@-    *@   ~$*=#:          :#@-    \r\n ;@= !#* ,#$~#, *;-;,#=,....  .;@~:#:   \r\n-=    -=.$*  #= @;.,. ,     .~$@~~-~@@, \r\n$::;;;;:.~ ....,..~--~-. . .~~.      .@ \r\n$-,,:..!=~,---~-.~-~,...--,- .:~-;~-:,# \r\n*~,,~,~#~~-~-~~-,,:::,,,...,,:$~--~~-,#~\r\n!,   .~*..  ..$;~~;~~-;:.... ,$:-,,,..@~\r\n!    ,*$,,~~,,$~-;!$;::$~!~~:~*!--, ~.#,\r\n*-,..-*~  ,:..$-~~.:*-~:*.--, .#~-, .,=,\r\n!-----#~ ~---~$-,-$$~,-:=,,.-,.$:--,--=-\r\n!,,,, $   ,. .=-~$@@@~~:*  ,- ,$~-,,..=-\r\n!,,:,.$   .- = *;@@@@:=:*  ,   $;~-,,-*,\r\n=;;~~:$   .~ -!~!@@@@;~;*  -   #!;!;;;=-\r\n=--,,,~    ,  ~..!::#~,:-  .   ~-----~-.\r\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n##     ## #### ##       ##          ###     ######   ######## \r\n##     ##  ##  ##       ##         ## ##   ##    ##  ##       \r\n##     ##  ##  ##       ##        ##   ##  ##        ##       \r\n##     ##  ##  ##       ##       ##     ## ##   #### ######   \r\n ##   ##   ##  ##       ##       ######### ##    ##  ##       \r\n  ## ##    ##  ##       ##       ##     ## ##    ##  ##       \r\n   ###    #### ######## ######## ##     ##  ######   ######## \r\n");
 
                 Console.WriteLine($"탐험가 ★{player.Name}★님 5P.GG 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
@@ -137,7 +162,9 @@ namespace MyDungeon
                     LoadGameData(player);
                     break;
                 case 9:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\r\n ######      ###    ##     ## ########    ######## ##    ## ########  \r\n##    ##    ## ##   ###   ### ##          ##       ###   ## ##     ## \r\n##         ##   ##  #### #### ##          ##       ####  ## ##     ## \r\n##   #### ##     ## ## ### ## ######      ######   ## ## ## ##     ## \r\n##    ##  ######### ##     ## ##          ##       ##  #### ##     ## \r\n##    ##  ##     ## ##     ## ##          ##       ##   ### ##     ## \r\n ######   ##     ## ##     ## ########    ######## ##    ## ########  \r\n");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("\n☆게임 종료를 선택하셨습니다! 2초후에 종료됩니다!!☆");
                     
                     Thread.Sleep(2000);

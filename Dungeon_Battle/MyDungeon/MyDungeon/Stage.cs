@@ -458,28 +458,28 @@ namespace MyDungeon
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.WriteLine("                            [캐릭터 정보]");
+            Console.WriteLine("                         [캐릭터 정보]");
             Console.WriteLine($"                     Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
-            Console.WriteLine($"                     HP {player1.stat.Hp} / {player1.stat.MaxHp}");
+            Console.WriteLine($"                        HP {player1.stat.Hp} / {player1.stat.MaxHp}");
             Console.WriteLine();
-
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("                      [던전에서 획득한 총 보상]");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine($"                             {stageGold} Gold"); // 이번 스테이지 획득한 총골드의 양
+            Console.WriteLine("                   [던전에서 획득한 총 보상]\n");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"                         + {stageGold} Gold"); // 이번 스테이지 획득한 총골드의 양
 
             Console.ForegroundColor = ConsoleColor.Blue;
 
-            Console.WriteLine($"                            +{stageExp}  Exp"); // 이번 스테이지 획득한 총경험치 양
+            Console.WriteLine($"                         + {stageExp}  Exp"); // 이번 스테이지 획득한 총경험치 양
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
             foreach (KeyValuePair<string, int> earn_item in Drop_Items)
             {
-                Console.WriteLine($"                      {earn_item.Key} X {earn_item.Value}"); // 이번 스테이지에서 획득한 아이템 나열
+                Console.WriteLine($"                        {earn_item.Key} X {earn_item.Value}"); // 이번 스테이지에서 획득한 아이템 나열
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -489,7 +489,7 @@ namespace MyDungeon
             Console.WriteLine(">>");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
-            
+            Console.Clear();
             player1.program.SelectAct(player1); // 메인메뉴로 되돌아가기
 
         }
