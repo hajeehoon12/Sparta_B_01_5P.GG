@@ -122,7 +122,7 @@ namespace MyDungeon
         //도적 스킬
         public static void CriticalThrow(Player player, Monster monster) // 스킬 크리티컬 스로우
         {
-            int skillDamage = (int)(player.Critical() * 1.8f);
+            int skillDamage = (int)(player.Critical() * 1.5f);
 
             //연출...
 
@@ -131,6 +131,9 @@ namespace MyDungeon
             player.skillUsing = true;
             if (monster.Health > 0)
                 monster.TakeDamage(player, skillDamage);
+            if (monster.Health > 0)
+                monster.TakeDamage(player, skillDamage);
+
             player.skillUsing = false;
         }
 
@@ -148,6 +151,7 @@ namespace MyDungeon
                 if (monster.Health > 0)  //몬스터가 죽지 않으면
                     monster.TakeDamage(player, skillDamage);
             }
+            
             player.skillUsing = false;
         }
 
@@ -168,7 +172,7 @@ namespace MyDungeon
                 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n ######   #######  ##     ## ##             ###    ########  ########   #######  ##      ## \r\n##    ## ##     ## ##     ## ##            ## ##   ##     ## ##     ## ##     ## ##  ##  ## \r\n##       ##     ## ##     ## ##           ##   ##  ##     ## ##     ## ##     ## ##  ##  ## \r\n ######  ##     ## ##     ## ##          ##     ## ########  ########  ##     ## ##  ##  ## \r\n      ## ##     ## ##     ## ##          ######### ##   ##   ##   ##   ##     ## ##  ##  ## \r\n##    ## ##     ## ##     ## ##          ##     ## ##    ##  ##    ##  ##     ## ##  ##  ## \r\n ######   #######   #######  ########    ##     ## ##     ## ##     ##  #######   ###  ###  \r\n");
-                Console.WriteLine("\n스킬 : 소울 애로우 시전중");
+                Console.WriteLine("\n★스킬 - 소울 애로우 대상 지정 단계★\n");
                 //대상을 선택
                
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -283,7 +287,7 @@ namespace MyDungeon
             while (!isRightMonster);
 
             //딜 시작
-            int skillDamage = (int)(player.Attack * 1.5f + 1.2f);
+            int skillDamage = (int)(player.Attack * 1.8f);
 
             //연출
 

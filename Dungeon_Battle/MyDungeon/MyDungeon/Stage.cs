@@ -219,7 +219,7 @@ namespace MyDungeon
             }
             while (!IsactNum);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Clear();
+            //Console.Clear();
             
             BattleTurn(actNum);
         }
@@ -261,7 +261,7 @@ namespace MyDungeon
             int skillNum = 0;   //스킬선택지
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
+            //Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
             Console.ForegroundColor = ConsoleColor.White;
 
             switch (actNum) // 플레이어가 공격 혹은 스킬 혹은 소모품을 사용
@@ -319,16 +319,18 @@ namespace MyDungeon
 
                     break;
                 case 2: // 플레이어 스킬 사용 // 임시 광역기
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine();
                     switch(player1.stat.job)    //직업별로 사용하는 스킬
                     {   //원하는 스킬을 선택하도록
                         case "전사":
                             do
                             {
-                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 심판");
+                                Console.WriteLine("1. 심판 (적 전체에게 1.5배의 광역 데미지로 공격)");
                                 
-                                Console.Write(">> ");
+                                Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (isSkillRight)
                                 {
@@ -350,11 +352,11 @@ namespace MyDungeon
                         case "마법사":
                             do
                             {
-                                Console.WriteLine("[ 스킬을 선택하세요 ]");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
                                 Console.WriteLine("1. 갓블레스 힐");
-                                Console.WriteLine("2. 샤이닝 레이");
-                                Console.Write(">> ");
+                                Console.WriteLine("2. 샤이닝 레이 (지정한 적과 양옆의 적에게 1.8배의 데미지로 공격)");
+                                Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (isSkillRight)
                                 {
@@ -378,11 +380,11 @@ namespace MyDungeon
                             
                             do
                             {
-                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 소울 에로우");
+                                Console.WriteLine("1. 소울 에로우 (적 전체에게 1.4배의 데미지로 광역공격)");
                                 
-                                Console.Write(">> ");
+                                Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (isSkillRight)
                                 {
@@ -403,11 +405,11 @@ namespace MyDungeon
                         case "도적":
                             do
                             {
-                                Console.WriteLine("[ 스킬을 선택하세요 ]");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 크리티컬 스로우");
-                                Console.WriteLine("2. 어벤져");
-                                Console.Write(">> ");
+                                Console.WriteLine("1. 크리티컬 스로우 (단일 적에게 1.5배의 데미지로 두번 공격)");
+                                Console.WriteLine("2. 어벤져 (적 전체에게 1.6배의 데미지로 공격 - 크리티컬 적용불가) ");
+                                Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (skillNum == 1 || skillNum == 2 || skillNum == 0)
                                     break;
@@ -417,23 +419,25 @@ namespace MyDungeon
                                     isSkillRight = false;
                                 }
                             } while (!isSkillRight);
-                            Console.Clear();
+                            
                             if (skillNum == 1)  //크리티컬 스로우
                             {
                                 do
                                 {
-                                    Console.WriteLine("[ 스킬 : 크리티컬 스로우 ]");
+                                    Console.WriteLine("\n[ 스킬 : 크리티컬 스로우 ]\n");
                                     int enemyIdx = 0;
-                                    Console.WriteLine("[ 대상을 선택하세요 ]");
+                                    Console.WriteLine("★스킬 - 크리티컬 스로우 대상 지정 단계★\n");
                                     foreach (Monster m in monsterInStage)
                                     {
                                         Console.Write($"{enemyIdx++}. ");
                                         m.PrintMonster();
                                     }
+                                    Console.WriteLine();
                                     IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);  //공격할 대상 선택
                                     Console.Clear();    //대상 선택후 콘솔창 갱신
                                     if (IsRightEnemy && (EnemyNum >= 0 && EnemyNum < monsterInStage.Count))
                                     {
+                                        Console.Clear();
                                         PlayerSkill.CriticalThrow(player1, monsterInStage[EnemyNum]);
                                         break;
                                     }
@@ -443,9 +447,11 @@ namespace MyDungeon
                                         IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
                                     }
                                 } while (!IsRightEnemy);
+                                
                             }
                             else if (skillNum == 2) //어벤져
                             {
+                                Console.Clear();
                                 PlayerSkill.Avenger(player1, monsterInStage);
                             }
                             else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
