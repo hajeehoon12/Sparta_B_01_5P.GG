@@ -19,10 +19,10 @@ namespace MyDungeon
         public int Level { get; }
         public int Health { get; set; }
         public int Attack { get; }
-
+        public List<Skills> skills { get; set; }
         //List<ItemData> Drop_Item;
 
-        
+
 
         public int Avoid { get; set; } // 몬스터 회피율
 
@@ -32,6 +32,7 @@ namespace MyDungeon
         public bool IsDead => Health <= 0;  //전투 중에서 죽었는지
 
         protected List<ItemData> Drop_Item = new List<ItemData>(); // 이렇게 안하면 아래서 Base를 쓸수가없음
+
         public Monster(string name, int level, int health, int attack)
         {
             Name = name;
@@ -39,7 +40,9 @@ namespace MyDungeon
             Health = health;
             Attack = attack;
             Avoid = 10;// 원래 회피율 10%; // 테스트를 위해 회피율 임시 조정
+            skills = new List<Skills>();
         }
+
 
         public void Reward(Player player) // 몬스터의 드랍 아이템
         {
@@ -236,6 +239,11 @@ namespace MyDungeon
         }
 
 
+    }
+
+    class InfernalDrake : Monster // 화염드래곤
+    {
+        public InfernalDrake(string name) : base(name, 7, 40, 8) { }
     }
 
 
