@@ -158,7 +158,7 @@ namespace MyDungeon
                 Console.WriteLine("이미 완료된 퀘스트입니다!");
             }
 
-            if (accept3) // 퀘스트 수락 + 조건 달성 못함
+            if (accept3 && !complete) // 퀘스트 수락 + 조건 달성 못함
             {
                 Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -179,6 +179,9 @@ namespace MyDungeon
                 Console.WriteLine("메뉴 - 인벤토리 - 장착관리 에서 내가 건네준 방패를 장착해오게나."); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 26);
                 Console.WriteLine("그럼 기다리고 있겟네 하하"); Thread.Sleep(1500);
+                Console.Clear();
+                QuestScroll(player);
+                
             }
 
 
