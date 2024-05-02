@@ -184,8 +184,9 @@ namespace MyDungeon
 
             string playerName;
             string playerjob;
-            
-            Console.ForegroundColor = ConsoleColor.Yellow;
+
+
+             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(0,15);
                        
             Console.WriteLine("                                    ..######..########.....##.....#######...########....##...." +
@@ -207,24 +208,30 @@ namespace MyDungeon
             
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.SetCursorPosition(20, 35);
-            Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
+            Console.SetCursorPosition(29, 35);
+            Console.Write("☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             playerName = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Green;
 
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(30, 38);
+            Console.WriteLine("1. 전사 (최대체력 + 20 , 방어력 + 3)\n");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.SetCursorPosition(45, 38);
-            Console.WriteLine("1. 전사");
-            Console.SetCursorPosition(45, 39);
-            Console.WriteLine("2. 마법사");
-            Console.SetCursorPosition(45, 40);
-            Console.WriteLine("3. 궁수");
-            Console.SetCursorPosition(45, 41);
-            Console.WriteLine("4. 도적");
-            Console.SetCursorPosition(18, 43);
+            Console.SetCursorPosition(30, 40);
+            
+            Console.WriteLine("2. 마법사 (공격력 + 10 , 치명타 확률 + 10 , 최대체력 - 20)\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(30, 42);
+            
+            Console.WriteLine("3. 궁수 (공격력 + 5 , 치명타 확률 + 15, 치명타 데미지 + 15)\n");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.SetCursorPosition(30, 44);
+            
+            Console.WriteLine("4. 도적 (치명타 확률 + 10, 치명타 데미지 + 10, 회피율 + 10)\n");
+            Console.SetCursorPosition(29, 46);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            Console.Write("☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             playerjob = Console.ReadLine();
             if (playerjob == "1")
