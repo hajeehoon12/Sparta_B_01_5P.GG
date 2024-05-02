@@ -82,7 +82,7 @@ namespace MyDungeon
             Console.WriteLine($"Lv.{Level} {Name}   {deadText}");
         }
 
-        public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때 , 보상처리도 추가
+        public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때 , 보상처리도 추가 // 몬스터가 죽는거 검사
         {
             
             int avoidProb;
@@ -114,6 +114,10 @@ namespace MyDungeon
                 //체력 삭감 이후
                 if (IsDead) // 몬스터가 사망시
                 {
+                    if(Name == "미니언")
+                    {
+                        character.quest.minionCount++;
+                    }
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
 

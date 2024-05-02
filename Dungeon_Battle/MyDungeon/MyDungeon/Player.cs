@@ -26,9 +26,12 @@ namespace MyDungeon
         Market market;
         Dungeon dungeon;
         Camp camp;
+        public Quest quest;
         public Program program;
         public Inventory inven; // 플레이어 인벤토리
         public Stage stage;
+        
+
 
         public bool skillUsing = false; // 스킬사용중 여부
 
@@ -112,9 +115,9 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
-
+            quest = new Quest();
             
-
+            
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
         }
@@ -245,7 +248,12 @@ namespace MyDungeon
         {
             stage.Start(player);
         }
-        
+
+        public void QuestAccept(Player player)
+        {
+            Console.Clear();
+            quest.QuestScroll(player);
+        }
 
     }
 }

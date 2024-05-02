@@ -90,7 +90,7 @@ namespace MyDungeon
                 Console.WriteLine($"탐험가 ★{player.Name}★님 5P.GG 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료");
+                Console.WriteLine("\n0. 모험가 길드\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료 ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\n★원하시는 행동을 숫자로 입력해주세요★ : ");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
@@ -124,7 +124,7 @@ namespace MyDungeon
                     player.BattleDungeon(player);
                     break;
                 case 6:
-                    Console.WriteLine("\n☆이 선택되었습니다.☆");
+                    Console.WriteLine("\n☆휴식이 선택되었습니다.☆");
                     player.DoCamping(player);
                     break;
                 case 7:
@@ -153,6 +153,12 @@ namespace MyDungeon
                     }
                     
                     break;
+                case 0:
+                    Console.WriteLine("☆모험가 길드를 선택하셨습니다.");
+                    player.QuestAccept(player);
+
+                    break;
+
 
                 default:
                     Console.WriteLine("\n☆====잘못된 입력입니다. 다시 입력해주세요====☆");
