@@ -255,6 +255,9 @@ namespace MyDungeon
             int EnemyNum;  // 지정한 적 번호
             int IntroNum = 0; // 적앞에 표시될 번호
 
+            bool isSkillRight; //스킬을 제대로 입력됐는지
+            int skillNum = 0;   //스킬선택지
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
             Console.ForegroundColor = ConsoleColor.White;
@@ -314,8 +317,84 @@ namespace MyDungeon
 
                     break;
                 case 2: // 플레이어 스킬 사용 // 임시 광역기
-
-                    PlayerSkill.OverHit(player1, monsterInStage);
+                    switch(player1.stat.job)    //직업별로 사용하는 스킬
+                    {   //원하는 스킬을 선택하도록
+                        case "전사":
+                            PlayerSkill.OverHit(player1, monsterInStage);
+                            break;
+                        case "마법사":
+                            do
+                            {
+                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("1. 갓블레스 힐");
+                                Console.WriteLine("2. 샤이닝 레이");
+                                Console.Write(">>");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 2)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            if(skillNum == 1)
+                                PlayerSkill.Heal(player1);
+                            else if(skillNum == 2)
+                                PlayerSkill.ShiningRay(player1, monsterInStage);
+                            break;
+                        case "궁수":
+                            PlayerSkill.SoulArrow(player1, monsterInStage);
+                            break;
+                        case "도적":
+                            do
+                            {
+                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("1. 크리티컬 스로우");
+                                Console.WriteLine("2. 어벤져");
+                                Console.Write(">>");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (skillNum == 1 || skillNum == 2)
+                                    break;
+                                else
+                                {
+                                    Console.WriteLine("입력이 잘못되었습니다.");
+                                    isSkillRight = false;
+                                }
+                            } while (!isSkillRight);
+                            if (skillNum == 1)  //크리티컬 스로우
+                            {
+                                do
+                                {
+                                    int enemyIdx = 0;
+                                    Console.WriteLine("대상을 선택하세요");
+                                    foreach (Monster m in monsterInStage)
+                                    {
+                                        Console.Write($"{enemyIdx++}. ");
+                                        m.PrintMonster();
+                                    }
+                                    IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);  //공격할 대상 선택
+                                    if (IsRightEnemy && (EnemyNum >= 0 && EnemyNum < monsterInStage.Count))
+                                    {
+                                        PlayerSkill.CriticalThrow(player1, monsterInStage[EnemyNum]);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("다시 선택하세요");
+                                        IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
+                                    }
+                                } while (!IsRightEnemy);
+                            }
+                            else if (skillNum == 2) //어벤져
+                            {
+                                PlayerSkill.Avenger(player1, monsterInStage);
+                            }
+                            break;
+                    }
                     break;
                 case 3: // 플레이어 소모품 사용
 
