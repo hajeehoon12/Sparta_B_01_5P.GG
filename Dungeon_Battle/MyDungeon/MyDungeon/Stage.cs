@@ -226,6 +226,7 @@ namespace MyDungeon
             inFight = true; // 전투중 (첫턴이아님)
             PlayerTurn(actNum); // 플레이어 턴 진행
                                 // 몬스터 턴 진행
+            Thread.Sleep(800);
             MonsterTurn();
             BattleStart();
         }
@@ -243,6 +244,7 @@ namespace MyDungeon
                     // else
                     monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
                     IsEnd(); // 끝났는지 검사
+                    Thread.Sleep(800);
                 }
             }
         }
