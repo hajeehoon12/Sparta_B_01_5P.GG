@@ -201,6 +201,7 @@ namespace MyDungeon
 
             //선택한 몬스터와 옆에 주변 몬스터들도 같이 공격
             //예) 2번을 선택하면 1, 2, 3번의 인덱스의 몬스터를 공격
+            player.skillUsing = true;
             for(int i= firstMonsterIndex;i<= lastMonsterIndex; i++)
             {
                 if (Monsters[i].Health > 0)
@@ -209,5 +210,65 @@ namespace MyDungeon
             player.skillUsing = false;
         }
 
+
+        //마법사 스킬
+        public static void Heal(Player player)  // 스킬 힐 (패시브)
+        {
+            //플레이어의 체력을 회복
+            int healPower = player.stat.MaxHp / 10;
+            player.Health += healPower;
+
+            player.skillUsing = true;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [체력 : +{healPower}");
+            player.skillUsing = false;
+        }
+        public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
+        {
+            int selectMonster;  // 몬스터 선택 대상
+            bool isRightMonster;    //숫자가 제대로 입력 되었는지
+            int index = 0;  //foreach선택
+            do
+            {
+                Console.WriteLine("대상을 선택하세요");
+                foreach (Monster m in Monsters)
+                {
+                    Console.Write($"{index++}. ");
+                    m.PrintMonster();
+                }
+                isRightMonster = int.TryParse(Console.ReadLine(), out selectMonster);
+                if (!isRightMonster || (selectMonster <= Monsters.Count - 1))
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("숫자를 제대로 입력해주세요");
+                }
+                if (Monsters[selectMonster].IsDead)
+                {
+                    Console.Clear();
+                    Console.WriteLine("해당 몬스터는 이미 사망했습니다.");
+                }
+            }
+            while (!isRightMonster);
+
+            //딜 시작
+            int skillDamage = (int)(player.Attack * 1.5f + 1.2f);
+
+            //연출
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}");
+            player.skillUsing = true;
+            index = 0;
+            foreach (Monster m in Monsters)
+            {
+                if (index == selectMonster) //선택 대상은 크리티컬 추가 어택
+                    m.TakeDamage(player, skillDamage + player.Critical());
+                else
+                    m.TakeDamage(player, skillDamage);
+                index++;
+            }
+            player.skillUsing = false;
+        }
     }
 }
