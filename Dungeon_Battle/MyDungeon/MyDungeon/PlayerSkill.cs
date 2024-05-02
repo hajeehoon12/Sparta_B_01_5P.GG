@@ -120,43 +120,78 @@ namespace MyDungeon
 
 
         //도적 스킬
-        public static void CriticalThrow(Player player, List<Monster> Monsters) // 스킬 크리티컬 스로우
+        public static void CriticalThrow(Player player, Monster monster) // 스킬 크리티컬 스로우
         {
-            int skillDamage = (int)(player.Critical() * 1.2f);
+            int skillDamage = (int)(player.Critical() * 1.8f);
 
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
-            foreach(Monster monster in Monsters)
-            {
-                if(monster.Health > 0)  //몬스터가 죽지 않으면
-                    monster.TakeDamage(player, skillDamage);
-            }
+            if (monster.Health > 0)
+                monster.TakeDamage(player, skillDamage);
             player.skillUsing = false;
         }
 
         public static void Avenger(Player player, List<Monster> Monsters)   // 스킬 어벤져
         {
-            int skillDamage = (int)(player.Critical() * 1.8f + 0.5f);
+            int skillDamage = (int)(player.Attack * 1.6f + 0.5f);
 
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{player.Name}의 어벤져!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
-            foreach(Monster monster in Monsters)
+            foreach (Monster monster in Monsters)
             {
-                if(monster.Health > 0)
+                if (monster.Health > 0)  //몬스터가 죽지 않으면
                     monster.TakeDamage(player, skillDamage);
             }
             player.skillUsing = false;
         }
 
 
+        //궁수 스킬
+        public static void IronArrow(Player player, Monster monster) // 스킬 아이언 애로우 (하나의 대상)
+        {
+            int skillDamage = (int)(player.Critical() * 2.3f);
 
+            //연출...
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 아이언 애로우!! [데미지 : {skillDamage}]");
+            player.skillUsing = true;
+            if(monster.Health > 0)
+                monster.TakeDamage(player, skillDamage);
+            player.skillUsing = false;
+        }
+
+        public static void SoulArrow(Player player, List<Monster> Monsters) // 스킬 소울 애로우 (여러 대상)
+        {
+            //대상을 선택
+            Console.WriteLine("대상을 선택하세요");
+            int index = 1;
+            foreach(Monster m in Monsters)
+            {
+                Console.Write($"{index++} ");
+                m.PrintMonster();
+            }
+
+            int skillDamage = (int)(player.Critical() * 1.3f + 1.7f);
+
+            //연출..
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]");
+            player.skillUsing = true;
+            foreach(Monster monster in Monsters)
+            { 
+                if(monster.Health > 0)
+                    monster.TakeDamage(player,skillDamage);
+            }
+            player.skillUsing = false;
+        }
 
     }
 }
