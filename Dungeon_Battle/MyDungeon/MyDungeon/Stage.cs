@@ -341,12 +341,14 @@ namespace MyDungeon
                                     }
                                 }
                             } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
                             if(skillNum == 1)
                                 PlayerSkill.Heal(player1);
                             else if(skillNum == 2)
                                 PlayerSkill.ShiningRay(player1, monsterInStage);
                             break;
                         case "궁수":
+                            Console.Clear();    //콘솔창 갱신
                             PlayerSkill.SoulArrow(player1, monsterInStage);
                             break;
                         case "도적":
@@ -365,10 +367,12 @@ namespace MyDungeon
                                     isSkillRight = false;
                                 }
                             } while (!isSkillRight);
+                            Console.Clear();
                             if (skillNum == 1)  //크리티컬 스로우
                             {
                                 do
                                 {
+                                    Console.WriteLine("스킬 : 크리티컬 스로우");
                                     int enemyIdx = 0;
                                     Console.WriteLine("대상을 선택하세요");
                                     foreach (Monster m in monsterInStage)
@@ -377,6 +381,7 @@ namespace MyDungeon
                                         m.PrintMonster();
                                     }
                                     IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);  //공격할 대상 선택
+                                    Console.Clear();    //대상 선택후 콘솔창 갱신
                                     if (IsRightEnemy && (EnemyNum >= 0 && EnemyNum < monsterInStage.Count))
                                     {
                                         PlayerSkill.CriticalThrow(player1, monsterInStage[EnemyNum]);
@@ -384,7 +389,7 @@ namespace MyDungeon
                                     }
                                     else
                                     {
-                                        Console.WriteLine("다시 선택하세요");
+                                        Console.WriteLine("\n다시 선택하세요");
                                         IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
                                     }
                                 } while (!IsRightEnemy);

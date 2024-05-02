@@ -127,7 +127,7 @@ namespace MyDungeon
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
             if (monster.Health > 0)
                 monster.TakeDamage(player, skillDamage);
@@ -155,7 +155,7 @@ namespace MyDungeon
         //궁수 스킬
         public static void SoulArrow(Player player, List<Monster> Monsters) // 스킬 소울 애로우 (여러 대상)
         {
-            int index = 1;  // foreach인덱스
+            int index = 0;  // foreach인덱스
 
             bool isRightIndex;
             int selectMonster;  // 몬스터 선택지
@@ -164,6 +164,7 @@ namespace MyDungeon
             int lastMonsterIndex;   //대상 몬스터의 막주변
             do
             {
+                Console.WriteLine("\n스킬 : 소울 애로우");
                 //대상을 선택
                 Console.WriteLine("대상을 선택하세요");
                 foreach (Monster m in Monsters)
@@ -204,6 +205,11 @@ namespace MyDungeon
             player.skillUsing = true;
             for(int i= firstMonsterIndex;i<= lastMonsterIndex; i++)
             {
+                if (Monsters[i].IsDead)
+                {
+                    Console.WriteLine("\n해당 몬스터는 이미 사망했습니다.");
+                    continue;
+                }
                 if (Monsters[i].Health > 0)
                     Monsters[i].TakeDamage(player, skillDamage);
             }
@@ -220,7 +226,10 @@ namespace MyDungeon
 
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
+<<<<<<< HEAD
             Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}");
+=======
+
             player.skillUsing = false;
         }
         public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
@@ -230,7 +239,9 @@ namespace MyDungeon
             int index = 0;  //foreach선택
             do
             {
+                Console.WriteLine("\n스킬 : 샤이닝 레이");
                 Console.WriteLine("대상을 선택하세요");
+                index = 0;  //인덱스 초기
                 foreach (Monster m in Monsters)
                 {
                     Console.Write($"{index++}. ");
@@ -247,6 +258,7 @@ namespace MyDungeon
                 {
                     Console.Clear();
                     Console.WriteLine("해당 몬스터는 이미 사망했습니다.");
+                    isRightMonster = false;
                 }
             }
             while (!isRightMonster);
@@ -257,11 +269,16 @@ namespace MyDungeon
             //연출
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}");
+            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
             index = 0;
             foreach (Monster m in Monsters)
             {
+                if (m.IsDead)
+                {
+                    Console.WriteLine("\n해당 몬스터는 이미 사망했습니다.");
+                    continue;   //이미 죽으면 넘어가는걸로
+                }
                 if (index == selectMonster) //선택 대상은 크리티컬 추가 어택
                     m.TakeDamage(player, skillDamage + player.Critical());
                 else
