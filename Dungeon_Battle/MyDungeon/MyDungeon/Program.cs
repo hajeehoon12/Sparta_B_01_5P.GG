@@ -12,6 +12,9 @@ namespace MyDungeon
 
         public void SavePlayerInfo(Player player) // 현재 플레이어 데이터 저장
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######     ###    ##     ## ######## \r\n##    ##   ## ##   ##     ## ##       \r\n##        ##   ##  ##     ## ##       \r\n ######  ##     ## ##     ## ######   \r\n      ## #########  ##   ##  ##       \r\n##    ## ##     ##   ## ##   ##       \r\n ######  ##     ##    ###    ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             string _fileName = player.Name+".json"; // 저장할 파일명 지정
             //string _itemFileName = "itemData.json"; // 이후 추가 직렬화 할 데이터가 있으면 쓸 양식
 
@@ -26,6 +29,7 @@ namespace MyDungeon
             
             Console.WriteLine("저장이 완료되었습니다.");
             Console.WriteLine($"플레이어의 정보가 해당 경로로 지정되었습니다. :{_filePath}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 
         }
@@ -79,24 +83,45 @@ namespace MyDungeon
             bool actIsNum;
 
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            
             do
             {
-
-                Console.WriteLine("\r\n##     ## #### ##       ##          ###     ######   ######## \r\n##     ##  ##  ##       ##         ## ##   ##    ##  ##       \r\n##     ##  ##  ##       ##        ##   ##  ##        ##       \r\n##     ##  ##  ##       ##       ##     ## ##   #### ######   \r\n ##   ##   ##  ##       ##       ######### ##    ##  ##       \r\n  ## ##    ##  ##       ##       ##     ## ##    ##  ##       \r\n   ###    #### ######## ######## ##     ##  ######   ######## \r\n");
-
+                switch (player.stat.Level) // 플레이어의 레벨에 따라 색상 변경
+                {
+                    case 1:
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        break;
+                    case 3:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case 4:
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        break;
+                    case 5:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        break;
                 
+                }
+                Console.WriteLine("\r\n\r\n    ;:     . .   .@@-            .    . \r\n  .#$@-    *@   ~$*=#:          :#@-    \r\n ;@= !#* ,#$~#, *;-;,#=,....  .;@~:#:   \r\n-=    -=.$*  #= @;.,. ,     .~$@~~-~@@, \r\n$::;;;;:.~ ....,..~--~-. . .~~.      .@ \r\n$-,,:..!=~,---~-.~-~,...--,- .:~-;~-:,# \r\n*~,,~,~#~~-~-~~-,,:::,,,...,,:$~--~~-,#~\r\n!,   .~*..  ..$;~~;~~-;:.... ,$:-,,,..@~\r\n!    ,*$,,~~,,$~-;!$;::$~!~~:~*!--, ~.#,\r\n*-,..-*~  ,:..$-~~.:*-~:*.--, .#~-, .,=,\r\n!-----#~ ~---~$-,-$$~,-:=,,.-,.$:--,--=-\r\n!,,,, $   ,. .=-~$@@@~~:*  ,- ,$~-,,..=-\r\n!,,:,.$   .- = *;@@@@:=:*  ,   $;~-,,-*,\r\n=;;~~:$   .~ -!~!@@@@;~;*  -   #!;!;;;=-\r\n=--,,,~    ,  ~..!::#~,:-  .   ~-----~-.\r\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n##     ## #### ##       ##          ###     ######   ######## \r\n##     ##  ##  ##       ##         ## ##   ##    ##  ##       \r\n##     ##  ##  ##       ##        ##   ##  ##        ##       \r\n##     ##  ##  ##       ##       ##     ## ##   #### ######   \r\n ##   ##   ##  ##       ##       ######### ##    ##  ##       \r\n  ## ##    ##  ##       ##       ##     ## ##    ##  ##       \r\n   ###    #### ######## ######## ##     ##  ######   ######## \r\n");
 
                 Console.WriteLine($"탐험가 ★{player.Name}★님 5P.GG 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료");
+                Console.WriteLine("\n0. 모험가 길드\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료 ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\n★원하시는 행동을 숫자로 입력해주세요★ : ");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
                 Console.Clear();
             } while (!actIsNum);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Green;
             switch (act)
             {
                 case 1: // 상태보기
@@ -124,7 +149,7 @@ namespace MyDungeon
                     player.BattleDungeon(player);
                     break;
                 case 6:
-                    Console.WriteLine("\n☆이 선택되었습니다.☆");
+                    Console.WriteLine("\n☆휴식이 선택되었습니다.☆");
                     player.DoCamping(player);
                     break;
                 case 7:
@@ -137,7 +162,9 @@ namespace MyDungeon
                     LoadGameData(player);
                     break;
                 case 9:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\r\n ######      ###    ##     ## ########    ######## ##    ## ########  \r\n##    ##    ## ##   ###   ### ##          ##       ###   ## ##     ## \r\n##         ##   ##  #### #### ##          ##       ####  ## ##     ## \r\n##   #### ##     ## ## ### ## ######      ######   ## ## ## ##     ## \r\n##    ##  ######### ##     ## ##          ##       ##  #### ##     ## \r\n##    ##  ##     ## ##     ## ##          ##       ##   ### ##     ## \r\n ######   ##     ## ##     ## ########    ######## ##    ## ########  \r\n");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("\n☆게임 종료를 선택하셨습니다! 2초후에 종료됩니다!!☆");
                     
                     Thread.Sleep(2000);
@@ -153,6 +180,12 @@ namespace MyDungeon
                     }
                     
                     break;
+                case 0:
+                    Console.WriteLine("☆모험가 길드를 선택하셨습니다.");
+                    player.QuestAccept(player);
+
+                    break;
+
 
                 default:
                     Console.WriteLine("\n☆====잘못된 입력입니다. 다시 입력해주세요====☆");
@@ -168,36 +201,87 @@ namespace MyDungeon
 
         static void Main()
         {
-            Console.SetWindowSize(120, 65); // 콘솔창 크기 조절
+            
+            Console.SetWindowSize(120, 70); // 콘솔창 크기 조절
+
+
+            
+            Console.Clear();
+
 
             string playerName;
             string playerjob;
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("              ..######..########.....##.....#######...########....##...." +
-                         "\r\n             .##.....#.##.....##...##.##...##.....##....##......##.##.." +
-                         "\r\n            .##.......##.....##..##...##..##.....##....##.....##...##." +
-                         "\r\n           ..######..########..##.....##.########.....##....##.....##" +
-                         "\r\n          .......##.##........#########.##...##......##....#########" +
-                         "\r\n         .##....##.##........##.....##.##....##.....##....##.....##" +
-                         "\r\n        ..######..##........##.....##.##.....##....##....##.....##");
+             Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(0,15);
+                       
+            Console.WriteLine("                                    ..######..########.....##.....#######...########....##...." +
+                         "\r\n                                   .##.....#.##.....##...##.##...##.....##....##......##.##.." +
+                         "\r\n                                  .##.......##.....##..##...##..##.....##....##.....##...##." +
+                         "\r\n                                 ..######..########..##.....##.########.....##....##.....##" +
+                         "\r\n                                .......##.##........#########.##...##......##....#########" +
+                         "\r\n                               .##....##.##........##.....##.##....##.....##....##.....##" +
+                         "\r\n                              ..######..##........##.....##.##.....##....##....##.....##");
              
-            Console.WriteLine("\r\n      .########..##.....##.##....##..######...########..#######..##....##" +
-                              "\r\n     .##.....##.##.....##.###...##.##....##..##.......##.....##.###...##" +
-                              "\r\n    .##.....##.##.....##.####..##.##........##.......##.....##.####..##" +
-                              "\r\n   .##.....##.##.....##.##.##.##.##...####.######...##.....##.##.##.##" +
-                              "\r\n  .##.....##.##.....##.##..####.##....##..##.......##.....##.##..####" +
-                              "\r\n .##.....##.##.....##.##...###.##....##..##.......##.....##.##...###" +
-                              "\r\n.########...#######..##....##..######...########..#######..##....## \r\n\n");
+            Console.WriteLine("\r\n                            .########..##.....##.##....##..######...########..#######..##....##" +
+                              "\r\n                           .##.....##.##.....##.###...##.##....##..##.......##.....##.###...##" +
+                              "\r\n                          .##.....##.##.....##.####..##.##........##.......##.....##.####..##" +
+                              "\r\n                         .##.....##.##.....##.##.##.##.##...####.######...##.....##.##.##.##" +
+                              "\r\n                        .##.....##.##.....##.##..####.##....##..##.......##.....##.##..####" +
+                              "\r\n                       .##.....##.##.....##.##...###.##....##..##.......##.....##.##...###" +
+                              "\r\n                      .########...#######..##....##..######...########..#######..##....## \r\n\n");
 
             
 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(29, 35);
+            Console.Write("☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("           ☆게임을 플레이할 플레이어의 이름을 적으세요☆ : ");
             playerName = Console.ReadLine();
-            Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(30, 38);
+            Console.WriteLine("1. 전사 (최대체력 + 20 , 방어력 + 3)\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.SetCursorPosition(30, 40);
+            
+            Console.WriteLine("2. 마법사 (공격력 + 10 , 치명타 확률 + 10 , 최대체력 - 20)\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(30, 42);
+            
+            Console.WriteLine("3. 궁수 (공격력 + 5 , 치명타 확률 + 15, 치명타 데미지 + 15)\n");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.SetCursorPosition(30, 44);
+            
+            Console.WriteLine("4. 도적 (치명타 확률 + 10, 치명타 데미지 + 10, 회피율 + 10)\n");
+            Console.SetCursorPosition(29, 46);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             playerjob = Console.ReadLine();
+            if (playerjob == "1")
+            {
+                playerjob = "전사";
+            }
+            else if (playerjob == "2")
+            {
+                playerjob = "마법사";
+            }
+            else if (playerjob == "3")
+            {
+                playerjob = "궁수";
+            }
+            else if (playerjob == "4")
+            {
+                playerjob = "도적";
+            }
+            else
+            {
+                Console.WriteLine("\n입력값이 올바르지 않습니다. 플레이어의 직업이 전사로 고정됩니다.");
+                playerjob = "전사";
+            }
 
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -206,7 +290,7 @@ namespace MyDungeon
 
             Player player = new Player(playerName);
             player.stat.job = playerjob; // 캐릭터 직업설정
-            
+            player.PlayerSet(); // 직업별 능력치 부여
 
             Program program = new Program();
             program.SelectAct(player);

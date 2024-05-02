@@ -26,9 +26,12 @@ namespace MyDungeon
         Market market;
         Dungeon dungeon;
         Camp camp;
+        public Quest quest;
         public Program program;
         public Inventory inven; // 플레이어 인벤토리
-        Stage stage;
+        public Stage stage;
+        
+
 
         public bool skillUsing = false; // 스킬사용중 여부
 
@@ -40,6 +43,8 @@ namespace MyDungeon
 
         public int avoid = 10;
         public int increaseAvoid = 0;
+
+        public int CurStage = 1; // 플레이어가 현재 해금가능한 스테이지 저장용
 
 
         public int Health { get; set; }
@@ -101,7 +106,8 @@ namespace MyDungeon
         public Player(string name)
         {
             Name = name;
-            stat = new Status(Name); 
+            stat = new Status(Name, this);
+            
             inven = new Inventory(name);
             stage = new Stage();
 
@@ -109,9 +115,44 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
+            quest = new Quest();
+            
             
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
+        }
+
+        public void PlayerSet()
+        {
+            if (stat.job == "전사") // 전사일 경우 세팅
+            {
+                stat.MaxHp += 20;
+                stat.Hp += 20;
+                stat.Defense += 3;
+            }
+            else if (stat.job == "마법사") // 마법사일 경우 세팅
+            {
+                stat.Attack += 10;
+                critical += 10;
+                stat.Hp -= 20;
+                stat.MaxHp -= 20;
+            }
+            else if (stat.job == "도적") // 도적일 경우 세팅
+            {
+                critical += 10;
+                criticalDmg += 10;
+                avoid += 10;
+            }
+            else if (stat.job == "궁수") // 궁수일 경우 세팅
+            {
+                stat.Attack += 5;
+                critical += 15;
+                criticalDmg += 15;
+            }
+            else
+            {
+                Console.WriteLine("직업선택오류발생 수정바람");
+            }
         }
 
         public void Wait() // 0번 입력대기용 함수
@@ -145,11 +186,15 @@ namespace MyDungeon
         {
             // 캐릭터 상태창을 띄우기전에 장비한 아이템의 정보가 반영되어야함
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######  ########    ###    ######## ##     ##  ######  \r\n##    ##    ##      ## ##      ##    ##     ## ##    ## \r\n##          ##     ##   ##     ##    ##     ## ##       \r\n ######     ##    ##     ##    ##    ##     ##  ######  \r\n      ##    ##    #########    ##    ##     ##       ## \r\n##    ##    ##    ##     ##    ##    ##     ## ##    ## \r\n ######     ##    ##     ##    ##     #######   ######  \r\n");
+
+
             (atkinc,definc) = inven.Item_Ability_Total(); // 상태창을 보여주기 전에 아이템 능력치의 총합을 반영함
 
             if (atkinc == 0 && definc == 0) // 아이템으로 인한 능력치 변화가 없을 때
             {
-                stat.Show_stat();   // 상태창
+                stat.Show_stat(0, 0);   // 상태창
             }
             else
             {
@@ -203,7 +248,12 @@ namespace MyDungeon
         {
             stage.Start(player);
         }
-        
+
+        public void QuestAccept(Player player)
+        {
+            Console.Clear();
+            quest.QuestScroll(player);
+        }
 
     }
 }
