@@ -179,7 +179,7 @@ namespace MyDungeon
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("숫자를 제대로 입력해주세요");
+                    Console.WriteLine("숫자를 제대로 입력해주세요!!"); // 오류부분
                 }
                 if (Monsters[selectMonster].IsDead) //몬스터가 이미 죽으면
                 {
@@ -226,10 +226,8 @@ namespace MyDungeon
 
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
-<<<<<<< HEAD
-            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}");
-=======
 
+            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}]");
             player.skillUsing = false;
         }
         public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
@@ -252,7 +250,7 @@ namespace MyDungeon
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("숫자를 제대로 입력해주세요");
+                    Console.WriteLine("숫자를 제대로 입력해주세요!!"); // 여기부분
                 }
                 if (Monsters[selectMonster].IsDead)
                 {
