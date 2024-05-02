@@ -133,7 +133,7 @@ namespace MyDungeon
                 }
                 
             }
-
+            Thread.Sleep(500);
         }
 
         public void HitDamage(Player character, Monster monster)  //몬스터가 플레이어를 가격할 때

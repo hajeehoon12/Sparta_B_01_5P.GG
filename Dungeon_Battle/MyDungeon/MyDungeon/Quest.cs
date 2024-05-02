@@ -250,10 +250,10 @@ namespace MyDungeon
 
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("[강제 퀘스트 시작] : 상남자의 길!!");
+                        Console.WriteLine("\n[강제 퀘스트 시작] : 상남자의 길!! (패널티로 몬스터 던전을 1회 클리어하기 전까지 휴식이 불가능합니다.)");
                         QuestScroll(player);
                         break;
-                    case 1: // 퀘스트 수락, 방패 지급
+                    case 1: // 퀘스트 수락
                         accept2 = true;  //퀘스트 수락
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"\n{player.Name} : 휴식 없이 몬스터 던전이라? 최대한 빠르게 해결하는게 좋겠군..\n"); Thread.Sleep(2000);
@@ -327,11 +327,12 @@ namespace MyDungeon
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(18, 3);
+                Console.WriteLine("[혁매님]");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-
-
-
-
                 Console.SetCursorPosition(37, 20);
                 Console.WriteLine($"\"{character.Name}\" 왔는가?"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 22);
@@ -355,11 +356,12 @@ namespace MyDungeon
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(18, 3);
+                Console.WriteLine("[혁매님]");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-
-                
-
-
                 Console.SetCursorPosition(37, 20);
                 Console.WriteLine($"어이! 이번에 들어온 \"{character.Name}\" 신참, 자네 장비는 장착할 줄 아는가?"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 22);
@@ -412,7 +414,7 @@ namespace MyDungeon
                         Console.WriteLine($"\n{player.Name} : 아니 이런 쓰레기를 줘놓고 그렇게 생색낸거야?\n"); Thread.Sleep(2000);
                         Console.WriteLine($"{player.Name} : 빨리 퀘스트를 해치우고 이딴 방패 바로 팔아버려야지..."); Thread.Sleep(6000);
                         Console.Clear();
-                        Console.WriteLine("[퀘스트 수락 완료] : 장비를 장착해보자!!");
+                        Console.WriteLine("\n[퀘스트 수락 완료] : 장비를 장착해보자!!");
                         accept3 = true; // 퀘스트 수락 확인용 변수
 
                         QuestScroll(player);
@@ -522,7 +524,7 @@ namespace MyDungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.WriteLine(">>");
+            Console.Write(">> ");
 
             string select = Console.ReadLine();
             if (select == "1")

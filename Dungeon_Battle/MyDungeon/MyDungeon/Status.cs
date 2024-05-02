@@ -184,14 +184,17 @@ namespace MyDungeon
         {
             if (Exp >= 2 * Level) // 경험치가 최대치에 도달하면 레벨업 진행
             {
-                Attack += 0.5f;
-                Defense += 1;
+                Attack += 1f;
+                Defense += 2;
                 Exp -= 2* Level;
                 Level += 1;
                 
                 MaxHp += 20;
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("레벨업!!\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{Name} 의 레벨이 상승했습니다!!\n");
+                Console.WriteLine($"Lv. {Level - 1} -> {Level}");  
+                Console.WriteLine($"공격력 {Attack - 1} -> {Attack}");
+                Console.WriteLine($"방어력 {Defense-2} -> {Defense}\n");
                 
             }
         }

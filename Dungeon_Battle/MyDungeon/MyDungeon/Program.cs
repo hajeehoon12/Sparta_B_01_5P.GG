@@ -116,11 +116,11 @@ namespace MyDungeon
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("\n0. 모험가 길드\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전");
-                if (!player.quest.accept2)
+                if (!player.quest.accept2 || player.quest.complete2) // 2번퀘스트를 받지않거나 클리어를 했다면
                 {
-                    Console.WriteLine(" 6.휴식하기");
+                    Console.WriteLine("6. 휴식하기");
                 }
-                else
+                else // 진행중이라면
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("6. 휴식하기 (상남자의 길!! 퀘스트 패널티로 인해 사용불가)");
@@ -159,7 +159,14 @@ namespace MyDungeon
                     Console.WriteLine("\n☆몬스터 던전이 선택되었습니다.☆");
                     player.BattleDungeon(player);
                     break;
-                case 6:
+                case 6: // 2번퀘스트 진행중이면 비활성화
+                    if (player.quest.accept2 && !player.quest.complete2)
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[상남자의 길!!] 퀘스트를 진행중이기에 휴식 기능을 사용하지 못합니다.");
+                        player.program.SelectAct(player);
+                    }
                     Console.WriteLine("\n☆휴식이 선택되었습니다.☆");
                     player.DoCamping(player);
                     break;

@@ -447,6 +447,11 @@ namespace MyDungeon
             else
             {
                 player1.CurStage += 1; // 현재 스테이지 클리어 다음에 실행하면 다음 스테이지로 업데이트
+
+                if (player1.quest.accept2 && !player1.quest.complete2) // 2번 퀘스트 수행중이라면 완료료 바꿈
+                {
+                    player1.quest.complete2 = true;
+                }
                 //Victory
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
