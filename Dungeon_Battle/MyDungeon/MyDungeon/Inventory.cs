@@ -50,7 +50,7 @@ namespace MyDungeon
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("- ");
-                if (ItemInfo[i].IsEquip) Console.Write("[E]");
+                if (ItemInfo[i].IsEquip) Console.Write("[E] ");
                 Console.Write($"{ItemInfo[i].ItemName}");
                 Console.Write($" X {ItemInfo[i].Amount}|");
                 if (ItemInfo[i].ItemAtk > 0) Console.Write($"   공격력 +{ItemInfo[i].ItemAtk.ToString("D4")} |");
@@ -127,7 +127,7 @@ namespace MyDungeon
                 Console.Write($"{i} ");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 
-                if (ItemInfo[i].IsEquip) Console.Write("[E]");
+                if (ItemInfo[i].IsEquip) Console.Write("[E] ");
                 Console.Write($"{ItemInfo[i].ItemName}");
                 Console.Write($" X {ItemInfo[i].Amount}|");
                 if (ItemInfo[i].ItemAtk > 0) Console.Write($" 공격력 +{ItemInfo[i].ItemAtk.ToString("D4")} |");
