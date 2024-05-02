@@ -136,7 +136,7 @@ namespace MyDungeon
 
         public static void Avenger(Player player, List<Monster> Monsters)   // 스킬 어벤져
         {
-            int skillDamage = (int)(player.Attack * 1.6f + 0.5f);
+            int skillDamage = (int)(player.Attack * 1.6f + 2.0f);
 
             //연출...
 
@@ -212,7 +212,7 @@ namespace MyDungeon
 
 
         //마법사 스킬
-        public static void Heal(Player player)  // 스킬 힐 (패시브)
+        public static void Heal(Player player)  // 스킬 갓 블레스 힐 (패시브)
         {
             //플레이어의 체력을 회복
             int healPower = player.stat.MaxHp / 10;
@@ -220,7 +220,7 @@ namespace MyDungeon
 
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [체력 : +{healPower}");
+            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}");
             player.skillUsing = false;
         }
         public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
