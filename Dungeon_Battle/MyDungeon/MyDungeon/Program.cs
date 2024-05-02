@@ -98,13 +98,28 @@ namespace MyDungeon
                         Console.ForegroundColor = ConsoleColor.White;
                         break;
                     case 4:
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
                         break;
                     case 5:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        break;
+                    case 6:
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        break;
+                    case 7:
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         break;
+                    case 8:
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        break;
+                    case 9:
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        break;
+
+
                         break;
                 
                 }

@@ -57,7 +57,7 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1. 마을을 위협하는 미니언 처치\n");
 
-            
+
 
             if (complete2)
             {
@@ -65,12 +65,19 @@ namespace MyDungeon
                 Console.Write("2. 상남자의 길!!");
                 Console.Write(" [완료됨]");
             }
+            else if (clearComplete2)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("2. 상남자의 길!!");
+                Console.Write(" [조건 달성!!]");
+            }
             else if (accept2)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("2. 상남자의 길!!");
                 Console.Write(" [진행중]");
             }
+
             else
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -283,11 +290,7 @@ namespace MyDungeon
 
                 }
             }
-            else if (accept2 && !complete2)
-            {
-                // 퀘스트 진행중 재방문 
-            }
-            else if(accept2 && !complete2 && clearComplete2)
+            else if (accept2 && !complete2 && clearComplete2)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -317,19 +320,80 @@ namespace MyDungeon
                 Console.SetCursorPosition(37, 28);
                 Console.WriteLine("말 그대로 직업에 상관없이 공통적으로 사용할 수 있는 스킬이지."); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 30);
-                Console.WriteLine("나같은 상남자들이 쓸 수 있는 스킬로"); Thread.Sleep(1500);
-
-                
+                Console.WriteLine("나같은 다재다능한 상남자들이 쓰는 스킬로 ........"); Thread.Sleep(1500);
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.SetCursorPosition(62, 34);
-                Console.Write($"..돔황챠!!!"); Thread.Sleep(500);
-                Console.Write("."); Thread.Sleep(500);
-                Console.Write("."); Thread.Sleep(500);
-                Console.Write("."); Thread.Sleep(500);
+                Console.SetCursorPosition(37, 32);
+                Console.WriteLine($"이후 [혁매님] 의 이야기를 한시간동안 들었다."); Thread.Sleep(2000);
+
+                Console.SetCursorPosition(0, 44);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("======================================================================================================");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("퀘스트 목표 : 휴식을 하지 않고 몬스턴 던전 1회 클리어 (1/1) 달성!\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("======================================================================================================");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("0. 나가기");
+                Console.WriteLine("1. 퀘스트 완료");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.WriteLine(">>");
+
+                do
+                {
+                    selectRight = int.TryParse(Console.ReadLine(), out selectAct);
+
+                } while (!selectRight);
+
+                switch (selectAct)
+                {
+                    case 0: // 나가기 버튼
+                        Console.Clear();
+                        QuestScroll(player);
+                        break;
+                    case 1: // 퀘스트 완료, 새방패 지급
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+
+                        Console.WriteLine("\n진이 빠져 현재 체력이 절반으로 감소했다!"); Thread.Sleep(2000);
+
+
+                        Console.WriteLine($"\n 체력 : {player.stat.Hp} -> {player.stat.Hp / 2}");
+                        player.stat.Hp /= 2;
+
+                        Console.WriteLine("\n☆★ 보상 : 최대 체력 +20 , Exp + 5 ★☆\n");
+                        Thread.Sleep(5000);
+                        player.stat.Exp += 5;
+
+                        player.stat.MaxHp += 20;
+                        player.stat.isLevelUp();
+                        complete2 = true; // 퀘스트완료
+
+                        Console.Clear();
+                        Console.WriteLine("[퀘스트 완료] : 장비를 장착해보자!!");
+
+                        QuestScroll(player);
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다.");
+                        ThirdQuest(false, character);
+                        break;
+                }
+
+
+
                 Console.Clear();
                 Console.WriteLine("[구상한 보상을 적을것]");
                 complete2 = true;
+                QuestScroll(player);
+            }
+            else
+            {
+                Console.Clear() ;
+                Console.WriteLine("퀘스트를 완료하지 못했습니다. 몬스터 던전을 클리어하세요!");
                 QuestScroll(player);
             }
 
