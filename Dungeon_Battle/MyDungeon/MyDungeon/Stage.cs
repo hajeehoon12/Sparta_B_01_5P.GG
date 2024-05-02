@@ -328,14 +328,20 @@ namespace MyDungeon
                                 Console.WriteLine("2. 샤이닝 레이");
                                 Console.Write(">>");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
-                                if (skillNum == 1 || skillNum == 2)
-                                    break;
-                                else
-                                    Console.WriteLine("입력이 잘못되었습니다.");
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 2)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
                             } while (!isSkillRight);
-                            if (skillNum == 1)
+                            if(skillNum == 1)
                                 PlayerSkill.Heal(player1);
-                            else if (skillNum == 2)
+                            else if(skillNum == 2)
                                 PlayerSkill.ShiningRay(player1, monsterInStage);
                             break;
                         case "궁수":
@@ -352,12 +358,39 @@ namespace MyDungeon
                                 if (skillNum == 1 || skillNum == 2)
                                     break;
                                 else
+                                {
                                     Console.WriteLine("입력이 잘못되었습니다.");
+                                    isSkillRight = false;
+                                }
                             } while (!isSkillRight);
-                            if(skillNum == 1)
-                                PlayerSkill.CriticalThrow(player1, monsterInStage[select]);
-                            else if(skillNum == 2)
+                            if (skillNum == 1)  //크리티컬 스로우
+                            {
+                                do
+                                {
+                                    int enemyIdx = 0;
+                                    Console.WriteLine("대상을 선택하세요");
+                                    foreach (Monster m in monsterInStage)
+                                    {
+                                        Console.Write($"{enemyIdx++}. ");
+                                        m.PrintMonster();
+                                    }
+                                    IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);  //공격할 대상 선택
+                                    if (IsRightEnemy && (EnemyNum >= 0 && EnemyNum < monsterInStage.Count))
+                                    {
+                                        PlayerSkill.CriticalThrow(player1, monsterInStage[EnemyNum]);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("다시 선택하세요");
+                                        IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
+                                    }
+                                } while (!IsRightEnemy);
+                            }
+                            else if (skillNum == 2) //어벤져
+                            {
                                 PlayerSkill.Avenger(player1, monsterInStage);
+                            }
                             break;
                     }
                     break;
