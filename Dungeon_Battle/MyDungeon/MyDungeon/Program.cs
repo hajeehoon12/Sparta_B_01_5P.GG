@@ -240,7 +240,7 @@ namespace MyDungeon
 
             
             Console.Clear();
-
+            
 
             string playerName;
             string playerjob;

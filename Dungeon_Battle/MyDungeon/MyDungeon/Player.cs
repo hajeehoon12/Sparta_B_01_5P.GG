@@ -198,7 +198,8 @@ namespace MyDungeon
             }
             else
             {
-                stat.Show_stat(atkinc, definc); // 능력치 변화의 존재
+                
+                stat.Show_stat(atkinc, definc, this); // 능력치 변화의 존재
             }
 
             
