@@ -213,7 +213,7 @@ namespace MyDungeon
             playerName = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Green;
 
-
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(45, 38);
             Console.WriteLine("1. 전사");
             Console.SetCursorPosition(45, 39);
@@ -223,6 +223,7 @@ namespace MyDungeon
             Console.SetCursorPosition(45, 41);
             Console.WriteLine("4. 도적");
             Console.SetCursorPosition(18, 43);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("           ☆게임을 플레이할 플레이어의 직업을 선택해주세요☆ : ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             playerjob = Console.ReadLine();

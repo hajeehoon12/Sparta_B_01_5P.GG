@@ -46,16 +46,18 @@ namespace MyDungeon
         public void QuestScreen() // 퀘스트 목록 출력
         {
 
-            
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n #######  ##     ## ########  ######  ######## #### #### \r\n##     ## ##     ## ##       ##    ##    ##    #### #### \r\n##     ## ##     ## ##       ##          ##    #### #### \r\n##     ## ##     ## ######    ######     ##     ##   ##  \r\n##  ## ## ##     ## ##             ##    ##              \r\n##    ##  ##     ## ##       ##    ##    ##    #### #### \r\n ##### ##  #######  ########  ######     ##    #### #### \r\n");
             Console.WriteLine();
-            Console.WriteLine("1. 마을을 위협하는 미니언 처치");
-            Console.WriteLine("2. 마을을 위협하는 공허충 처치");
-            Console.WriteLine("3. 장비를 장착해보자");
-            Console.WriteLine("4. 포션을 사용해보자");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("1. 마을을 위협하는 미니언 처치\n");
+            Console.WriteLine("2. 마을을 위협하는 공허충 처치\n");
+            Console.WriteLine("3. 장비를 장착해보자\n");
+            Console.WriteLine("4. 포션을 사용해보자\n");
             Console.WriteLine("-1 돌아가기");
             Console.WriteLine();
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("원하시는 행동을 선택해주세요");
             Console.WriteLine(">>");
         }
@@ -146,54 +148,82 @@ namespace MyDungeon
                 Console.WriteLine("\n ===== 잘못된 입력입니다.다시 입력해주세요 ===== ");
             }
         }
-        public void ThirdQuest(bool complete) //세번째 퀘스트
+        public void ThirdQuest(bool complete , Player character) //세번째 퀘스트
         {
 
             if (!complete) // 퀘스트 완료전
             {
-                Quest check = new Quest();
-                ThirdQuestCheck(); // 퀘스트 성공 여부 확인
-                //Console.Clear();
-                Console.WriteLine("Quest!!");
+                Console.ForegroundColor = ConsoleColor.Yellow;Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("퀘스트 : 장비를 장착해보자!!"); Thread.Sleep(500);
                 Console.WriteLine();
-                Console.WriteLine("장비를 장착해보자");
-                Console.WriteLine();
-                Console.WriteLine("자네 장비는 장착할 줄 아는가?");
-                Console.WriteLine("장비는 전투에서 없어서는 안될 중요한 아이템이라네");
-                Console.WriteLine("자네에게 장비를 장착하는 방법을 알려 주겠네");
-                Console.WriteLine("내가 낡은 수련용 방패를 자네에게 주었으니 인벤토리에서 낡은 방패를 장착해오게");
-                Console.WriteLine();
-                Console.WriteLine("- 낡은 수련용 방패 장착하기");
-                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+                Console.ForegroundColor = ConsoleColor.Cyan;
 
+                
+
+
+                Console.SetCursorPosition(37, 20);
+                Console.WriteLine($"어이! 이번에 들어온 \"{character.Name}\" 신참, 자네 장비는 장착할 줄 아는가?"); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 22);
+                Console.WriteLine("장비는 전투에 한해서는 없어서는 안될 중요한 아이템이라네."); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 24);
+                Console.WriteLine("제대로 장비를 착용하지 않고 전투에 나선다면 다쳐서 돌아오기 십상이지."); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 26);
+                Console.WriteLine("내 소싯적에 애용하던 방패를 자네에게 건네줄테니 인벤토리에서 낡은 방패를 장착해오게"); Thread.Sleep(1500);
+               
+                Console.WriteLine();
+                
+                
+                Console.SetCursorPosition(0, 44);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("=================================================================================================");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("퀘스트 목표 : 베테랑 모험가 [혁매님] 에게서 받은 낡은 수련용 방패를 인벤토리에서 장착하라! (0/1)\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("=================================================================================================");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine("1. 수락");
-
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.WriteLine(">>");
 
                 do
                 {
                     selectRight = int.TryParse(Console.ReadLine(), out selectAct);
-                    Console.Clear();
+                    
                 } while (!selectRight);
 
                 switch (selectAct)
                 {
-                    case 0:
+                    case 0: // 나가기 버튼
+                        Console.Clear();
                         QuestScroll(player);
                         break;
-                    case 1:
-                        player.ItemAmount_Change(new ItemData(3, "낡은 수련용 방패", 0, 2, 50, 1, "가벼운 공격은 막을 수 있지만 성능이 좋아 보이진 않는다."), 1);
-                        
-                        check.accept = true; // 낡은 수련용 방패 지급 구현해야함
+                    case 1: // 퀘스트 수락, 방패 지급
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("\n어디 보자... 여기 있네. 내가 가장 소중히 여기는 방패니까 조심히 다루게나!!"); Thread.Sleep(1500);
+                        player.ItemAmount_Change(new ItemData(3, "낡은 수련용 방패", 0, 2, 50, 1, "돈을 주고 팔아야할 것 같은 싸구려 방패"), 1);
+                        Console.WriteLine("\n☆★낡은 수련용 방패 지급 완료!★☆\n"); 
+
+                        Console.WriteLine("[아이템 설명] : 돈을 주고 팔아야할 것 같은 싸구려 방패"); Thread.Sleep(1500);
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"\n{player.Name} : 아니 이런 쓰레기를 줘놓고 그렇게 생색낸거야?"); Thread.Sleep(800);
+                        Console.WriteLine($"{player.Name} : 빨리 퀘스트를 해치우고 이딴 방패 바로 팔아버려야지..."); Thread.Sleep(7000);
                         Console.Clear();
-                        Console.WriteLine("낡은 수련용 방패 지급 완료!");
+                        Console.WriteLine("[퀘스트 수락 완료] : 장비를 장착해보자!!");
+
                         QuestScroll(player);
                         break;
                     default:
+                        Console.Clear();
                         Console.WriteLine("잘못된 입력입니다.");
-                        ThirdQuest(false);
+                        ThirdQuest(false, character);
                         break;
                 }
             }
@@ -274,7 +304,7 @@ namespace MyDungeon
                         }
                     }
                     Console.Clear();
-                    ThirdQuest(isEquip);
+                    ThirdQuest(isEquip, character);
                 }
                 else if (select == "4") // 4번을 입력할 시 4번 퀘스트 진행
                 {
