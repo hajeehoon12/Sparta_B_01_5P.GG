@@ -153,42 +153,58 @@ namespace MyDungeon
 
 
         //궁수 스킬
-        public static void IronArrow(Player player, Monster monster) // 스킬 아이언 애로우 (하나의 대상)
-        {
-            int skillDamage = (int)(player.Critical() * 2.3f);
-
-            //연출...
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 아이언 애로우!! [데미지 : {skillDamage}]");
-            player.skillUsing = true;
-            if(monster.Health > 0)
-                monster.TakeDamage(player, skillDamage);
-            player.skillUsing = false;
-        }
-
         public static void SoulArrow(Player player, List<Monster> Monsters) // 스킬 소울 애로우 (여러 대상)
         {
-            //대상을 선택
-            Console.WriteLine("대상을 선택하세요");
-            int index = 1;
-            foreach(Monster m in Monsters)
-            {
-                Console.Write($"{index++} ");
-                m.PrintMonster();
-            }
+            int index = 1;  // foreach인덱스
 
-            int skillDamage = (int)(player.Critical() * 1.3f + 1.7f);
+            bool isRightIndex;
+            int selectMonster;  // 몬스터 선택지
+
+            int firstMonsterIndex; //대상 몬스터의 첫주변
+            int lastMonsterIndex;   //대상 몬스터의 막주변
+            do
+            {
+                //대상을 선택
+                Console.WriteLine("대상을 선택하세요");
+                foreach (Monster m in Monsters)
+                {
+                    Console.Write($"{index++} ");
+                    m.PrintMonster();
+                }
+                Console.Write(">> ");
+
+                isRightIndex = int.TryParse(Console.ReadLine(), out selectMonster);
+                if (!isRightIndex || (selectMonster <= Monsters.Count - 1))//입력 숫자가 제대로 안되면
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("숫자를 제대로 입력해주세요");
+                }
+                if (Monsters[selectMonster].IsDead) //몬스터가 이미 죽으면
+                {
+                    Console.Clear();
+                    Console.WriteLine("해당 몬스터는 이미 사망했습니다.");
+                }
+            }
+            while (!isRightIndex);
+
+            //딜 시작
+            int skillDamage = (int)(player.Critical() * 1.4f + 1.7f);
 
             //연출..
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
-            foreach(Monster monster in Monsters)
-            { 
-                if(monster.Health > 0)
-                    monster.TakeDamage(player,skillDamage);
+            firstMonsterIndex = selectMonster == 0 ? 0 : selectMonster - 1; //selectMonster가 첫 인덱스이면 0
+            lastMonsterIndex = selectMonster == Monsters.Count - 1 ? Monsters.Count - 1 : selectMonster + 1; //selectMonster가 마지막 인덱스이면 마지막
+
+            //선택한 몬스터와 옆에 주변 몬스터들도 같이 공격
+            //예) 2번을 선택하면 1, 2, 3번의 인덱스의 몬스터를 공격
+            for(int i= firstMonsterIndex;i<= lastMonsterIndex; i++)
+            {
+                if (Monsters[i].Health > 0)
+                    Monsters[i].TakeDamage(player, skillDamage);
             }
             player.skillUsing = false;
         }
