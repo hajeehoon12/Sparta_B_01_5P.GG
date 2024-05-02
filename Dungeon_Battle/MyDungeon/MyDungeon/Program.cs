@@ -115,7 +115,18 @@ namespace MyDungeon
                 Console.WriteLine($"탐험가 ★{player.Name}★님 5P.GG 마을에 오신 여러분 환영합니다!!" +
                 "\n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\n0. 모험가 길드\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전 \n6. 휴식하기 \n7. 저장하기 \n8. 불러오기 \n9. 게임종료 ");
+                Console.WriteLine("\n0. 모험가 길드\n1. 상태 보기 \n2. 인벤토리 \n3. 상점 \n4. 탐험 던전  \n5. 몬스터 던전");
+                if (!player.quest.accept2)
+                {
+                    Console.WriteLine(" 6.휴식하기");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("6. 휴식하기 (상남자의 길!! 퀘스트 패널티로 인해 사용불가)");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                }
+                Console.WriteLine("7. 저장하기 \n8. 불러오기 \n9. 게임종료 \n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\n★원하시는 행동을 숫자로 입력해주세요★ : ");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);

@@ -225,9 +225,9 @@ namespace MyDungeon
         {
             inFight = true; // 전투중 (첫턴이아님)
             PlayerTurn(actNum); // 플레이어 턴 진행
-                                // 몬스터 턴 진행
+                                
             Thread.Sleep(800);
-            MonsterTurn();
+            MonsterTurn();  // 몬스터 턴 진행
             BattleStart();
         }
 
