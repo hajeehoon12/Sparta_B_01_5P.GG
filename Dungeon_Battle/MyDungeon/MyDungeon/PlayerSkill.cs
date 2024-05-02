@@ -164,14 +164,21 @@ namespace MyDungeon
             int lastMonsterIndex;   //대상 몬스터의 막주변
             do
             {
-                Console.WriteLine("\n스킬 : 소울 애로우");
+                
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n ######   #######  ##     ## ##             ###    ########  ########   #######  ##      ## \r\n##    ## ##     ## ##     ## ##            ## ##   ##     ## ##     ## ##     ## ##  ##  ## \r\n##       ##     ## ##     ## ##           ##   ##  ##     ## ##     ## ##     ## ##  ##  ## \r\n ######  ##     ## ##     ## ##          ##     ## ########  ########  ##     ## ##  ##  ## \r\n      ## ##     ## ##     ## ##          ######### ##   ##   ##   ##   ##     ## ##  ##  ## \r\n##    ## ##     ## ##     ## ##          ##     ## ##    ##  ##    ##  ##     ## ##  ##  ## \r\n ######   #######   #######  ########    ##     ## ##     ## ##     ##  #######   ###  ###  \r\n");
+                Console.WriteLine("\n스킬 : 소울 애로우 시전중");
                 //대상을 선택
-                Console.WriteLine("대상을 선택하세요");
+               
+                Console.ForegroundColor = ConsoleColor.Red;
                 foreach (Monster m in Monsters)
                 {
                     Console.Write($"{index++} ");
                     m.PrintMonster();
                 }
+                
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n대상을 선택하세요\n");
                 Console.Write(">> ");
 
                 isRightIndex = int.TryParse(Console.ReadLine(), out selectMonster);
@@ -190,7 +197,7 @@ namespace MyDungeon
             while (!isRightIndex);
 
             //딜 시작
-            int skillDamage = (int)(player.Critical() * 1.4f + 1.7f);
+            int skillDamage = (int)(player.Critical() * 1.4f);
 
             //연출..
 

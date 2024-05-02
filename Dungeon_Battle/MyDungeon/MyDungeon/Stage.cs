@@ -196,7 +196,7 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬 - 심판");
+            Console.WriteLine("2. 스킬");
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
@@ -320,19 +320,43 @@ namespace MyDungeon
                     switch(player1.stat.job)    //직업별로 사용하는 스킬
                     {   //원하는 스킬을 선택하도록
                         case "전사":
-                            PlayerSkill.OverHit(player1, monsterInStage);
+                            do
+                            {
+                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 심판");
+                                
+                                Console.Write(">> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
+                            if (skillNum == 1)
+                                PlayerSkill.OverHit(player1, monsterInStage);
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+
                             break;
                         case "마법사":
                             do
                             {
                                 Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("0. 취소");
                                 Console.WriteLine("1. 갓블레스 힐");
                                 Console.WriteLine("2. 샤이닝 레이");
-                                Console.Write(">>");
+                                Console.Write(">> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (isSkillRight)
                                 {
-                                    if (skillNum == 1 || skillNum == 2)
+                                    if (skillNum == 1 || skillNum == 2 || skillNum == 0)
                                         break;
                                     else
                                     {
@@ -346,20 +370,44 @@ namespace MyDungeon
                                 PlayerSkill.Heal(player1);
                             else if(skillNum == 2)
                                 PlayerSkill.ShiningRay(player1, monsterInStage);
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
                             break;
                         case "궁수":
-                            Console.Clear();    //콘솔창 갱신
-                            PlayerSkill.SoulArrow(player1, monsterInStage);
+                            
+                            do
+                            {
+                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 소울 에로우");
+                                
+                                Console.Write(">> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
+                            if (skillNum == 1) PlayerSkill.SoulArrow(player1, monsterInStage);
+                            else if(skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
                             break;
+
                         case "도적":
                             do
                             {
                                 Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("0. 취소");
                                 Console.WriteLine("1. 크리티컬 스로우");
                                 Console.WriteLine("2. 어벤져");
-                                Console.Write(">>");
+                                Console.Write(">> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
-                                if (skillNum == 1 || skillNum == 2)
+                                if (skillNum == 1 || skillNum == 2 || skillNum == 0)
                                     break;
                                 else
                                 {
@@ -398,6 +446,7 @@ namespace MyDungeon
                             {
                                 PlayerSkill.Avenger(player1, monsterInStage);
                             }
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
                             break;
                     }
                     break;
