@@ -140,14 +140,14 @@ namespace MyDungeon
             else if (stat.job == "도적") // 도적일 경우 세팅
             {
                 critical += 10;
-                criticalDmg += 10;
+                criticalDmg += 0.10f;
                 avoid += 10;
             }
             else if (stat.job == "궁수") // 궁수일 경우 세팅
             {
                 stat.Attack += 5;
                 critical += 15;
-                criticalDmg += 15;
+                criticalDmg += 0.15f;
             }
             else
             {
