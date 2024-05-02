@@ -141,7 +141,7 @@ namespace MyDungeon
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 어벤져!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 어벤져!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
             foreach (Monster monster in Monsters)
             {
@@ -164,27 +164,30 @@ namespace MyDungeon
             int lastMonsterIndex;   //대상 몬스터의 막주변
             do
             {
-                Console.WriteLine("\n스킬 : 소울 애로우");
+                Console.WriteLine("\n[ 스킬 : 소울 애로우 ]");
                 //대상을 선택
-                Console.WriteLine("대상을 선택하세요");
+                Console.WriteLine("[ 대상을 선택하세요 ]");
+                index = 0;
                 foreach (Monster m in Monsters)
                 {
-                    Console.Write($"{index++} ");
+                    Console.Write($"{index++}. ");
                     m.PrintMonster();
                 }
                 Console.Write(">> ");
 
                 isRightIndex = int.TryParse(Console.ReadLine(), out selectMonster);
-                if (!isRightIndex || (selectMonster <= Monsters.Count - 1))//입력 숫자가 제대로 안되면
+                if (selectMonster >= Monsters.Count || selectMonster < 0)//입력 숫자 범위를 벗어나면
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("숫자를 제대로 입력해주세요");
+                    isRightIndex = false;
                 }
-                if (Monsters[selectMonster].IsDead) //몬스터가 이미 죽으면
+                else if (Monsters[selectMonster].IsDead) //몬스터가 이미 죽으면
                 {
                     Console.Clear();
                     Console.WriteLine("해당 몬스터는 이미 사망했습니다.");
+                    isRightIndex = false;
                 }
             }
             while (!isRightIndex);
@@ -194,8 +197,9 @@ namespace MyDungeon
 
             //연출..
 
+            Console.Clear();    //여기서 콘솔창 갱신
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]");
             player.skillUsing = true;
             firstMonsterIndex = selectMonster == 0 ? 0 : selectMonster - 1; //selectMonster가 첫 인덱스이면 0
             lastMonsterIndex = selectMonster == Monsters.Count - 1 ? Monsters.Count - 1 : selectMonster + 1; //selectMonster가 마지막 인덱스이면 마지막
@@ -226,7 +230,7 @@ namespace MyDungeon
 
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [체력 : +{healPower}]");
+            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}]");
             player.skillUsing = false;
         }
         public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
@@ -236,8 +240,8 @@ namespace MyDungeon
             int index = 0;  //foreach선택
             do
             {
-                Console.WriteLine("\n스킬 : 샤이닝 레이");
-                Console.WriteLine("대상을 선택하세요");
+                Console.WriteLine("\n[ 스킬 : 샤이닝 레이 ]");
+                Console.WriteLine("[ 대상을 선택하세요 ]");
                 index = 0;  //인덱스 초기
                 foreach (Monster m in Monsters)
                 {
@@ -245,13 +249,14 @@ namespace MyDungeon
                     m.PrintMonster();
                 }
                 isRightMonster = int.TryParse(Console.ReadLine(), out selectMonster);
-                if (!isRightMonster || (selectMonster <= Monsters.Count - 1))
+                if (selectMonster < 0 || selectMonster >= Monsters.Count) //해당 범위를 벗어나면
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("숫자를 제대로 입력해주세요");
+                    isRightMonster = false;
                 }
-                if (Monsters[selectMonster].IsDead)
+                else if (Monsters[selectMonster].IsDead)
                 {
                     Console.Clear();
                     Console.WriteLine("해당 몬스터는 이미 사망했습니다.");
@@ -265,6 +270,7 @@ namespace MyDungeon
 
             //연출
 
+            Console.Clear();    //여기서 콘솔창 갱신
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}]");
             player.skillUsing = true;

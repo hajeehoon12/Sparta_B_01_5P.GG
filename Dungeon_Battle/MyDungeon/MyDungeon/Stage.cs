@@ -196,7 +196,7 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬 - 심판");
+            Console.WriteLine($"2. 스킬 - {player1.stat.job}");
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
@@ -323,7 +323,7 @@ namespace MyDungeon
                         case "마법사":
                             do
                             {
-                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]");
                                 Console.WriteLine("1. 갓블레스 힐");
                                 Console.WriteLine("2. 샤이닝 레이");
                                 Console.Write(">>");
@@ -352,7 +352,7 @@ namespace MyDungeon
                         case "도적":
                             do
                             {
-                                Console.WriteLine("스킬을 선택하세요");
+                                Console.WriteLine("[ 스킬을 선택하세요 ]");
                                 Console.WriteLine("1. 크리티컬 스로우");
                                 Console.WriteLine("2. 어벤져");
                                 Console.Write(">>");
@@ -370,9 +370,9 @@ namespace MyDungeon
                             {
                                 do
                                 {
-                                    Console.WriteLine("스킬 : 크리티컬 스로우");
+                                    Console.WriteLine("[ 스킬 : 크리티컬 스로우 ]");
                                     int enemyIdx = 0;
-                                    Console.WriteLine("대상을 선택하세요");
+                                    Console.WriteLine("[ 대상을 선택하세요 ]");
                                     foreach (Monster m in monsterInStage)
                                     {
                                         Console.Write($"{enemyIdx++}. ");
