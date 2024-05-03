@@ -8,44 +8,29 @@ namespace MyDungeon
 {
     public class Skills // 몬스터 패턴 저장용 클래스
     {
+        static Random rand = new Random();
         static public void WormPattern(Player player, Monster monster)
         {
-            int monsterAct = 0;
-
-            monsterAct = monster.turn % 5;
+            int monsterAct = rand.Next(0, 3);
 
             switch (monsterAct)
             {
-                case 0: // 1턴 디버프 적용
-                    player.stat.AttackInc -= 1;
+
+                case 0:
+                    player.stat.Hp -= 20;
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                    Console.WriteLine($"\"공허충\" 이 플레이어에게 [몸통박치기]을(를) 합니다!");
+                    Console.WriteLine($"{player.Name} 에게 고정데미지가 들어옵니다.");
+                    Console.WriteLine($"{player.Name} 의 체력 {player.stat.Hp + 20} -> {player.stat.Hp}");
                     break;
                 case 1:
+                    monster.Health += 10;
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
-                    break;
-                case 2:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
-                    break;
-                case 3:
-                    player.stat.AttackInc -= 1;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                    Console.WriteLine("\"공허충\" 이 [웅크리기]을(를) 합니다!");
+                    Console.WriteLine("\"공허충\" 이 최대 체력을 증가시킵니다.");
                     break;
                 default:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
                     monster.HitDamage(player, monster);
                     break;
 
@@ -57,39 +42,31 @@ namespace MyDungeon
         {
             int monsterAct = 0;
 
-            monsterAct = monster.turn % 5;
+            monsterAct = monster.turn % 4;
 
             switch (monsterAct)
             {
-                case 0: // 1턴 디버프 적용
-                    player.stat.AttackInc -= 1;
+                case 0:
+                    player.stat.Hp -= 30;
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                    Console.WriteLine($"\"머포미니언\" 이 플레이어에게 [대포 발사]을(를) 합니다!");
+                    Console.WriteLine($"{player.Name} 에게 고정데미지가 들어옵니다.");
+                    Console.WriteLine($"{player.Name} 의 체력 {player.stat.Hp + 30} -> {player.stat.Hp}");
                     break;
                 case 1:
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
+                    Console.WriteLine("\"머포미니언\" 이 [에너지]을(를) 모으기 시작합니다!!");
+
                     break;
                 case 2:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
+                    Console.WriteLine("\"머포미니언\" 의 에너지포!");
+                    monster.Attack *= 3;
                     monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
-                    break;
-                case 3:
-                    player.stat.AttackInc -= 1;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                    monster.Attack /= 3;
                     break;
                 default:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
+                    Console.WriteLine("\"머포미니언\" 의 2연타 공격!!");
                     monster.HitDamage(player, monster);
                     monster.HitDamage(player, monster);
                     break;
