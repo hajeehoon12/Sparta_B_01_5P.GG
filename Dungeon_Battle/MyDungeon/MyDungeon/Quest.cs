@@ -29,7 +29,7 @@ namespace MyDungeon
 
         Player player;
 
-        public void QuestScreen() // 퀘스트 목록 출력
+        public void QuestScreen() // 퀘스트 목록 출력 2
         {
 
             Console.ForegroundColor = ConsoleColor.Yellow;
