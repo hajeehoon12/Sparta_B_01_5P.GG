@@ -21,7 +21,8 @@ namespace MyDungeon
         public int Attack { get; }
 
         //List<ItemData> Drop_Item;
-
+        public int DropGold { get; set; }   //보상 골드
+        public int DropExp { get; set; }    //보상 경험치
         
 
         public int Avoid { get; set; } // 몬스터 회피율
@@ -50,10 +51,28 @@ namespace MyDungeon
                 {
                     player.ItemAmount_Change(items, 1);
                     Console.WriteLine($"{Name} 이(가) {items.ItemName} 을(를) 드랍했습니다.");
+                    if (!player.stage.Drop_Items.ContainsKey(items.ItemName))
+                    {
+                        player.stage.Drop_Items.Add(items.ItemName, 1); // 없을 경우 드랍 아이템 추가
+                    }
+                    else
+                    {
+                        player.stage.Drop_Items[items.ItemName] += 1; // 이미 같은 이름의 아이템이 존재할 경우 수량 추가
+                    }
+                    
                 }
             }
-            //경험치
-            //골드
+            //경험치 = (레벨) * ((공격10%) + 1)
+            DropExp = Level * ((Attack / 10) + 1); // 드랍된 경험치
+            player.stat.Exp += DropExp; // 드랍된 경험치를 플레이어게 준다.
+            player.stat.isLevelUp(); // 레벨업 검사
+
+            //골드 = (20 * ((레벨 / 2) + 1)) + ((레벨 / 2)+1)
+            DropGold = (20 * ((Level / 2) + 1)) + ((Level / 2) + 1); // 몬스터가 드랍한 골드
+            player.stat.Gold += DropGold;
+
+            player.stage.stageExp += DropExp;
+            player.stage.stageGold += DropGold;
         }
 
 
@@ -63,7 +82,7 @@ namespace MyDungeon
             Console.WriteLine($"Lv.{Level} {Name}   {deadText}");
         }
 
-        public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때 , 보상처리도 추가
+        public void TakeDamage(Player character, int damage)  //플레이어가 몬스터를 가격할 때 , 보상처리도 추가 // 몬스터가 죽는거 검사
         {
             
             int avoidProb;
@@ -95,6 +114,10 @@ namespace MyDungeon
                 //체력 삭감 이후
                 if (IsDead) // 몬스터가 사망시
                 {
+                    if(Name == "미니언")
+                    {
+                        character.quest.minionCount++;
+                    }
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
 
@@ -110,7 +133,7 @@ namespace MyDungeon
                 }
                 
             }
-
+            Thread.Sleep(500);
         }
 
         public void HitDamage(Player character, Monster monster)  //몬스터가 플레이어를 가격할 때
@@ -168,6 +191,11 @@ namespace MyDungeon
             Console.WriteLine(character.stat.Hp);
         }
 
+        public virtual void add_Drop_Item()
+        {
+            //Drop_Item.Add(new ItemData(0, "도란의 검", 10, 0, 450, 1, "도란의 검"));
+        }
+
     }
     class Minion : Monster  //미니언
     {
@@ -176,12 +204,54 @@ namespace MyDungeon
             add_Drop_Item();
         }
 
-        public void add_Drop_Item()
+        public override void add_Drop_Item()
         {
+            int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류
+            int dropPercent = new Random().Next(0, 100);    //드랍할 각 아이템종류의 확률
 
-            Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0 , 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼")); 
-            Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+            //미니언이 드랍할 적절한 아이템 (랜덤으로 생성)
 
+            switch(itemIndex)
+            {
+                case 0: // 무기 : 도란의 검, 칠흑의 양날도끼, 단검
+                    if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(0, "도란의 검", 10, 0, 450, 1, "도란의 검"));
+                    else if (dropPercent > 50)
+                        Drop_Item.Add(new ItemData(0, "단검", 30, 0, 3000, 1, "마법석이 박힌 마법봉"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
+                    break;
+                case 1: // 보조무기 : 도란의 방패, 얼음 방패
+                    if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(1, "도란의 방패", 0, 4, 450, 1, "도란의 방패"));
+                    else if (dropPercent > 55)
+                        Drop_Item.Add(new ItemData(1, "얼음 방패", 0, 20, 950, 1, "천갑옷에서 사파이어 수정과 빛나는 티골로 조합하여 만든 장비"));
+                    break;
+                case 2: //악세사리 : 도란의 반지, 부서진 팔목 보호대, 
+                    if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(2, "도란의 반지", 0, 5, 400, 1, "도란의 반지"));
+                    else if (dropPercent > 50)
+                        Drop_Item.Add(new ItemData(2, "부서진 팔목 보호대", 0, 25, 1600, 1, "팔목 보호대는 망가졌지만 업그레이드가 가능한 장비"));
+                    else if (dropPercent > 45)
+                        Drop_Item.Add(new ItemData(2, "수은 장식띠", 0, 30, 1300, 1, "모든 군중 제어 효과를 제거"));
+                    break;
+                case 3: // 방어구 : 천 갑옷, 가시 갑옷
+                    if(dropPercent > 75)
+                        Drop_Item.Add(new ItemData(3, "천 갑옷", 0, 15, 300, 1, "천으로 만들어진 갑옷"));
+                    else if(dropPercent > 72)   
+                        Drop_Item.Add(new ItemData(3, "가시 갑옷", 0, 70, 2700, 1, "덤불조끼와 거인의 허리띠를 조합한 갑옷"));
+                    break;
+                case 4: // 소모품 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 3), "사용하면 체력을 50 회복합니다."));
+                    break;
+                case 5: // 잡템 : 미니언의 거적떼기, 루비 수정
+                    if (dropPercent > 20)
+                        Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, new Random().Next(1, 3), "미니언이 걸치고 다니는 거적떼기"));
+                    else
+                        Drop_Item.Add(new ItemData(5, "루비 수정", 0, 0, 400, new Random().Next(1, 3), "루비 수정"));
+                    break;
+            }
             // 아이템 양식 , (아이템타입(0:무기, 1:보조무기 2:악세서리 3: 방어구 4:소모품 5:잡템), 아이템 이름, 공격력, 방어력, 골드, 수량)
             // Drop_Item에 추가
         }
@@ -195,10 +265,46 @@ namespace MyDungeon
             add_Drop_Item();
         }
 
-        public void add_Drop_Item()
+        public override void add_Drop_Item()
         {
-            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼")); // 추가하고 싶은 아이템 추가
-            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+            int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류 (유일하게 소모품과 잡템만)
+            int dropPercent = new Random().Next(0, 100);    //드랍할 각 아이템종류의 확률
+
+            switch(itemIndex)
+            {
+                case 0: //무기 : 롱소드, 독사의 송곳니
+                    if (dropPercent > 65)
+                        Drop_Item.Add(new ItemData(0, "롱소드", 10, 0, 350, 1, "길게 만들어진 검"));
+                    else if (dropPercent > 63)
+                        Drop_Item.Add(new ItemData(0, "독사의 송곳니", 55, 0, 2500, 1, "톱날 단검과 독사의 조합으로 만든 검"));
+                    break;
+                case 1: //보조 무기 : 도란의 방패, 땅굴 채굴기
+                    if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(1, "도란의 방패", 0, 4, 450, 1, "도란의 방패"));
+                    else if (dropPercent > 45)
+                        Drop_Item.Add(new ItemData(1, "땅굴 채굴기", 15, 0, 1150, 1, "보석을 캘수 있는 채굴기"));
+                    break;
+                case 2: //악세사리 : 강철 인장, 얼어붙은 심장
+                    if (dropPercent > 85)
+                        Drop_Item.Add(new ItemData(2, "강철 인장", 15, 30, 1100, 1, "보호와 동시에 공격해줄 도구"));
+                    else if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(2, "얼어붙은 심장", 0, 65, 2500, 1, "얼어버린 심장"));
+                    break;
+                case 3: // 방어구 : 천 갑옷, 
+                    if (dropPercent > 75)
+                        Drop_Item.Add(new ItemData(3, "천 갑옷", 0, 15, 300, 1, "천으로 만들어진 갑옷"));
+                    break;
+                case 4: // 소모품 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 3), "사용하면 체력을 50 회복합니다."));
+                    break;
+                case 5: //잡템 : 사파이어 수정, 새끼 바람돌이
+                    if (dropPercent > 80)
+                        Drop_Item.Add(new ItemData(5, "사파이어 수정", 0, 0, 350, new Random().Next(1, 4), "사파이어 수정"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(5, "새끼 바람돌이", 0, 0, 450, new Random().Next(1, 3), "플레이어를 도와주는 바람돌이를 소환"));
+                    break;
+            }
         }
     }
 
@@ -212,8 +318,40 @@ namespace MyDungeon
 
         public void add_Drop_Item()
         {
-            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
-            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+            int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류
+            int dropPercent = new Random().Next(0, 100);    //드랍할 각 아이템종류의 확률
+
+            switch(itemIndex)
+            {
+                case 0: //무기 : 단검, 나보리 신속검
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(0, "단검", 12, 0, 300, 1, "빠르게 공격할 수 있는 단검"));
+                    else if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(0, "나보리 신속검", 65, 0, 3300, 1, "무기중 제일 빠른 공격을 자랑하는 검"));
+                    break;
+                case 1: //보조무기 : 란두인의 예언
+                    if (dropPercent > 65)
+                        Drop_Item.Add(new ItemData(1, "란두인의 예언", 0, 55, 2700, 1, "데미지를 입을 때 피해량을 크게 감소시킨다."));
+                    break;
+                case 2: //악세사리 : 원기 회복의 구슬
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(2, "원기 회복의 구슬", 0, 30, 300, 1, "체력을 보호해 주는 구슬"));
+                    break;
+                case 3: //방어구 : 기사의 맹세, 
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(3, "기사의 맹세", 0, 45, 2200, 1, "쇠사슬 조끼와 점화석을 조합한 투구"));
+                    break;
+                case 4: //소모아이템 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
+                    break;
+                case 5: //잡템 : 새끼 이끼 쿵쿵이, 새끼 화염발톱
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(5, "새끼 이끼 쿵쿵이", 0, 0, 450, new Random().Next(1, 3), "플레이어를 도와주는 이끼쿵쿵이 소환"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(5, "새끼 화염발톱", 0, 0, 450, new Random().Next(1, 3), "플레이어를 도와주는 화염발톱 소환"));
+                    break;
+            }
         }
 
     }
@@ -231,8 +369,40 @@ namespace MyDungeon
         }
         public void add_Drop_Item()
         {
-            //Drop_Item.Add(new ItemData(0, "칠흑의 양날도끼", 30, 0, 5000, 1, "콜필드의 전투망치와 점화석 롱소드를 조합하여 만든 도끼"));
-            //Drop_Item.Add(new ItemData(5, "미니언의 거적떼기", 0, 0, 100, 1, "미니언이 걸치고 다니는 거적떼기"));
+            int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류
+            int dropPercent = new Random().Next(0, 100);    //드랍할 각 아이템종류의 확률
+
+            switch (itemIndex)
+            {
+                case 0: //무기 : 단검, 그림자 검
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(0, "단검", 12, 0, 300, 1, "빠르게 공격할 수 있는 단검"));
+                    else if (dropPercent > 60)
+                        Drop_Item.Add(new ItemData(0, "그림자 검", 50, 0, 2600, 1, "근처의 투명한 덫과 와드를 드러내고 무력화 시킴"));
+                    break;
+                case 1: //보조무기 : 불경한 히드라
+                    if (dropPercent > 65)
+                        Drop_Item.Add(new ItemData(1, "불경한 히드라", 60, 0, 3300, 1, "티아맷과 야수화를 조합한 무기"));
+                    break;
+                case 2: //악세사리 : 오만
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(2, "오만", 18, 60, 3000, 1, "몬스터를 관통할 수 있는 머리장식"));
+                    break;
+                case 3: //방어구 : 파수꾼의 갑옷
+                    if (dropPercent > 50)
+                        Drop_Item.Add(new ItemData(3, "파수꾼의 갑옷", 0, 40, 1000, 1, "공격을 받는 피해량이 감소"));
+                    break;
+                case 4: //소모아이템 : 체력 물약
+                    if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
+                    break;
+                case 5: //잡템 : 여신의 눈물, 에테르 환영
+                    if (dropPercent > 70)
+                        Drop_Item.Add(new ItemData(5, "여신의 눈물", 0, 0, 400, new Random().Next(1, 5), "여신의 눈물"));
+                    else if (dropPercent > 40)
+                        Drop_Item.Add(new ItemData(5, "에테르 환영", 0, 0, 850, new Random().Next(1, 3), "에테르 환영"));
+                    break;
+            }
         }
 
 

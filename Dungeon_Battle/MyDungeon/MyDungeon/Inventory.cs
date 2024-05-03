@@ -35,26 +35,33 @@ namespace MyDungeon
         }
         public void Show_Inven(Player player) // 인벤토리 표시
         {
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n#### ##    ## ##     ## ######## ##    ## ########  #######  ########  ##    ## \r\n ##  ###   ## ##     ## ##       ###   ##    ##    ##     ## ##     ##  ##  ##  \r\n ##  ####  ## ##     ## ##       ####  ##    ##    ##     ## ##     ##   ####   \r\n ##  ## ## ## ##     ## ######   ## ## ##    ##    ##     ## ########     ##    \r\n ##  ##  ####  ##   ##  ##       ##  ####    ##    ##     ## ##   ##      ##    \r\n ##  ##   ###   ## ##   ##       ##   ###    ##    ##     ## ##    ##     ##    \r\n#### ##    ##    ###    ######## ##    ##    ##     #######  ##     ##    ##    \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n=================================================================================");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"★플레이어 {Name} 의 인벤토리★ \n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write($"보유 골드 : {player.stat.Gold} G \n");
-            Console.WriteLine("           [아이템 목록]           \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n           [아이템 목록]           \n");
             
             for (int i = 0; i < ItemInfo.Count; i++) // 인벤토리 표시
             {
-                
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("- ");
-                if (ItemInfo[i].IsEquip) Console.Write("[E]");
+                if (ItemInfo[i].IsEquip) Console.Write("[E] ");
                 Console.Write($"{ItemInfo[i].ItemName}");
                 Console.Write($" X {ItemInfo[i].Amount}|");
                 if (ItemInfo[i].ItemAtk > 0) Console.Write($"   공격력 +{ItemInfo[i].ItemAtk.ToString("D4")} |");
                 if (ItemInfo[i].ItemDef > 0) Console.Write($"   방어력 +{ItemInfo[i].ItemDef.ToString("D4")} |");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 if (ItemInfo[i].ItemExp != null) Console.Write($"  {ItemInfo[i].ItemExp} \n");
+                
 
-            
+
             }
+            Console.ForegroundColor = ConsoleColor.Green;
 
             Console.WriteLine("=================================================================================\n\n");
 
@@ -65,10 +72,13 @@ namespace MyDungeon
         }
         private void Show_Inven_Menu(Player player)
         {
+            
             do
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("-1. 나가기");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\n원하시는 행동을 숫자로 입력해주세요.\n");
                 Console.Write(">>");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
@@ -97,28 +107,37 @@ namespace MyDungeon
 
         public void Item_manage(Player player) // 장착 관리 실행
         {
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n########  #######  ##     ## #### ########     ##     ##    ###    ##    ##    ###     ######   ######## \r\n##       ##     ## ##     ##  ##  ##     ##    ###   ###   ## ##   ###   ##   ## ##   ##    ##  ##       \r\n##       ##     ## ##     ##  ##  ##     ##    #### ####  ##   ##  ####  ##  ##   ##  ##        ##       \r\n######   ##     ## ##     ##  ##  ########     ## ### ## ##     ## ## ## ## ##     ## ##   #### ######   \r\n##       ##  ## ## ##     ##  ##  ##           ##     ## ######### ##  #### ######### ##    ##  ##       \r\n##       ##    ##  ##     ##  ##  ##           ##     ## ##     ## ##   ### ##     ## ##    ##  ##       \r\n########  ##### ##  #######  #### ##           ##     ## ##     ## ##    ## ##     ##  ######   ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            
             Console.WriteLine("\n\n=================================================================================");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("★인벤토리 - 장착 관리★\n");
-            Console.Write($"보유 골드 : {player.stat.Gold} G \n");
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"보유 골드 : {player.stat.Gold} G \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("           [아이템 목록]           \n");
             
             for (int i = 0; i < ItemInfo.Count; i++) // 인벤토리 표시
             {
-
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write($"{i} ");
-                if (ItemInfo[i].IsEquip) Console.Write("[E]");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                
+                if (ItemInfo[i].IsEquip) Console.Write("[E] ");
                 Console.Write($"{ItemInfo[i].ItemName}");
                 Console.Write($" X {ItemInfo[i].Amount}|");
                 if (ItemInfo[i].ItemAtk > 0) Console.Write($" 공격력 +{ItemInfo[i].ItemAtk.ToString("D4")} |");
                 if (ItemInfo[i].ItemDef > 0) Console.Write($" 방어력 +{ItemInfo[i].ItemDef.ToString("D4")} |");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 if (ItemInfo[i].ItemExp != null) Console.Write($"  {ItemInfo[i].ItemExp} \n");
 
 
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("==================================================================================\n\n");
 
 
@@ -130,9 +149,12 @@ namespace MyDungeon
             act = 0;
             do
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("-1. 나가기");
+                Console.ForegroundColor = ConsoleColor.Green;
+                
                 Console.Write("\n원하시는 행동을 숫자로 입력해주세요. 장비장착을 원하시면 해당 장비의 번호를 입력하세요. \n");
-                Console.Write(">>");
+                Console.Write(">> ");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
                 Console.Clear();
             } while (!actIsNum);
@@ -141,8 +163,6 @@ namespace MyDungeon
             {
                 case -1: //장착 관리
                     Show_Inven(player); // 전단계로 돌아감
-
-
 
                     break;
                 default:
@@ -171,6 +191,7 @@ namespace MyDungeon
                         {
                             if (ItemInfo[act].ItemType == 4) // 소모품일 경우 명력 거부
                             {
+
                                 Console.WriteLine("☆소모품은 장착할 수 없습니다.☆");
                             }
                             else // 장착 가능한 용품일 경우

@@ -17,7 +17,10 @@ namespace MyDungeon
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
         int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
-        
+
+        public int stageExp = 0;
+        public int stageGold = 0;
+        public Dictionary<string, int> Drop_Items = new Dictionary<string, int>();
         
 
         private int select; //선택지
@@ -35,9 +38,17 @@ namespace MyDungeon
             Console.WriteLine("\r\n ######  ########    ###     ######   ######## \r\n##    ##    ##      ## ##   ##    ##  ##       \r\n##          ##     ##   ##  ##        ##       \r\n ######     ##    ##     ## ##   #### ######   \r\n      ##    ##    ######### ##    ##  ##       \r\n##    ##    ##    ##     ## ##    ##  ##       \r\n ######     ##    ##     ##  ######   ######## \r\n");
 
             //스테이지 선택
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            int atkinc, definc;
+            (atkinc, definc) = player1.inven.Item_Ability_Total();
+            player1.stat.Show_stat(atkinc,definc);  // 플레이어 상태 표시
+            
+
             Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
-            
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("0. 마을로 돌아가기\n");
             for (int i = 0; i < 3; i++)
             {
 
@@ -69,21 +80,36 @@ namespace MyDungeon
                 }
             }
             while (!stageSelect);
-            if (select >= player1.CurStage)
+            if (select > player1.CurStage) // 해금된 스테이지보다 높은수 입력
             {
+                
                 Console.Clear();
+                Console.WriteLine(player1.CurStage);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("미해금된 스테이지입니다.");
                 Start(player1);
+            }
+            else if (select < 0) // 0이하의 수를 입력
+            {
+                Console.Clear();
+                Console.WriteLine("존재하지 않는 스테이지입니다.");
+                Start(player1);
+            }
+            else if (select ==0) //0입력 마을귀환
+            {
+                Console.Clear();
+                Console.WriteLine("마을로 귀환합니다.");
+                player1.program.SelectAct(player1);
+
             }
             Console.ForegroundColor = ConsoleColor.White;
             StageStart(select);
         }
 
         //stage를 만들어서
-        // 1스테이지는 (공허충 최대 2마리 나머지 미니온)
-        // 2스테이지는 (대포 1마리 나머지는 미니온이나 공허충)
-        // 3스테이지는 (대포 최대 2마리 나머지는 미니온이나 공허충)
+        // 1스테이지는 (공허충 최대 2마리 나머지 미니언)
+        // 2스테이지는 (대포 1마리 나머지는 미니언이나 공허충)
+        // 3스테이지는 (대포 최대 2마리 나머지는 미니언이나 공허충)
         public void StageStart(int stage)
         {
             inFight = false; // 초기화
@@ -170,7 +196,9 @@ namespace MyDungeon
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
-            Console.WriteLine("2. 스킬(광역베기<임시>)");
+
+            Console.WriteLine($"2. 스킬 "); // - {player1.stat.job}
+
             Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
 
             Console.WriteLine();
@@ -191,7 +219,7 @@ namespace MyDungeon
             }
             while (!IsactNum);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Clear();
+            //Console.Clear();
             
             BattleTurn(actNum);
         }
@@ -199,8 +227,9 @@ namespace MyDungeon
         {
             inFight = true; // 전투중 (첫턴이아님)
             PlayerTurn(actNum); // 플레이어 턴 진행
-                                // 몬스터 턴 진행
-            MonsterTurn();
+                                
+            Thread.Sleep(800);
+            MonsterTurn();  // 몬스터 턴 진행
             BattleStart();
         }
 
@@ -217,6 +246,7 @@ namespace MyDungeon
                     // else
                     monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
                     IsEnd(); // 끝났는지 검사
+                    Thread.Sleep(800);
                 }
             }
         }
@@ -227,8 +257,11 @@ namespace MyDungeon
             int EnemyNum;  // 지정한 적 번호
             int IntroNum = 0; // 적앞에 표시될 번호
 
+            bool isSkillRight; //스킬을 제대로 입력됐는지
+            int skillNum = 0;   //스킬선택지
+
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
+            //Console.WriteLine("\r\n########     ###    ######## ######## ##       ######## #### #### \r\n##     ##   ## ##      ##       ##    ##       ##       #### #### \r\n##     ##  ##   ##     ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ##       ######    ##   ##  \r\n##     ## #########    ##       ##    ##       ##                 \r\n##     ## ##     ##    ##       ##    ##       ##       #### #### \r\n########  ##     ##    ##       ##    ######## ######## #### #### \r\n");
             Console.ForegroundColor = ConsoleColor.White;
 
             switch (actNum) // 플레이어가 공격 혹은 스킬 혹은 소모품을 사용
@@ -286,19 +319,144 @@ namespace MyDungeon
 
                     break;
                 case 2: // 플레이어 스킬 사용 // 임시 광역기
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine();
+                    switch(player1.stat.job)    //직업별로 사용하는 스킬
+                    {   //원하는 스킬을 선택하도록
+                        case "전사":
+                            do
+                            {
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 심판 (적 전체에게 1.5배의 광역 데미지로 공격)");
+                                
+                                Console.Write("\n>> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
+                            if (skillNum == 1)
+                                PlayerSkill.OverHit(player1, monsterInStage);
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
 
-                    int skilldamage = 0; // 스킬데미지 통일
-                    skilldamage = (int)(player1.Critical() * 1.5f);
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.WriteLine($"{player1.Name} 의 광역베기!! [데미지 : {skilldamage}]");
-                    player1.skillUsing = true;
-                    foreach (Monster monster in monsterInStage)
-                    {
-                        monster.TakeDamage(player1, skilldamage);
+                            break;
+                        case "마법사":
+                            do
+                            {
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 갓블레스 힐");
+                                Console.WriteLine("2. 샤이닝 레이 (지정한 적과 양옆의 적에게 1.8배의 데미지로 공격)");
+                                Console.Write("\n>> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 2 || skillNum == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
+                            if(skillNum == 1)
+                                PlayerSkill.Heal(player1);
+                            else if(skillNum == 2)
+                                PlayerSkill.ShiningRay(player1, monsterInStage);
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            break;
+                        case "궁수":
+                            
+                            do
+                            {
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 소울 에로우 (적 전체에게 1.4배의 데미지로 광역공격)");
+                                
+                                Console.Write("\n>> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (isSkillRight)
+                                {
+                                    if (skillNum == 1 || skillNum == 0)
+                                        break;
+                                    else
+                                    {
+                                        Console.WriteLine("입력이 잘못되었습니다.");
+                                        isSkillRight = false;
+                                    }
+                                }
+                            } while (!isSkillRight);
+                            Console.Clear();    //여기서 콘솔창 갱신
+                            if (skillNum == 1) PlayerSkill.SoulArrow(player1, monsterInStage);
+                            else if(skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            break;
+
+                        case "도적":
+                            do
+                            {
+                                Console.WriteLine("[ 스킬을 선택하세요 ]\n");
+                                Console.WriteLine("0. 취소");
+                                Console.WriteLine("1. 크리티컬 스로우 (단일 적에게 1.5배의 데미지로 두번 공격)");
+                                Console.WriteLine("2. 어벤져 (적 전체에게 1.6배의 데미지로 공격 - 크리티컬 적용불가) ");
+                                Console.Write("\n>> ");
+                                isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
+                                if (skillNum == 1 || skillNum == 2 || skillNum == 0)
+                                    break;
+                                else
+                                {
+                                    Console.WriteLine("입력이 잘못되었습니다.");
+                                    isSkillRight = false;
+                                }
+                            } while (!isSkillRight);
+                            
+                            if (skillNum == 1)  //크리티컬 스로우
+                            {
+                                do
+                                {
+                                    Console.WriteLine("\n[ 스킬 : 크리티컬 스로우 ]\n");
+                                    int enemyIdx = 0;
+                                    Console.WriteLine("★스킬 - 크리티컬 스로우 대상 지정 단계★\n");
+                                    foreach (Monster m in monsterInStage)
+                                    {
+                                        Console.Write($"{enemyIdx++}. ");
+                                        m.PrintMonster();
+                                    }
+                                    Console.WriteLine();
+                                    IsRightEnemy = int.TryParse(Console.ReadLine(), out EnemyNum);  //공격할 대상 선택
+                                    Console.Clear();    //대상 선택후 콘솔창 갱신
+                                    if (IsRightEnemy && (EnemyNum >= 0 && EnemyNum < monsterInStage.Count))
+                                    {
+                                        Console.Clear();
+                                        PlayerSkill.CriticalThrow(player1, monsterInStage[EnemyNum]);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\n다시 선택하세요");
+                                        IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
+                                    }
+                                } while (!IsRightEnemy);
+                                
+                            }
+                            else if (skillNum == 2) //어벤져
+                            {
+                                Console.Clear();
+                                PlayerSkill.Avenger(player1, monsterInStage);
+                            }
+                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            break;
                     }
-                    player1.skillUsing = false;
                     break;
                 case 3: // 플레이어 소모품 사용
 
@@ -430,25 +588,56 @@ namespace MyDungeon
             else
             {
                 player1.CurStage += 1; // 현재 스테이지 클리어 다음에 실행하면 다음 스테이지로 업데이트
+
+                if (player1.quest.accept2 && !player1.quest.clearComplete2) // 2번 퀘스트 수행중이라면 완료료 바꿈
+                {
+                    player1.quest.clearComplete2 = true;
+                }
                 //Victory
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("=============================================================");
                 Console.WriteLine();
-                Console.WriteLine($"던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
-                // 아이템 나열
-                Console.ForegroundColor= ConsoleColor.White;
+                Console.WriteLine("                       [던전 탐험 결과]");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n              던전에서 몬스터 {monsterInStage.Count}마리를 잡았습니다.\n");
+                
+            }
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            Console.WriteLine("                         [캐릭터 정보]");
+            Console.WriteLine($"                     Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
+            Console.WriteLine($"                        HP {player1.stat.Hp} / {player1.stat.MaxHp}");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine("                   [던전에서 획득한 총 보상]\n");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine($"                         + {stageGold} Gold"); // 이번 스테이지 획득한 총골드의 양
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.WriteLine($"                         + {stageExp}  Exp"); // 이번 스테이지 획득한 총경험치 양
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            foreach (KeyValuePair<string, int> earn_item in Drop_Items)
+            {
+                Console.WriteLine($"                        {earn_item.Key} X {earn_item.Value}"); // 이번 스테이지에서 획득한 아이템 나열
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Lv.{player1.stat.Level}  {player1.Name} ({player1.stat.job}) ");
-            Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
-            Console.WriteLine();
+            Console.WriteLine("=============================================================");
+
             Console.WriteLine("0. 마을로 돌아가기");
             Console.WriteLine(">>");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
-            
+            Console.Clear();
             player1.program.SelectAct(player1); // 메인메뉴로 되돌아가기
 
         }

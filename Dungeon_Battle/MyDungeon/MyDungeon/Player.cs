@@ -26,9 +26,12 @@ namespace MyDungeon
         Market market;
         Dungeon dungeon;
         Camp camp;
+        public Quest quest;
         public Program program;
         public Inventory inven; // 플레이어 인벤토리
-        Stage stage;
+        public Stage stage;
+        
+
 
         public bool skillUsing = false; // 스킬사용중 여부
 
@@ -92,7 +95,7 @@ namespace MyDungeon
                 // 크리티컬이 터진다.
                 dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!");
+                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!  ");
                 
             }
             
@@ -103,7 +106,8 @@ namespace MyDungeon
         public Player(string name)
         {
             Name = name;
-            stat = new Status(Name); 
+            stat = new Status(Name, this);
+            
             inven = new Inventory(name);
             stage = new Stage();
 
@@ -111,9 +115,9 @@ namespace MyDungeon
             dungeon = new Dungeon();
             camp = new Camp();
             program = new Program();
-
+            quest = new Quest();
             
-
+            
             //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
         }
@@ -136,14 +140,14 @@ namespace MyDungeon
             else if (stat.job == "도적") // 도적일 경우 세팅
             {
                 critical += 10;
-                criticalDmg += 10;
+                criticalDmg += 0.10f;
                 avoid += 10;
             }
             else if (stat.job == "궁수") // 궁수일 경우 세팅
             {
                 stat.Attack += 5;
                 critical += 15;
-                criticalDmg += 15;
+                criticalDmg += 0.15f;
             }
             else
             {
@@ -182,15 +186,20 @@ namespace MyDungeon
         {
             // 캐릭터 상태창을 띄우기전에 장비한 아이템의 정보가 반영되어야함
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######  ########    ###    ######## ##     ##  ######  \r\n##    ##    ##      ## ##      ##    ##     ## ##    ## \r\n##          ##     ##   ##     ##    ##     ## ##       \r\n ######     ##    ##     ##    ##    ##     ##  ######  \r\n      ##    ##    #########    ##    ##     ##       ## \r\n##    ##    ##    ##     ##    ##    ##     ## ##    ## \r\n ######     ##    ##     ##    ##     #######   ######  \r\n");
+
+
             (atkinc,definc) = inven.Item_Ability_Total(); // 상태창을 보여주기 전에 아이템 능력치의 총합을 반영함
 
             if (atkinc == 0 && definc == 0) // 아이템으로 인한 능력치 변화가 없을 때
             {
-                stat.Show_stat();   // 상태창
+                stat.Show_stat(0, 0);   // 상태창
             }
             else
             {
-                stat.Show_stat(atkinc, definc); // 능력치 변화의 존재
+                
+                stat.Show_stat(atkinc, definc, this); // 능력치 변화의 존재
             }
 
             
@@ -240,7 +249,12 @@ namespace MyDungeon
         {
             stage.Start(player);
         }
-        
+
+        public void QuestAccept(Player player)
+        {
+            Console.Clear();
+            quest.QuestScroll(player);
+        }
 
     }
 }

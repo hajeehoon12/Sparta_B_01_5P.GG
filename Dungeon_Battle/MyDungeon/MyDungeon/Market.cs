@@ -53,16 +53,20 @@ namespace MyDungeon
 
         public void Show_Market(Player player)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n ######  ########  #######  ########  ######## \r\n##    ##    ##    ##     ## ##     ## ##       \r\n##          ##    ##     ## ##     ## ##       \r\n ######     ##    ##     ## ########  ######   \r\n      ##    ##    ##     ## ##   ##   ##       \r\n##    ##    ##    ##     ## ##    ##  ##       \r\n ######     ##     #######  ##     ## ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n=================================================================================");
-            Console.WriteLine($" ★{market_Name}★ \n "); // 상점명
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"                                ★{market_Name}★ \n "); // 상점명
             
-            Console.WriteLine($"       [보유 골드] : {player.stat.Gold} G        \n"); // 플레이어 보유 골드 표시
-            Console.WriteLine("           [아이템 목록]           \n");
+            Console.WriteLine($"                             [보유 골드] : {player.stat.Gold} G        \n"); // 플레이어 보유 골드 표시
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("                                    [아이템 목록]           \n");
 
             for (int i = 0; i < Market_Item.Count; i++) // 인벤토리 표시
             {
-
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("- ");
                 
                 Console.Write($"{Market_Item[i].ItemName}");
@@ -80,6 +84,7 @@ namespace MyDungeon
                 }
                 Console.WriteLine(" "); //줄바꿈용
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("=================================================================================\n\n");
             Market_Menu(player); // 상점 선택창
 
@@ -90,10 +95,11 @@ namespace MyDungeon
             
             do
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("1. 아이템 구매");
                 Console.WriteLine("2. 아이템 판매");
                 Console.WriteLine("-1. 나가기");
-
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\n원하시는 행동을 숫자로 입력해주세요.\n");
                 Console.Write(">>");
                 actIsNum = int.TryParse(Console.ReadLine(), out act);
@@ -122,15 +128,19 @@ namespace MyDungeon
         {
 
 
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n########  ##     ## ########   ######  ##     ##    ###     ######  ######## \r\n##     ## ##     ## ##     ## ##    ## ##     ##   ## ##   ##    ## ##       \r\n##     ## ##     ## ##     ## ##       ##     ##  ##   ##  ##       ##       \r\n########  ##     ## ########  ##       ######### ##     ##  ######  ######   \r\n##        ##     ## ##   ##   ##       ##     ## #########       ## ##       \r\n##        ##     ## ##    ##  ##    ## ##     ## ##     ## ##    ## ##       \r\n##         #######  ##     ##  ######  ##     ## ##     ##  ######  ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n=================================================================================");
-            Console.WriteLine($" ★{market_Name} - 아이템 구매 ★\n"); // 상점명
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"                    ★{market_Name} - 아이템 구매 ★\n"); // 상점명
             
             
-            Console.WriteLine($"       [보유 골드] : {player.stat.Gold} G        \n"); // 플레이어 보유 골드 표시
-            Console.WriteLine("           [아이템 목록]           \n");
-
+            Console.WriteLine($"                     [보유 골드] : {player.stat.Gold} G        \n"); // 플레이어 보유 골드 표시
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("                                 [아이템 목록]           \n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             for (int i = 0; i < Market_Item.Count; i++) // 인벤토리 표시
             {
 
@@ -151,6 +161,7 @@ namespace MyDungeon
                 }
                 Console.WriteLine(" "); //줄바꿈용
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("=================================================================================\n\n");
 
 
@@ -222,23 +233,31 @@ namespace MyDungeon
         {
             List<ItemData> ItemInfo = new List<ItemData>();
             ItemInfo = player.inven.ItemInfo; // 얕은 복사 , 플레이어 인벤창 불러오기
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n ######     ###    ##       ######## \r\n##    ##   ## ##   ##       ##       \r\n##        ##   ##  ##       ##       \r\n ######  ##     ## ##       ######   \r\n      ## ######### ##       ##       \r\n##    ## ##     ## ##       ##       \r\n ######  ##     ## ######## ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n=================================================================================");
-            Console.WriteLine($"★{market_Name} - 판매★\n");
-            Console.WriteLine("           [아이템 목록]           \n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"                            ★{market_Name} - 판매★\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("                                  [아이템 목록]           \n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"\n\n보유골드 : {player.stat.Gold}\n");
+
 
             for (int i = 0; i < ItemInfo.Count; i++) // 인벤토리 표시
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"{i} ");
                 if (ItemInfo[i].IsEquip) Console.Write("[E]");
                 Console.Write($"{ItemInfo[i].ItemName}");
                 Console.Write($" X {ItemInfo[i].Amount}|");
                 if (ItemInfo[i].ItemAtk > 0) Console.Write($" 공격력 +{ItemInfo[i].ItemAtk.ToString("D4")} |");
                 if (ItemInfo[i].ItemDef > 0) Console.Write($" 방어력 +{ItemInfo[i].ItemDef.ToString("D4")} |");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 if (ItemInfo[i].ItemExp != null) Console.Write($"  {ItemInfo[i].ItemExp} \n");
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("=================================================================================\n\n");
             Market_Sale_Menu(player);
         }
@@ -261,7 +280,8 @@ namespace MyDungeon
             switch (act)
             {
                 case -1: // 바깥 메뉴로 가기
-                    Console.WriteLine("\n\n 조금 더 물건을 둘러봅니다.");
+                    Console.Clear();
+                    Console.WriteLine("\n\n물건 판매를 취소합니다.");
                     break;
                 default:
 
@@ -295,10 +315,12 @@ namespace MyDungeon
                         }
                         else if (player.stat.Gold < tempItemInfo[act].ItemPrice) // 골드 부족
                         {
+                            Console.Clear();
                             Console.WriteLine("Gold 가 부족합니다.");
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("불길한 오류입니다.");  // 알 수 없는 오류
                         }
 

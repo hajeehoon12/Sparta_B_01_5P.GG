@@ -20,11 +20,17 @@ namespace MyDungeon
             
         public void Camping(Player player)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\r\n ######     ###    ##     ## ########  \r\n##    ##   ## ##   ###   ### ##     ## \r\n##        ##   ##  #### #### ##     ## \r\n##       ##     ## ## ### ## ########  \r\n##       ######### ##     ## ##        \r\n##    ## ##     ## ##     ## ##        \r\n ######  ##     ## ##     ## ##        \r\n");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n==================================================================================\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("★[휴식하기]★\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"{price} G 를 내면 체력을 회복할 수 있습니다.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write($"(보유 골드 : {player.stat.Gold} G) \n\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"현재 체력 : {player.stat.Hp}, 최대 체력 : {player.stat.MaxHp}");
             Console.WriteLine("-1. 나가기");
             Console.WriteLine("0. 휴식하기 (잃은 체력의 절반 회복)");
@@ -37,7 +43,7 @@ namespace MyDungeon
 
             do
             {
-
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("\n원하시는 행동을 숫자로 입력해주세요 : ");
                 Console.Write(">>");
                 
@@ -55,13 +61,17 @@ namespace MyDungeon
 
                     if (player.stat.Gold >= 500)
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n\n==================================================================================\n");
                         Console.WriteLine($"{price} G 를 내고 휴식을 진행합니다. : 잃은 체력의 절반 회복");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\n[휴식 결과]\n");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine($"체력 {player.stat.Hp} -> 100");
                         Console.WriteLine($"Gold {player.stat.Gold} G-> {player.stat.Gold - price} ");
                         player.stat.Hp += (player.stat.MaxHp-player.stat.Hp)/2;
                         player.stat.Gold -= 500;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n\n==================================================================================\n");
                         Camping(player);
                         
@@ -75,6 +85,8 @@ namespace MyDungeon
             
                     break;
                 case 1: // 물약 사용
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
 
                     for (int i = 0; i < player.inven.ItemInfo.Count; i++)
                     {
@@ -95,7 +107,9 @@ namespace MyDungeon
                                     Console.WriteLine($"{player.inven.ItemInfo[i].ItemName} 을(를) 사용하여 체력을 {player.stat.MaxHp - player.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player.inven.ItemInfo[i].Amount})");
                                     player.stat.Hp = player.stat.MaxHp;
                                 }
+                                Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.Write($"현재 체력 : {player.stat.Hp}, 최대 체력 : {player.stat.MaxHp}");
+                                Console.WriteLine();
                                 Camping(player); // 물약 사용후 종료
                             }
                             else // 물약개수 동남
