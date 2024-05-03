@@ -120,6 +120,8 @@ namespace MyDungeon
             int randomLength;
             if (stage == 3) //스테이지가 3이면
                 randomLength = new Random().Next(2, 5); //2~4마리의 랜덤한 몬스터 생성
+            else if(stage ==1)
+                randomLength = new Random().Next(1, 1);
             else
                 randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
 
@@ -242,26 +244,32 @@ namespace MyDungeon
             foreach (Monster monster in monsterInStage)
             {
                 
-
-
                 if (monster.Health <= 0) // 몬스터가 죽은상태면 공격을 안함
                 {
                 }
                 else
                 {
-                    
-
-                    if (monster.Name == "바론")
+                    switch (monster.Name) // monster.name 에 따른 행동패턴 적용
                     {
-                        Skills.Namjak(player1);
-                        
+                        case "바론":
+                            Skills.BaronPattern(player1, monster);
+                            break;
+                        case "미니언":
+                            Skills.MinionPattern(player1, monster);
+                            break;
+                        case "공허충":
+                            Skills.WormPattern(player1, monster);
+                            break;
+                        case "머포미니언":
+                            Skills.CannonPattern(player1, monster);
+                            break;
+                        default: // 그 무엇도 해당안될 경우
+                            monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
+                            IsEnd(); // 끝났는지 검사
+                            Thread.Sleep(800);
+                            break;
                     }
-
-                    // if(monster.currentCoolTime != 0) monster.skilluse
-                    // else
-                    monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
-                    IsEnd(); // 끝났는지 검사
-                    Thread.Sleep(800);
+                    
                 }
             }
         }
@@ -282,6 +290,7 @@ namespace MyDungeon
             switch (actNum) // 플레이어가 공격 혹은 스킬 혹은 소모품을 사용
             {
                 case 1: // 플레이어의 일반 공격
+                    Console.WriteLine();
                     foreach (Monster monster in monsterInStage)
                     {
                         //Console.BackgroundColor = ConsoleColor.White;
@@ -483,6 +492,8 @@ namespace MyDungeon
                         {
                             if (player1.inven.ItemInfo[i].Amount >= 1)
                             {
+                                Console.WriteLine("");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine($"{player1.Name} 이(가) 현재 회복물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
                                 player1.inven.ItemInfo[i].Amount -= 1;
                                 usePotion = true; // 포션사용
@@ -496,7 +507,11 @@ namespace MyDungeon
                                     Console.WriteLine($"회복물약 을(를) 사용하여 체력을 {player1.stat.MaxHp - player1.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
                                     player1.stat.Hp = player1.stat.MaxHp;
                                 }
+
+                                Console.WriteLine(""); Thread.Sleep(800);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.Write($"플레이어 HP : {player1.stat.Hp} / {player1.stat.MaxHp}\n");
+                                Console.WriteLine();
                                 break;
                             }
                             else // 물약개수 동남
@@ -514,6 +529,8 @@ namespace MyDungeon
                     } 
                     break;
                 default: // 잘못된 값 입력
+                    Console.Clear();
+                    Console.WriteLine("제대로된 행동을 입력하세요.");
                     BattleStart(); // 플레이어 입력턴으로 원상복귀
                     break;
 

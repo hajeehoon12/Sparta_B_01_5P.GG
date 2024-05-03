@@ -11,11 +11,11 @@ namespace MyDungeon
         Program program = new Program();
         int act = 0;
         bool actIsNum = false;
-        int price = 500;
+        int price = 1000;
 
         public Camp()
         {
-            price = 500;
+            price = 1000;
         }
             
         public void Camping(Player player)
@@ -59,7 +59,7 @@ namespace MyDungeon
                     break;
                 case 0: // 휴식하기
 
-                    if (player.stat.Gold >= 500)
+                    if (player.stat.Gold >= price)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n\n==================================================================================\n");
@@ -67,10 +67,10 @@ namespace MyDungeon
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\n[휴식 결과]\n");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"체력 {player.stat.Hp} -> 100");
+                        Console.WriteLine($"체력 {player.stat.Hp} -> {player.stat.MaxHp}");
                         Console.WriteLine($"Gold {player.stat.Gold} G-> {player.stat.Gold - price} ");
                         player.stat.Hp += (player.stat.MaxHp-player.stat.Hp)/2;
-                        player.stat.Gold -= 500;
+                        player.stat.Gold -= price;
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n\n==================================================================================\n");
                         Camping(player);

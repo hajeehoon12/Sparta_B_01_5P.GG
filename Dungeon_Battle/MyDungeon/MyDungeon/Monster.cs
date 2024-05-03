@@ -20,6 +20,7 @@ namespace MyDungeon
         public int Health { get; set; }
         public int Attack { get; }
 
+        public int turn = 0;
         //List<ItemData> Drop_Item;
         public int DropGold { get; set; }   //보상 골드
         public int DropExp { get; set; }    //보상 경험치
@@ -40,6 +41,7 @@ namespace MyDungeon
             Health = health;
             Attack = attack;
             Avoid = 10;// 원래 회피율 10%; // 테스트를 위해 회피율 임시 조정
+            //turn = 0;
         }
 
         public void Reward(Player player) // 몬스터의 드랍 아이템
@@ -243,7 +245,7 @@ namespace MyDungeon
                     break;
                 case 4: // 소모품 : 체력 물약
                     if (dropPercent > 40)
-                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 3), "사용하면 체력을 50 회복합니다."));
+                        Drop_Item.Add(new ItemData(4, "회복물약", 0, 0, 20, new Random().Next(1, 3), "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
                     break;
                 case 5: // 잡템 : 미니언의 거적떼기, 루비 수정
                     if (dropPercent > 20)
@@ -296,7 +298,7 @@ namespace MyDungeon
                     break;
                 case 4: // 소모품 : 체력 물약
                     if (dropPercent > 40)
-                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 3), "사용하면 체력을 50 회복합니다."));
+                        Drop_Item.Add(new ItemData(4, "회복물약", 0, 0, 20, new Random().Next(1, 3), "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
                     break;
                 case 5: //잡템 : 사파이어 수정, 새끼 바람돌이
                     if (dropPercent > 80)
@@ -343,7 +345,7 @@ namespace MyDungeon
                     break;
                 case 4: //소모아이템 : 체력 물약
                     if (dropPercent > 40)
-                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
+                        Drop_Item.Add(new ItemData(4, "회복물약", 0, 0, 20, new Random().Next(1, 5), "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
                     break;
                 case 5: //잡템 : 새끼 이끼 쿵쿵이, 새끼 화염발톱
                     if (dropPercent > 70)
@@ -397,7 +399,7 @@ namespace MyDungeon
                     break;
                 case 4: //소모아이템 : 체력 물약
                     if (dropPercent > 40)
-                        Drop_Item.Add(new ItemData(4, "체력 물약", 0, 0, 20, new Random().Next(1, 5), "사용하면 체력을 50 회복합니다."));
+                        Drop_Item.Add(new ItemData(4, "회복물약", 0, 0, 20, new Random().Next(1, 5), "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
                     break;
                 case 5: //잡템 : 여신의 눈물, 에테르 환영
                     if (dropPercent > 70)
