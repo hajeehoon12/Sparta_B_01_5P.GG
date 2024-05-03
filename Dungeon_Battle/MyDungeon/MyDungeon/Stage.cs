@@ -12,7 +12,7 @@ namespace MyDungeon
 {
     public class Stage
     {
-        enum MonsterSpices { Minion, Worm, CanonMinion, baron};   //몬스터 종류
+        public enum MonsterSpices { Minion, Worm, CanonMinion, baron};   //몬스터 종류
 
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
@@ -121,7 +121,7 @@ namespace MyDungeon
             if (stage == 3) //스테이지가 3이면
                 randomLength = new Random().Next(2, 5); //2~4마리의 랜덤한 몬스터 생성
             else if(stage ==1)
-                randomLength = new Random().Next(1, 1);
+                randomLength = new Random().Next(1, 2);
             else
                 randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
 
@@ -232,7 +232,20 @@ namespace MyDungeon
         public void BattleTurn(int actNum) // 입력받은 값을 통해 플레이어와 몬스터의 턴이 진행됨 // 플레이어의 행동값 1.공격 2.스킬 3. 소모품 사용 등
         {
             inFight = true; // 전투중 (첫턴이아님)
-            PlayerTurn(actNum); // 플레이어 턴 진행
+
+            if (!player1.skipTurn) // 턴 스킵 false일 경우 //몬스터 디버프용 스킬
+            {
+                PlayerTurn(actNum); // 플레이어 턴 진행
+            }
+            else // 턴 스킵할 경우
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{player1.Name} 이(가) [행동불가] 디버프 상태입니다. 턴이 자동으로 스킵됩니다.."); Thread.Sleep(2000);
+
+                Console.Clear();
+                
+                Console.WriteLine($"{player1.Name} 이(가) [행동불가] 디버프 상태입니다. 턴이 자동으로 스킵됩니다..");
+            }
                                 
             Thread.Sleep(800);
             MonsterTurn();  // 몬스터 턴 진행
@@ -545,15 +558,20 @@ namespace MyDungeon
         {
             switch (IsBattleEnd())
             {
-                case 1:
-                    Console.WriteLine("플레이어 패배");
-                    BattleStart(); // 일단은 재시작으로 설정 나중에 GameOver Scene 만들예정
+                case 1: // 플레이어 패배
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\r\n##    ##  #######  ##     ##    ##        #######   ######  ######## \r\n ##  ##  ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n  ####   ##     ## ##     ##    ##       ##     ## ##       ##       \r\n   ##    ##     ## ##     ##    ##       ##     ##  ######  ######   \r\n   ##    ##     ## ##     ##    ##       ##     ##       ## ##       \r\n   ##    ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n   ##     #######   #######     ########  #######   ######  ######## \r\n");
+                    Console.WriteLine("\n3초 뒤에 자동으로 메인 화면으로 돌아갑니다."); Thread.Sleep(1000);
+                    Console.WriteLine($"{player1.Name} 의 체력 0 -> 1"); 
+                    Thread.Sleep(3000);
+                    player1.program.SelectAct(player1);
                     break;
-                case 2:
+                case 2: // 플레이어 스테이지 클리어
                     Console.WriteLine("\r\n##     ## ####  ######  ########  #######  ########  ##    ## #### #### \r\n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##  ##  #### #### \r\n##     ##  ##  ##          ##    ##     ## ##     ##   ####   #### #### \r\n##     ##  ##  ##          ##    ##     ## ########     ##     ##   ##  \r\n ##   ##   ##  ##          ##    ##     ## ##   ##      ##              \r\n  ## ##    ##  ##    ##    ##    ##     ## ##    ##     ##    #### #### \r\n   ###    ####  ######     ##     #######  ##     ##    ##    #### #### \r\n");
                     //Console.WriteLine("플레이어 승리");
-                    BattleResult();
-                    Console.ReadLine(); // 출력확인용 입력대기
+                    BattleResult(); // 결과판 출력
+                    Console.WriteLine("5초 뒤에 자동으로 던전 선택창으로 나가집니다.");
+                    Thread.Sleep(5000);
                     Start(player1);
                     break;
                 default: // 0
@@ -585,7 +603,7 @@ namespace MyDungeon
         }
 
 
-        private void CreateMonster(MonsterSpices monsterIdx)  //랜덤으로 몬스터 생성
+        public void CreateMonster(MonsterSpices monsterIdx)  //랜덤으로 몬스터 생성
         {
             switch (monsterIdx)
             {

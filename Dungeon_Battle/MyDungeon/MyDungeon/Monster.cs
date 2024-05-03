@@ -18,7 +18,7 @@ namespace MyDungeon
         public string Name { get; }
         public int Level { get; }
         public int Health { get; set; }
-        public int Attack { get; }
+        public int Attack { get; set; }
 
         public int turn = 0;
         //List<ItemData> Drop_Item;
@@ -361,7 +361,7 @@ namespace MyDungeon
 
     class baron : Monster // 바론
     {
-        public baron(string name) : base(name, 10, 50, 10)
+        public baron(string name) : base(name, 10, 70, 10)
         {
 
             add_Drop_Item();
