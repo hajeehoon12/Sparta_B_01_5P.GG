@@ -78,63 +78,48 @@ namespace MyDungeon
         static public void MinionPattern(Player player, Monster monster)
         {
             int monsterAct = 0;
-
+            bool attackbuff = false;
             monsterAct = rand.Next(0, 4);
 
             switch (monsterAct)
             {
                 case 0:
-                    if (monster.Attack > 3)
+                    
+                    monster.Attack *= 2;
+                    
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine();
+                    Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
+                    Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
+                    if (attackbuff)
                     {
                         monster.Attack /= 2;
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine();
-                        Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
-                        Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
-                        monster.Attack = 2;
+                        attackbuff = false;
                     }
-                    else
-                    {
-                        monster.Attack = 2;
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine();
-                        Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
-                        Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
-                    }
+                    attackbuff = true;
                     break;
-
                 case 1:
+                    
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"\"미니언\"이 한눈 팔려 공격을 하지 않습니다!");
-                    break;
-                case 2:
-                    if (monster.Attack > 3)
+                    if (attackbuff)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("\"미니언\" 의 회심의 연속 공격!!");
-                        monster.HitDamage(player, monster);
-                        monster.HitDamage(player, monster);
                         monster.Attack /= 2;
                     }
-                    else
+                    break;
+                case 2:
+                    
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\"미니언\" 의 회심의 연속 공격!!");
+                    monster.HitDamage(player, monster);
+                    monster.HitDamage(player, monster);
+                    if (attackbuff)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("\"미니언\" 의 회심의 연속 공격!!");
-                        monster.HitDamage(player, monster);
-                        monster.HitDamage(player, monster);
+                        monster.Attack /= 2;
                     }
                     break;
                 default:
-                    if (monster.Attack > 3)
-                    {
-                        monster.HitDamage(player, monster);
-                        monster.Attack /= 2;
-                    }
-                    else
-                    {
-                        monster.HitDamage(player, monster);
-                    }
-                    monster.HitDamage(player, monster);
+                   
                     break;
 
 
