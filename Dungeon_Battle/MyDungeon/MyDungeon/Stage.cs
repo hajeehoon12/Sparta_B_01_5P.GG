@@ -12,11 +12,11 @@ namespace MyDungeon
 {
     public class Stage
     {
-        enum MonsterSpices { Minion, Worm, CanonMinion };   //몬스터 종류
+        public enum MonsterSpices { Minion, Worm, CanonMinion, baron};   //몬스터 종류
 
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
-        int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
+        int[] monstersCount = { 0, 0, 0 , 0};  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
 
         public int stageExp = 0;
         public int stageGold = 0;
@@ -49,7 +49,7 @@ namespace MyDungeon
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("0. 마을로 돌아가기\n");
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
 
                 if (player1.CurStage > i)
@@ -118,20 +118,33 @@ namespace MyDungeon
                 monstersCount[i] = 0;   //몬스터 종류 수 초기
             
             int randomLength;
-            if (stage == 3) //스테이지가 3이면
-                randomLength = new Random().Next(2, 5); //2~4마리의 랜덤한 몬스터 생성
-            else
+            if (stage == 2 || stage == 3) //스테이지가 2,3이면
+            {
+                randomLength = new Random().Next(2, 5); //2~4마리 랜덤한 몬스터 생성
+            }
+            else if (stage == 1)
+            {
                 randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
+            }
+            else
+            {
+                randomLength = new Random().Next(1, 2); // 보스전 몬스터한마리만 생성
+            }
+         
 
             for (int i = 0; i < randomLength; i++)
             {
                 switch (stage)  //몬스터 리스트에 몬스터 추가
                 {
                     case 1: //스테이지 1
+                        
                         if (monstersCount[(int)MonsterSpices.Worm] >= 2)    //공허충이 2마리가 넘어가면
-                            CreateMonster(MonsterSpices.Minion);    //나머지를 미니온으로
+                            //CreateMonster(MonsterSpices.baron);
+                            CreateMonster(MonsterSpices.Minion);    //나머지를 미니언으로
                         else
+                            //CreateMonster(MonsterSpices.baron);
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
+
                         break;
                     case 2: //스테이지 2
                         if (i == (randomLength - 1) && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면
@@ -148,6 +161,9 @@ namespace MyDungeon
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
                         else
                             CreateMonster((MonsterSpices)new Random().Next(0, 3));
+                        break;
+                    case 4:
+                        CreateMonster(MonsterSpices.baron);
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
@@ -226,7 +242,20 @@ namespace MyDungeon
         public void BattleTurn(int actNum) // 입력받은 값을 통해 플레이어와 몬스터의 턴이 진행됨 // 플레이어의 행동값 1.공격 2.스킬 3. 소모품 사용 등
         {
             inFight = true; // 전투중 (첫턴이아님)
-            PlayerTurn(actNum); // 플레이어 턴 진행
+
+            if (!player1.skipTurn) // 턴 스킵 false일 경우 //몬스터 디버프용 스킬
+            {
+                PlayerTurn(actNum); // 플레이어 턴 진행
+            }
+            else // 턴 스킵할 경우
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{player1.Name} 이(가) [행동불가] 디버프 상태입니다. 턴이 자동으로 스킵됩니다.."); Thread.Sleep(2000);
+
+                Console.Clear();
+                
+                Console.WriteLine($"{player1.Name} 이(가) [행동불가] 디버프 상태입니다. 턴이 자동으로 스킵됩니다..");
+            }
                                 
             Thread.Sleep(800);
             MonsterTurn();  // 몬스터 턴 진행
@@ -237,16 +266,33 @@ namespace MyDungeon
         {
             foreach (Monster monster in monsterInStage)
             {
+                
                 if (monster.Health <= 0) // 몬스터가 죽은상태면 공격을 안함
                 {
                 }
                 else
                 {
-                    // if(monster.currentCoolTime != 0) monster.skilluse
-                    // else
-                    monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
-                    IsEnd(); // 끝났는지 검사
-                    Thread.Sleep(800);
+                    switch (monster.Name) // monster.name 에 따른 행동패턴 적용
+                    {
+                        case "바론":
+                            Skills.BaronPattern(player1, monster);
+                            break;
+                        case "미니언":
+                            Skills.MinionPattern(player1, monster);
+                            break;
+                        case "공허충":
+                            Skills.WormPattern(player1, monster);
+                            break;
+                        case "머포미니언":
+                            Skills.CannonPattern(player1, monster);
+                            break;
+                        default: // 그 무엇도 해당안될 경우
+                            monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
+                            IsEnd(); // 끝났는지 검사
+                            Thread.Sleep(800);
+                            break;
+                    }
+                    
                 }
             }
         }
@@ -267,6 +313,7 @@ namespace MyDungeon
             switch (actNum) // 플레이어가 공격 혹은 스킬 혹은 소모품을 사용
             {
                 case 1: // 플레이어의 일반 공격
+                    Console.WriteLine();
                     foreach (Monster monster in monsterInStage)
                     {
                         //Console.BackgroundColor = ConsoleColor.White;
@@ -468,6 +515,8 @@ namespace MyDungeon
                         {
                             if (player1.inven.ItemInfo[i].Amount >= 1)
                             {
+                                Console.WriteLine("");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine($"{player1.Name} 이(가) 현재 회복물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
                                 player1.inven.ItemInfo[i].Amount -= 1;
                                 usePotion = true; // 포션사용
@@ -481,7 +530,11 @@ namespace MyDungeon
                                     Console.WriteLine($"회복물약 을(를) 사용하여 체력을 {player1.stat.MaxHp - player1.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
                                     player1.stat.Hp = player1.stat.MaxHp;
                                 }
+
+                                Console.WriteLine(""); Thread.Sleep(800);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.Write($"플레이어 HP : {player1.stat.Hp} / {player1.stat.MaxHp}\n");
+                                Console.WriteLine();
                                 break;
                             }
                             else // 물약개수 동남
@@ -499,6 +552,8 @@ namespace MyDungeon
                     } 
                     break;
                 default: // 잘못된 값 입력
+                    Console.Clear();
+                    Console.WriteLine("제대로된 행동을 입력하세요.");
                     BattleStart(); // 플레이어 입력턴으로 원상복귀
                     break;
 
@@ -513,15 +568,20 @@ namespace MyDungeon
         {
             switch (IsBattleEnd())
             {
-                case 1:
-                    Console.WriteLine("플레이어 패배");
-                    BattleStart(); // 일단은 재시작으로 설정 나중에 GameOver Scene 만들예정
+                case 1: // 플레이어 패배
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\r\n##    ##  #######  ##     ##    ##        #######   ######  ######## \r\n ##  ##  ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n  ####   ##     ## ##     ##    ##       ##     ## ##       ##       \r\n   ##    ##     ## ##     ##    ##       ##     ##  ######  ######   \r\n   ##    ##     ## ##     ##    ##       ##     ##       ## ##       \r\n   ##    ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n   ##     #######   #######     ########  #######   ######  ######## \r\n");
+                    Console.WriteLine("\n3초 뒤에 자동으로 메인 화면으로 돌아갑니다."); Thread.Sleep(1000);
+                    Console.WriteLine($"{player1.Name} 의 체력 0 -> 1"); 
+                    Thread.Sleep(3000);
+                    player1.program.SelectAct(player1);
                     break;
-                case 2:
+                case 2: // 플레이어 스테이지 클리어
                     Console.WriteLine("\r\n##     ## ####  ######  ########  #######  ########  ##    ## #### #### \r\n##     ##  ##  ##    ##    ##    ##     ## ##     ##  ##  ##  #### #### \r\n##     ##  ##  ##          ##    ##     ## ##     ##   ####   #### #### \r\n##     ##  ##  ##          ##    ##     ## ########     ##     ##   ##  \r\n ##   ##   ##  ##          ##    ##     ## ##   ##      ##              \r\n  ## ##    ##  ##    ##    ##    ##     ## ##    ##     ##    #### #### \r\n   ###    ####  ######     ##     #######  ##     ##    ##    #### #### \r\n");
                     //Console.WriteLine("플레이어 승리");
-                    BattleResult();
-                    Console.ReadLine(); // 출력확인용 입력대기
+                    BattleResult(); // 결과판 출력
+                    Console.WriteLine("5초 뒤에 자동으로 던전 선택창으로 나가집니다.");
+                    Thread.Sleep(5000);
                     Start(player1);
                     break;
                 default: // 0
@@ -553,7 +613,7 @@ namespace MyDungeon
         }
 
 
-        private void CreateMonster(MonsterSpices monsterIdx)  //랜덤으로 몬스터 생성
+        public void CreateMonster(MonsterSpices monsterIdx)  //랜덤으로 몬스터 생성
         {
             switch (monsterIdx)
             {
@@ -567,8 +627,12 @@ namespace MyDungeon
                     monstersCount[(int)MonsterSpices.Worm]++;
                     break;
                 case MonsterSpices.CanonMinion:
-                    monsterInStage.Add(new CannonMinion("머포 미니언"));
+                    monsterInStage.Add(new CannonMinion("머포미니언"));
                     monstersCount[(int)MonsterSpices.CanonMinion]++;
+                    break;
+                case MonsterSpices.baron:
+                    monsterInStage.Add(new baron("바론"));
+                    monstersCount[(int)MonsterSpices.baron]++;
                     break;
             }
         }

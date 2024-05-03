@@ -30,8 +30,8 @@ namespace MyDungeon
         public Program program;
         public Inventory inven; // 플레이어 인벤토리
         public Stage stage;
-        
 
+        public bool skipTurn = false; // 플레이어 턴 스킵용 변수
 
         public bool skillUsing = false; // 스킬사용중 여부
 

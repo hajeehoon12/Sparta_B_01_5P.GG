@@ -17,11 +17,8 @@ namespace MyDungeon
         public int Defense { get; set; }
         public int Hp { get; set; }
         public float Gold { get; set; }
-
         public int MaxHp { get; set; }
-
         public int Exp { get; set; }
-
         public int AttackInc { get; set; }
         public int DefInc { get; set; }
         public string job { get; set; }
@@ -36,7 +33,7 @@ namespace MyDungeon
             Attack = 10;
             Defense = 8;
             Hp = 100;
-            Gold = 1000;
+            Gold = 100000;
             Exp = 0;
             MaxHp = 100;
             player = player1;
@@ -239,6 +236,7 @@ namespace MyDungeon
 
                 default:
                     Console.WriteLine("\n=====잘못된 입력입니다. 다시 입력해주세요=====");
+                    Console.Clear();
                     Show_stat();
                     Stat_menu();
                     break;
@@ -255,12 +253,14 @@ namespace MyDungeon
                 Level += 1;
                 
                 MaxHp += 20;
+                Hp += 20;
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{Name} 의 레벨이 상승했습니다!!\n");
-                Console.WriteLine($"Lv. {Level - 1} -> {Level}");  
+                Console.WriteLine($"Lv. {Level - 1} -> {Level}");
                 Console.WriteLine($"공격력 {Attack - 1} -> {Attack}");
                 Console.WriteLine($"방어력 {Defense-2} -> {Defense}\n");
-                
+                Console.WriteLine($"최대체력 {MaxHp - 20} -> {MaxHp + 20}");
+
             }
         }
 

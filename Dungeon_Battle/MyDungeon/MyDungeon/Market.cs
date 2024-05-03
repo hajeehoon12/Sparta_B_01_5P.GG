@@ -35,7 +35,7 @@ namespace MyDungeon
             Market_Item.Add(new ItemData(1, "강철 방패", 10, 10, 5000, 1, "무겁지만 제성능을 톡톡히 해내는 강철로 만든 방패"));
             Market_Item.Add(new ItemData(2, "화려한목걸이", 15, 15, 30000, 1, "사용자에게 미지의 힘을 화려한 목걸이"));
 
-            Market_Item.Add(new ItemData(4, "회복물약", 0, 0, 1000, 99, "사용자의 상처를 치유하고 활력이 돋게 하는 물약"));
+            Market_Item.Add(new ItemData(4, "회복물약", 0, 0, 1000, 99, "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
 
             
 
@@ -119,7 +119,7 @@ namespace MyDungeon
                     break;
                 default:
                     Console.WriteLine("\n=====잘못된 입력입니다. 다시 입력해주세요=====");
-                    Market_Menu(player);
+                    Show_Market(player);
                     break;
             }
         }
@@ -212,6 +212,7 @@ namespace MyDungeon
                         else if (player.stat.Gold >= Market_Item[act].ItemPrice || Market_Item[act].Amount > 0) // 정상구매
                         {
                             player.stat.Gold -= Market_Item[act].ItemPrice;
+                            
                             Console.WriteLine($"\n☆\"{Market_Item[act].ItemName}\" 아이템을 구매했습니다.☆");
                             Market_Item[act].Amount -= 1;
                             tempItem = DeepCopy(act);
@@ -289,8 +290,9 @@ namespace MyDungeon
                     if (act > tempItemInfo.Count - 1 || act < -1) // 상점의 아이템 데이터 범위를 벗어날 경우
                     {
                         Console.Clear();
+
                         Console.WriteLine("존재하지 않는 아이템을 선택하셨습니다.");
-                        Market_Sale_Menu(player);
+                        Market_Sale(player);
                     }
                     if (tempItemInfo[act] != null)
                     {
@@ -302,7 +304,7 @@ namespace MyDungeon
                         {
                             
                             player.stat.Gold += (int)((tempItemInfo[act].ItemPrice) * 0.85);
-
+                            Console.Clear();
                             Console.WriteLine($"\"{tempItemInfo[act].ItemName}\" 아이템을 판매했습니다.");
 
                             ItemData choosedItem = new ItemData(tempItemInfo[act].ItemType, $"{tempItemInfo[act].ItemName}",
