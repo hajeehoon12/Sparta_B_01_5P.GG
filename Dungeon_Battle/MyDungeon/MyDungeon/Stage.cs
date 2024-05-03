@@ -235,6 +235,9 @@ namespace MyDungeon
         {
             foreach (Monster monster in monsterInStage)
             {
+
+
+                // 스킬 넣을 자리 확률 추가
                 if (monster.Health <= 0) // 몬스터가 죽은상태면 공격을 안함
                 {
                 }

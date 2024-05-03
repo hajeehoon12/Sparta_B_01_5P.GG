@@ -213,7 +213,7 @@ namespace MyDungeon
         static void Main()
         {
             
-            Console.SetWindowSize(120, 70); // 콘솔창 크기 조절
+            Console.SetWindowSize(120, 60); // 콘솔창 크기 조절
 
 
             
