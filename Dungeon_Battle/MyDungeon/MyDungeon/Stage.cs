@@ -12,11 +12,11 @@ namespace MyDungeon
 {
     public class Stage
     {
-        enum MonsterSpices { Minion, Worm, CanonMinion };   //몬스터 종류
+        enum MonsterSpices { Minion, Worm, CanonMinion, baron};   //몬스터 종류
 
         Player player1;
         List<Monster> monsterInStage;   //스테이지에 몬스터 4마리 출현할 리스트
-        int[] monstersCount = { 0, 0, 0 };  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
+        int[] monstersCount = { 0, 0, 0 , 0};  //스테이지에 있는 몬스터 종류의 수 (미니온, 공허춘, 대포 순으로)
 
         public int stageExp = 0;
         public int stageGold = 0;
@@ -128,10 +128,14 @@ namespace MyDungeon
                 switch (stage)  //몬스터 리스트에 몬스터 추가
                 {
                     case 1: //스테이지 1
+                        
                         if (monstersCount[(int)MonsterSpices.Worm] >= 2)    //공허충이 2마리가 넘어가면
-                            CreateMonster(MonsterSpices.Minion);    //나머지를 미니온으로
+                            CreateMonster(MonsterSpices.baron);
+                            //CreateMonster(MonsterSpices.Minion);    //나머지를 미니온으로
                         else
-                            CreateMonster((MonsterSpices)new Random().Next(0, 2));
+                            CreateMonster(MonsterSpices.baron);
+                            //CreateMonster((MonsterSpices)new Random().Next(0, 2));
+
                         break;
                     case 2: //스테이지 2
                         if (i == (randomLength - 1) && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면
@@ -237,11 +241,22 @@ namespace MyDungeon
         {
             foreach (Monster monster in monsterInStage)
             {
+                
+
+
                 if (monster.Health <= 0) // 몬스터가 죽은상태면 공격을 안함
                 {
                 }
                 else
                 {
+                    
+
+                    if (monster.Name == "바론")
+                    {
+                        Skills.Namjak(player1);
+                        
+                    }
+
                     // if(monster.currentCoolTime != 0) monster.skilluse
                     // else
                     monster.HitDamage(player1, monster); // 몬스터가 플레이어에게 일반 공격 함수
@@ -569,6 +584,10 @@ namespace MyDungeon
                 case MonsterSpices.CanonMinion:
                     monsterInStage.Add(new CannonMinion("머포 미니언"));
                     monstersCount[(int)MonsterSpices.CanonMinion]++;
+                    break;
+                case MonsterSpices.baron:
+                    monsterInStage.Add(new baron("바론"));
+                    monstersCount[(int)MonsterSpices.baron]++;
                     break;
             }
         }

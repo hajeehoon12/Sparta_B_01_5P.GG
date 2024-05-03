@@ -8,52 +8,30 @@ namespace MyDungeon
 {
     public class Skills
     {
-        public string Name { get; }
-        public int Attack { get; }
-        public int Cooldown { get; }
-        public int Currentcooldown { get; set; }
-        public Action<Player> Effect { get; }
 
-        public Skills(string name, int attack, int cooldown, Action<Player> effect = null)
-        {
-            Name = name;
-            Attack = attack;
-            Cooldown = cooldown;
-            Currentcooldown = 0;
-            Effect = effect;
-        }
 
-        public bool IsReady()
-        {
-            if (Currentcooldown <= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        public void UseSkill(Player player)
-        {
-            if (IsReady())
-            {
-                Console.WriteLine($"스킬 {Name}을(를) 사용했습니다!");
-                if (Effect != null) // 특수효과가 있다면 적용
-                {
-                    Effect(player);
-                }
 
-                Currentcooldown = Cooldown;
-            }
-        }
-        public void TickCooldown()
+
+
+
+
+        static public void Namjak(Player player)
         {
-            if (Currentcooldown > 0)
+
+
+
+
+            if (true) // 20% + cooltime 적용 
             {
-                Currentcooldown = Currentcooldown - 1; // 쿨다운 감소
+                player.stat.AttackInc -= 5;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
+                Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
+                Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 5} -> {player.stat.Attack}");
             }
+            
+
         }
 
     }
