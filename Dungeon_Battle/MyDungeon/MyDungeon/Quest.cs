@@ -11,7 +11,6 @@ namespace MyDungeon
     public class Quest
     {
 
-
         public bool compleat = false; // 1번 퀘스트 완료 여부
         public bool accept; // 1번 퀘스트 수락 여부
         public string questItem; // 퀘스트 관련 아이템
