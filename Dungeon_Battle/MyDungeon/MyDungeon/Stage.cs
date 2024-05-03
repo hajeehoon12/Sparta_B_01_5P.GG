@@ -49,7 +49,7 @@ namespace MyDungeon
             Console.WriteLine("\n스테이지를 선택하세요.\n\n");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("0. 마을로 돌아가기\n");
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
 
                 if (player1.CurStage > i)
@@ -118,12 +118,19 @@ namespace MyDungeon
                 monstersCount[i] = 0;   //몬스터 종류 수 초기
             
             int randomLength;
-            if (stage == 3) //스테이지가 3이면
-                randomLength = new Random().Next(2, 5); //2~4마리의 랜덤한 몬스터 생성
-            else if(stage ==1)
-                randomLength = new Random().Next(1, 2);
-            else
+            if (stage == 2 || stage == 3) //스테이지가 2,3이면
+            {
+                randomLength = new Random().Next(2, 5); //2~4마리 랜덤한 몬스터 생성
+            }
+            else if (stage == 1)
+            {
                 randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
+            }
+            else
+            {
+                randomLength = new Random().Next(1, 2); // 보스전 몬스터한마리만 생성
+            }
+         
 
             for (int i = 0; i < randomLength; i++)
             {
@@ -132,11 +139,11 @@ namespace MyDungeon
                     case 1: //스테이지 1
                         
                         if (monstersCount[(int)MonsterSpices.Worm] >= 2)    //공허충이 2마리가 넘어가면
-                            CreateMonster(MonsterSpices.baron);
-                            //CreateMonster(MonsterSpices.Minion);    //나머지를 미니온으로
+                            //CreateMonster(MonsterSpices.baron);
+                            CreateMonster(MonsterSpices.Minion);    //나머지를 미니온으로
                         else
-                            CreateMonster(MonsterSpices.baron);
-                            //CreateMonster((MonsterSpices)new Random().Next(0, 2));
+                            //CreateMonster(MonsterSpices.baron);
+                            CreateMonster((MonsterSpices)new Random().Next(0, 2));
 
                         break;
                     case 2: //스테이지 2
@@ -154,6 +161,9 @@ namespace MyDungeon
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
                         else
                             CreateMonster((MonsterSpices)new Random().Next(0, 3));
+                        break;
+                    case 4:
+                        CreateMonster(MonsterSpices.baron);
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");

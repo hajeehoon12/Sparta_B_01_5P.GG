@@ -33,7 +33,7 @@ namespace MyDungeon
             Attack = 10;
             Defense = 8;
             Hp = 100;
-            Gold = 1000;
+            Gold = 100000;
             Exp = 0;
             MaxHp = 100;
             player = player1;

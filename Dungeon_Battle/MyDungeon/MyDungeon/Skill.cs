@@ -167,7 +167,7 @@ namespace MyDungeon
                     Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 5} -> {player.stat.Attack}");
 
                     break;
-                case 2:
+                case 1:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Boss[바론] 이 엄청강력한 스킬을 준비중입니다..");
                     Console.Write("."); Thread.Sleep(500);
@@ -177,17 +177,10 @@ namespace MyDungeon
                     Console.WriteLine("조심하세요..");
 
                     break;
-                case 1:
-
-
-                    player.stage.CreateMonster(Stage.MonsterSpices.baron);
-                    Console.WriteLine("잡몹 생성");
-
-                    break;
-
+     
 
                 
-                case 7:
+                case 2:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Boss[바론] 이 [석화의 응시] 을(를) 사용!!"); Thread.Sleep(1000);
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -245,6 +238,15 @@ namespace MyDungeon
 
                     monster.HitDamage(player, monster); Thread.Sleep(800);
                     monster.HitDamage(player, monster); Thread.Sleep(800);
+                    break;
+                case 7:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine();
+                    Console.WriteLine($"Boss[바론] 의 [꼬리 휘두르기]!!"); Thread.Sleep(800);
+
+                    Console.WriteLine($"{player.Name} 에게 강력한 데미지를 입힙니다!!"); Thread.Sleep(800);
+
+                    monster.HitDamage(player, monster); Thread.Sleep(800);  
                     break;
 
                 default:
