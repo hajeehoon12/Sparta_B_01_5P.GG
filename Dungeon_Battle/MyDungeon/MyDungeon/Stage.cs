@@ -514,6 +514,8 @@ namespace MyDungeon
                     } 
                     break;
                 default: // 잘못된 값 입력
+                    Console.Clear();
+                    Console.WriteLine("제대로된 행동을 입력하세요.");
                     BattleStart(); // 플레이어 입력턴으로 원상복귀
                     break;
 
