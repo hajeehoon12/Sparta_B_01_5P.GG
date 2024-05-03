@@ -119,7 +119,7 @@ namespace MyDungeon
                     break;
                 default:
                     Console.WriteLine("\n=====잘못된 입력입니다. 다시 입력해주세요=====");
-                    Market_Menu(player);
+                    Show_Market(player);
                     break;
             }
         }
@@ -212,6 +212,7 @@ namespace MyDungeon
                         else if (player.stat.Gold >= Market_Item[act].ItemPrice || Market_Item[act].Amount > 0) // 정상구매
                         {
                             player.stat.Gold -= Market_Item[act].ItemPrice;
+                            
                             Console.WriteLine($"\n☆\"{Market_Item[act].ItemName}\" 아이템을 구매했습니다.☆");
                             Market_Item[act].Amount -= 1;
                             tempItem = DeepCopy(act);
@@ -289,8 +290,9 @@ namespace MyDungeon
                     if (act > tempItemInfo.Count - 1 || act < -1) // 상점의 아이템 데이터 범위를 벗어날 경우
                     {
                         Console.Clear();
+
                         Console.WriteLine("존재하지 않는 아이템을 선택하셨습니다.");
-                        Market_Sale_Menu(player);
+                        Market_Sale(player);
                     }
                     if (tempItemInfo[act] != null)
                     {
@@ -302,7 +304,7 @@ namespace MyDungeon
                         {
                             
                             player.stat.Gold += (int)((tempItemInfo[act].ItemPrice) * 0.85);
-
+                            Console.Clear();
                             Console.WriteLine($"\"{tempItemInfo[act].ItemName}\" 아이템을 판매했습니다.");
 
                             ItemData choosedItem = new ItemData(tempItemInfo[act].ItemType, $"{tempItemInfo[act].ItemName}",

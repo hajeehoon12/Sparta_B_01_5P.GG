@@ -364,9 +364,12 @@ namespace MyDungeon
 
             add_Drop_Item();
             // 디버프 스킬 추가
-            Skills debuffSkill = new Skills("남작의 시선", 0, 3, player => player.stat.Attack -= 5);
+            //Skills debuffSkill = new Skills("남작의 시선", 0, 3, player => player.stat.Attack -= 5);
             //this.skills.Add(debuffSkill);
         }
+
+        
+
         public void add_Drop_Item()
         {
             int itemIndex = new Random().Next(0, 6);   //드랍할 아이템 종류

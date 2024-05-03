@@ -239,6 +239,7 @@ namespace MyDungeon
 
                 default:
                     Console.WriteLine("\n=====잘못된 입력입니다. 다시 입력해주세요=====");
+                    Console.Clear();
                     Show_stat();
                     Stat_menu();
                     break;
