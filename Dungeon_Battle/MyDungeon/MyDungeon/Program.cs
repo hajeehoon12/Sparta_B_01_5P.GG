@@ -234,8 +234,9 @@ namespace MyDungeon
 
         static void Main()
         {
-            
+            Console.SetBufferSize(200, 120);
             Console.SetWindowSize(120, 70); // 콘솔창 크기 조절
+            
 
 
             

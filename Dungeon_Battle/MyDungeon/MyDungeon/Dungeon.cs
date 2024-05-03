@@ -125,6 +125,15 @@ namespace MyDungeon
                 Console.WriteLine($"\n☆{(leveldun)act} 던전을 선택하셨습니다.☆\n");
                 DungeonPlay(player, act);
             }
+            else if (act == -1)
+            {
+                player.program.SelectAct(player);
+            }
+            else
+            {
+                Console.WriteLine("제대로 된 번호를 입력해주세요.");
+                Dungeon_Menu(player);
+            }
 
         }
 
