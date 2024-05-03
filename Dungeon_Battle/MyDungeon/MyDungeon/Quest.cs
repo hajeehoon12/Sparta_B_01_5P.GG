@@ -105,7 +105,7 @@ namespace MyDungeon
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.WriteLine("4. 포션을 사용해보자\n");
+           
             Console.WriteLine("0. 돌아가기");
             Console.WriteLine();
             Console.WriteLine();
@@ -711,39 +711,7 @@ namespace MyDungeon
             }
         }
 
-        public void ForthQuest()
-        {
-            Console.WriteLine("Quest!!");
-            Console.WriteLine();
-            Console.WriteLine("포션을 사용해보자");
-            Console.WriteLine();
-            Console.WriteLine("이봐, 자네 포션이라는 것은 아는가?");
-            Console.WriteLine("전투에서 자네에게 큰 도움을 주는 소모품이라네");
-            Console.WriteLine("전투에서 한번 포션을 사용해보게나");
-            Console.WriteLine();
-            Console.WriteLine("- 회복 포션 사용해보기");
-            Console.WriteLine();
-            Console.WriteLine("1. 수락");  //조건이 달성 되었을 때 보상받기로 변경 > 보상 받고 나서 사후처리
-            Console.WriteLine("2. 거절");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-
-            string select = Console.ReadLine();
-            if (select == "1")
-            {
-
-            }
-            else if (select == "2")
-            {
-                QuestScroll(player);
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("\n ===== 잘못된 입력입니다.다시 입력해주세요 ===== ");
-            }
-        }
+       
         public void QuestScroll(Player character)
         {
             player = character;
@@ -792,11 +760,6 @@ namespace MyDungeon
                     }
                     Console.Clear();
                     ThirdQuest(isEquip, character);
-                }
-                else if (select == "4") // 4번을 입력할 시 4번 퀘스트 진행
-                {
-                    break;
-                    //ForthQuest();
                 }
                 else if (select == "0") // -1번 입력할 시 메뉴화면
                 {
