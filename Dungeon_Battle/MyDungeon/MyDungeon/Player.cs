@@ -95,7 +95,7 @@ namespace MyDungeon
                 // 크리티컬이 터진다.
                 dmgresult = (int)(dmgresult * (criticalDmg + increaseCriticalDmg / 100.0f)); // 크리티컬 확률 및 크리티컬 데미지 계산식
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!");
+                Console.Write($"\n{Name} 이(가) 적의 급소를 노려 치명적인 일격이 적용!!  ");
                 
             }
             
@@ -140,14 +140,14 @@ namespace MyDungeon
             else if (stat.job == "도적") // 도적일 경우 세팅
             {
                 critical += 10;
-                criticalDmg += 10;
+                criticalDmg += 0.10f;
                 avoid += 10;
             }
             else if (stat.job == "궁수") // 궁수일 경우 세팅
             {
                 stat.Attack += 5;
                 critical += 15;
-                criticalDmg += 15;
+                criticalDmg += 0.15f;
             }
             else
             {
@@ -198,7 +198,8 @@ namespace MyDungeon
             }
             else
             {
-                stat.Show_stat(atkinc, definc); // 능력치 변화의 존재
+                
+                stat.Show_stat(atkinc, definc, this); // 능력치 변화의 존재
             }
 
             

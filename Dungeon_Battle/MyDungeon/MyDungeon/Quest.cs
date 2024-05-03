@@ -19,6 +19,7 @@ namespace MyDungeon
         public bool accept2; // 2번 퀘스트 수락 여부
         public bool complete3 = false; // 3번 퀘스트 완료 여부
         public bool complete2 = false; // 2번 퀘스트 완료 여부
+        public bool clearComplete2 = false; // 2번 퀘스트 클리어 확인 조건용 변수
 
         bool selectRight = false;
         int selectAct;
@@ -56,7 +57,7 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1. 마을을 위협하는 미니언 처치\n");
 
-            
+
 
             if (complete2)
             {
@@ -64,12 +65,19 @@ namespace MyDungeon
                 Console.Write("2. 상남자의 길!!");
                 Console.Write(" [완료됨]");
             }
+            else if (clearComplete2)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("2. 상남자의 길!!");
+                Console.Write(" [조건 달성!!]");
+            }
             else if (accept2)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("2. 상남자의 길!!");
                 Console.Write(" [진행중]");
             }
+
             else
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -98,7 +106,7 @@ namespace MyDungeon
             Console.WriteLine("\n");
 
 
-
+            Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.WriteLine("4. 포션을 사용해보자\n");
             Console.WriteLine("0. 돌아가기");
@@ -159,7 +167,7 @@ namespace MyDungeon
         }
         public void SecondQuest(bool complete ,Player character) // 두번쨰 퀘스트
         {
-            if (!accept3) // 퀘스트 수락 안함
+            if (!accept2) // 퀘스트 수락 안함
             {
                 Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -167,7 +175,7 @@ namespace MyDungeon
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
-                
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(18, 3);
                 Console.WriteLine("[혁매님]");
@@ -182,8 +190,8 @@ namespace MyDungeon
                 Console.WriteLine("남자라면 모름지기 휴식없이 혼자서 던전을 클리어할줄도 알아야 하는 법!"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 26);
                 Console.WriteLine("내가 한창 잘 나갈때는 말이야! 돈이 없어서 포션도 없이 싸우고... 어?"); Thread.Sleep(1500);
-                
-                
+
+
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.SetCursorPosition(37, 28);
                 Console.WriteLine($"{player.Name} : 이거 진짜에요?"); Thread.Sleep(2000);
@@ -250,10 +258,10 @@ namespace MyDungeon
 
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("[강제 퀘스트 시작] : 상남자의 길!!");
+                        Console.WriteLine("\n[강제 퀘스트 시작] : 상남자의 길!! (패널티로 몬스터 던전을 1회 클리어하기 전까지 휴식이 불가능합니다.)");
                         QuestScroll(player);
                         break;
-                    case 1: // 퀘스트 수락, 방패 지급
+                    case 1: // 퀘스트 수락
                         accept2 = true;  //퀘스트 수락
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"\n{player.Name} : 휴식 없이 몬스터 던전이라? 최대한 빠르게 해결하는게 좋겠군..\n"); Thread.Sleep(2000);
@@ -267,7 +275,7 @@ namespace MyDungeon
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\n[강제 퀘스트 시작] : 상남자의 길!! (패널티로 몬스터 던전을 1회 클리어하기 전까지 휴식이 불가능합니다.)");
-                        accept3 = true; // 퀘스트 수락 확인용 변수
+                        // 퀘스트 수락 확인용 변수
 
                         QuestScroll(player);
                         break;
@@ -279,37 +287,117 @@ namespace MyDungeon
 
                         SecondQuest(false, character);
                         break;
+
+                }
+            }
+            else if (accept2 && !complete2 && clearComplete2)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("퀘스트 : 상남자의 길!! [조건 달성 완료]"); Thread.Sleep(500);
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(18, 3);
+                Console.WriteLine("[혁매님]");
+
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.SetCursorPosition(37, 20);
+                Console.WriteLine($"\"{character.Name}\" 가 돌아왔구만"); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 22);
+                Console.WriteLine("이 정도의 용기라면 내 비기를 전수해줘도 되겠어."); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 24);
+                Console.WriteLine("자네 공용스킬이라고 들어는 봤나?"); Thread.Sleep(1500);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.SetCursorPosition(37, 26);
+                Console.WriteLine($"{player.Name} : 그게 뭔가요?"); Thread.Sleep(2000);
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.SetCursorPosition(37, 28);
+                Console.WriteLine("말 그대로 직업에 상관없이 공통적으로 사용할 수 있는 스킬이지."); Thread.Sleep(1500);
+                Console.SetCursorPosition(37, 30);
+                Console.WriteLine("나같은 다재다능한 상남자들이 쓰는 스킬로 ........"); Thread.Sleep(1500);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.SetCursorPosition(37, 32);
+                Console.WriteLine($"이후 [혁매님] 의 이야기를 한시간동안 들었다."); Thread.Sleep(2000);
+
+                Console.SetCursorPosition(0, 44);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("======================================================================================================");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("퀘스트 목표 : 휴식을 하지 않고 몬스턴 던전 1회 클리어 (1/1) 달성!\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("======================================================================================================");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("0. 나가기");
+                Console.WriteLine("1. 퀘스트 완료");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.WriteLine(">>");
+
+                do
+                {
+                    selectRight = int.TryParse(Console.ReadLine(), out selectAct);
+
+                } while (!selectRight);
+
+                switch (selectAct)
+                {
+                    case 0: // 나가기 버튼
+                        Console.Clear();
+                        QuestScroll(player);
+                        break;
+                    case 1: // 퀘스트 완료, 새방패 지급
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+
+                        Console.WriteLine("\n진이 빠져 현재 체력이 절반으로 감소했다!"); Thread.Sleep(2000);
+
+
+                        Console.WriteLine($"\n 체력 : {player.stat.Hp} -> {player.stat.Hp / 2}");
+                        player.stat.Hp /= 2;
+
+                        Console.WriteLine("\n☆★ 보상 : 최대 체력 +20 , Exp + 5 ★☆\n");
+                        Thread.Sleep(5000);
+                        player.stat.Exp += 5;
+
+                        player.stat.MaxHp += 20;
+                        player.stat.isLevelUp();
+                        complete2 = true; // 퀘스트완료
+
+                        Console.Clear();
+                        Console.WriteLine("[퀘스트 완료] : 장비를 장착해보자!!");
+
+                        QuestScroll(player);
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다.");
+                        ThirdQuest(false, character);
+                        break;
                 }
 
 
 
-                QuestScroll(player);
-
-            }
-            Console.WriteLine("- 보상 -"); // 보상 구현하기
-            Console.WriteLine("아이템");
-            Console.WriteLine("골드");
-            Console.WriteLine();
-            Console.WriteLine("1. 수락"); // 0/5 조건이 달성 되었을 때 보상받기로 변경 > 보상 받고 나서 사후처리
-            Console.WriteLine("2. 거절");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-
-            string select = Console.ReadLine();
-            if (select == "1")
-            {
-
-            }
-            else if (select == "2")
-            {
+                Console.Clear();
+                Console.WriteLine("[구상한 보상을 적을것]");
+                complete2 = true;
                 QuestScroll(player);
             }
             else
             {
-                Console.WriteLine();
-                Console.WriteLine("\n ===== 잘못된 입력입니다.다시 입력해주세요 ===== ");
+                Console.Clear() ;
+                Console.WriteLine("퀘스트를 완료하지 못했습니다. 몬스터 던전을 클리어하세요!");
+                QuestScroll(player);
             }
+
+            
         }
         public void ThirdQuest(bool complete , Player character) //세번째 퀘스트
         {
@@ -327,11 +415,12 @@ namespace MyDungeon
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(18, 3);
+                Console.WriteLine("[혁매님]");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-
-
-
-
                 Console.SetCursorPosition(37, 20);
                 Console.WriteLine($"\"{character.Name}\" 왔는가?"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 22);
@@ -355,11 +444,12 @@ namespace MyDungeon
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\r\n\r\n                ..;==!:,,,,             \r\n               .!=====$$$$$;            \r\n               .======$$$$$$            \r\n               .*=..::::..*$            \r\n                :=        !,            \r\n                 =        :             \r\n                 -                      \r\n                  ~                     \r\n                  *=:~~;$*              \r\n                  ~===$$$*              \r\n                  .;!*=!!,              \r\n              ~;;,.. ., ,.~;;-          \r\n          *=======..,  ,.-=$$$$$$;      \r\n        .!========!.  .  *$$$$$$$$*     \r\n      ...!=========*~*==*$$$$$$$$$-.    \r\n     .....============$$$$$$$$$$$=,.    \r\n    ......============$$$$$$$$$$$;..    \r\n   .......-===========$$$$$$$$$$$;..    \r\n  ......  .*==========$$$$$$$$$$$....   \r\n .....     :==========$$$$$$$$$$$.....  \r\n .....     :==========$$$$$$$$$$. ....  \r\n  .....    :==========$$$$$$$$$$  ....  \r\n   .....   :==========$$$$$$$$$$  ....  \r\n     ..... :==========$$$$$$$$$$   ...  \r\n       ....:==========$$$$$$$$$$   .... \r\n      .-,.. .!========$$$$$$$$$$   .... \r\n        .~   .!=======$$$$$$$$$$    ... \r\n              ,~*=====$$$$$$$$$$    ... \r\n             :;!*=====$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n           :==========$$$$$$$$$$    ... \r\n.;;;;;;;;;;*==========$$$$$$$$$$!!!!!!!~\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$$$$$$$:\r\n.=====================$$$$$$$$$$$*;;;;;-\r\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(18, 3);
+                Console.WriteLine("[혁매님]");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-
-                
-
-
                 Console.SetCursorPosition(37, 20);
                 Console.WriteLine($"어이! 이번에 들어온 \"{character.Name}\" 신참, 자네 장비는 장착할 줄 아는가?"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 22);
@@ -412,7 +502,7 @@ namespace MyDungeon
                         Console.WriteLine($"\n{player.Name} : 아니 이런 쓰레기를 줘놓고 그렇게 생색낸거야?\n"); Thread.Sleep(2000);
                         Console.WriteLine($"{player.Name} : 빨리 퀘스트를 해치우고 이딴 방패 바로 팔아버려야지..."); Thread.Sleep(6000);
                         Console.Clear();
-                        Console.WriteLine("[퀘스트 수락 완료] : 장비를 장착해보자!!");
+                        Console.WriteLine("\n[퀘스트 수락 완료] : 장비를 장착해보자!!");
                         accept3 = true; // 퀘스트 수락 확인용 변수
 
                         QuestScroll(player);
@@ -522,7 +612,7 @@ namespace MyDungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.WriteLine(">>");
+            Console.Write(">> ");
 
             string select = Console.ReadLine();
             if (select == "1")

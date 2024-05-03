@@ -40,7 +40,9 @@ namespace MyDungeon
             Exp = 0;
             MaxHp = 100;
             player = player1;
-            
+            AttackInc = 0;
+            DefInc = 0;
+
         }
 
         public void Show_dungeon_stat()
@@ -150,6 +152,69 @@ namespace MyDungeon
 
 
         }
+        public void Show_stat(int atkinc, int definc, Player player)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\n☆캐릭터의 정보가 표시됩니다.☆\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==================================================================");
+            Console.WriteLine("             [현재 플레이어 상태]           \n");
+            Console.WriteLine($"Lv. {Level}");
+            Console.WriteLine($"{Name} ({job})");
+
+            DefInc = definc;
+            AttackInc = atkinc;
+
+            if (atkinc != 0)
+            {
+                Console.WriteLine($"공격력 : {Attack} + ({atkinc})");
+            }
+            else
+            {
+                Console.WriteLine($"공격력 : {Attack}");
+            }
+            if (definc != 0)
+            {
+                Console.WriteLine($"방어력 : {Defense} + ({definc})");
+            }
+            else
+            {
+                Console.WriteLine($"방어력 : {Defense}");
+            }
+            Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
+
+            if (player.increaseCritical == 0)
+            {
+                Console.WriteLine($"치명타 확률 : {player.critical} %");
+            }
+            else
+            {
+                Console.WriteLine($"치명타 확률 : {player.critical} + ({player.increaseCritical}) %");
+            }
+
+            if (player.increaseCriticalDmg == 0)
+            {
+                Console.WriteLine($"치명타 데미지 : {player.criticalDmg * 100} %");
+            }
+            else
+            {
+                Console.WriteLine($"치명타 데미지 : {player.criticalDmg * 100} + ({player.increaseCriticalDmg}) %");
+            }
+
+            if (player.increaseAvoid == 0)
+            {
+                Console.WriteLine($"회피율 : {player.avoid} %");
+            }
+            else
+            {
+                Console.WriteLine($"회피율 : {player.avoid} + ({player.increaseAvoid}) %");
+            }
+
+            Console.WriteLine($"Gold : {Gold} G");
+            Console.WriteLine("==================================================================\n\n");
+
+
+        }
         public void Stat_menu()
         {
             int act;
@@ -184,14 +249,17 @@ namespace MyDungeon
         {
             if (Exp >= 2 * Level) // 경험치가 최대치에 도달하면 레벨업 진행
             {
-                Attack += 0.5f;
-                Defense += 1;
+                Attack += 1f;
+                Defense += 2;
                 Exp -= 2* Level;
                 Level += 1;
                 
                 MaxHp += 20;
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("레벨업!!\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{Name} 의 레벨이 상승했습니다!!\n");
+                Console.WriteLine($"Lv. {Level - 1} -> {Level}");  
+                Console.WriteLine($"공격력 {Attack - 1} -> {Attack}");
+                Console.WriteLine($"방어력 {Defense-2} -> {Defense}\n");
                 
             }
         }
