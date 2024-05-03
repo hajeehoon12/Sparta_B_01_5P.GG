@@ -138,9 +138,9 @@ namespace MyDungeon
                 {
                     case 1: //스테이지 1
                         
-                        if (monstersCount[(int)MonsterSpices.Worm] >= 0)    //공허충이 2마리가 넘어가면
+                        if (monstersCount[(int)MonsterSpices.Worm] >= 2)    //공허충이 2마리가 넘어가면
                             //CreateMonster(MonsterSpices.baron);
-                            CreateMonster(MonsterSpices.CanonMinion);    //나머지를 미니온으로
+                            CreateMonster(MonsterSpices.Minion);    //나머지를 미니언으로
                         else
                             //CreateMonster(MonsterSpices.baron);
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
