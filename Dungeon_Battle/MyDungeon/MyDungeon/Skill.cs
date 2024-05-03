@@ -79,40 +79,61 @@ namespace MyDungeon
         {
             int monsterAct = 0;
 
-            monsterAct = monster.turn % 5;
+            monsterAct = rand.Next(0, 4);
 
             switch (monsterAct)
             {
-                case 0: // 1턴 디버프 적용
-                    player.stat.AttackInc -= 1;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                case 0:
+                    if (monster.Attack > 3)
+                    {
+                        monster.Attack /= 2;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine();
+                        Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
+                        Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
+                        monster.Attack = 2;
+                    }
+                    else
+                    {
+                        monster.Attack = 2;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine();
+                        Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
+                        Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
+                    }
                     break;
+
                 case 1:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine($"\"미니언\"이 한눈 팔려 공격을 하지 않습니다!");
                     break;
                 case 2:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
-                    monster.HitDamage(player, monster);
-                    break;
-                case 3:
-                    player.stat.AttackInc -= 1;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine();
-                    Console.WriteLine($"\"바론\" 이 플레이어를 응시합니다!");
-                    Console.WriteLine($"{player.Name} 에게 이번 전투동안 강력한 디버프가 적용됩니다.");
-                    Console.WriteLine($"{player.Name} 의 공격력 {player.stat.Attack + 1} -> {player.stat.Attack}");
+                    if (monster.Attack > 3)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\"미니언\" 의 회심의 연속 공격!!");
+                        monster.HitDamage(player, monster);
+                        monster.HitDamage(player, monster);
+                        monster.Attack /= 2;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\"미니언\" 의 회심의 연속 공격!!");
+                        monster.HitDamage(player, monster);
+                        monster.HitDamage(player, monster);
+                    }
                     break;
                 default:
-                    Console.WriteLine("\"바론\" 의 2연타 공격!!");
-                    monster.HitDamage(player, monster);
+                    if (monster.Attack > 3)
+                    {
+                        monster.HitDamage(player, monster);
+                        monster.Attack /= 2;
+                    }
+                    else
+                    {
+                        monster.HitDamage(player, monster);
+                    }
                     monster.HitDamage(player, monster);
                     break;
 

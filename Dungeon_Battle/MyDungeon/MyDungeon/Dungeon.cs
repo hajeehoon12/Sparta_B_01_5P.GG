@@ -57,17 +57,22 @@ namespace MyDungeon
 
             (int atk_inc, int def_inc)= PlayerEquipMent(player);
             player.stat.isLevelUp(); // 레벨업 갱신 검사
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\r\n   ###    ########  ##     ## ######## ##    ## ######## ##     ## ########  ######## \r\n  ## ##   ##     ## ##     ## ##       ###   ##    ##    ##     ## ##     ## ##       \r\n ##   ##  ##     ## ##     ## ##       ####  ##    ##    ##     ## ##     ## ##       \r\n##     ## ##     ## ##     ## ######   ## ## ##    ##    ##     ## ########  ######   \r\n######### ##     ##  ##   ##  ##       ##  ####    ##    ##     ## ##   ##   ##       \r\n##     ## ##     ##   ## ##   ##       ##   ###    ##    ##     ## ##    ##  ##       \r\n##     ## ########     ###    ######## ##    ##    ##     #######  ##     ## ######## \r\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\n=================================================================================");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("★던전입장★\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
             Console.WriteLine($"현재 당신의 체력: {player.stat.Hp} / {player.stat.MaxHp}");
             Console.WriteLine($"현재 당신의 자금: {player.stat.Gold}");
             Console.WriteLine($"현재 당신의 레벨: {player.stat.Level} , 공격력: {player.stat.Attack} +({atk_inc}) , 방어력: {player.stat.Defense} + ({def_inc})");
             Console.WriteLine($"레벨업까지 남은 경험치 : {player.stat.Level * 2 - player.stat.Exp}");
 
-            Console.WriteLine("\n\n-1. 나가기");
+            Console.WriteLine();
 
-            
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             for (int i = 0; i < dungeons.Count; i++) // 던전 성공확률 계산
             {
@@ -92,27 +97,28 @@ namespace MyDungeon
                 }
                 
             }
-
+            Console.WriteLine("\n");
             foreach (var value in leveling)
             { 
 
                 Console.Write($"{(int)value}. {(leveldun)value} 던전  | 방어력 {dungeons[(int)value].defenseRate} 이상 권장 " +
                     $"| 평균 보상 금액 : {dungeons[(int)value].reward} | 탐사 성공 확률 : {dungeons[(int)value].probability} % \n");
             }
-
-
+            Console.WriteLine("4. 나가기");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\n=================================================================================\n");
 
             if (player.stat.Hp <= 0)
             {
+                Console.ForegroundColor =ConsoleColor.Yellow;
                 Console.WriteLine("\n=================================================================================\n");
                 Console.Write($"\n ★체력이 모두 소진되어 {player.Name}이(가) 명령을 거부합니다. 휴식하기로 강제 이동됩니다.★\n");
                 Console.WriteLine("\n=================================================================================\n");
                 Console.Write("이동하시려면 아무키나 입력하세요!");
-                string confirm=Console.ReadLine();
+                string confirm= Console.ReadLine();
                 camp.Camping(player);
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             do
             {
                 Console.Write("\n원하시는 행동을 숫자로 입력해주세요 : ");
@@ -123,9 +129,10 @@ namespace MyDungeon
             if (0 <= act && act <= 3) // 난이도에 맞는 던전 실행
             {
                 Console.WriteLine($"\n☆{(leveldun)act} 던전을 선택하셨습니다.☆\n");
+                Console.ForegroundColor = ConsoleColor.Green;
                 DungeonPlay(player, act);
             }
-            else if (act == -1)
+            else if (act == 4)
             {
                 player.program.SelectAct(player);
             }
@@ -161,9 +168,9 @@ namespace MyDungeon
                 {
                     Console.WriteLine("지옥 난이도의 던전을 클리어하여 게임을 클리어 했습니다! 축하드립니다!");
                     Console.WriteLine("\n\n\n\n");
-                    Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+                    Console.WriteLine("\n★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
                     Console.WriteLine("\r\n _____                                    _           _         _    _                    \r\n/  __ \\                                  | |         | |       | |  (_)                   \r\n| /  \\/  ___   _ __    __ _  _ __   __ _ | |_  _   _ | |  __ _ | |_  _   ___   _ __   ___ \r\n| |     / _ \\ | '_ \\  / _` || '__| / _` || __|| | | || | / _` || __|| | / _ \\ | '_ \\ / __|\r\n| \\__/\\| (_) || | | || (_| || |   | (_| || |_ | |_| || || (_| || |_ | || (_) || | | |\\__ \\\r\n \\____/ \\___/ |_| |_| \\__, ||_|    \\__,_| \\__| \\__,_||_| \\__,_| \\__||_| \\___/ |_| |_||___/\r\n                       __/ |                                                              \r\n                      |___/                                                               \r\n");
-                    Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+                    Console.WriteLine("\n★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 
                     Console.WriteLine("해당 기록은 자동으로 저장되고 게임을 이어합니다.");
 
@@ -181,8 +188,8 @@ namespace MyDungeon
 
                 defgap = player.stat.Defense - dungeons[level].defenseRate; // 플레이어 방어력 - 던전 적정 방어력 계산
 
-                Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★");
-                Console.WriteLine($"축하합니다!! \n{(leveldun)level}던전을 클리어 하였습니다.");
+                Console.WriteLine("\n★★★★★★★★★★★★★★★★★★★★★★★★★");
+                Console.WriteLine($"\n축하합니다!! \n{(leveldun)level}던전을 클리어 하였습니다.");
                 Console.WriteLine("\n[탐험 결과]");
                 Console.WriteLine($"\n체력 {player.stat.Hp} -> {player.stat.Hp - num - defgap}");
                 Console.WriteLine($"Gold {player.stat.Gold} -> {player.stat.Gold + dungeons[level].reward * (1 + num2 * 0.02)} G");
@@ -213,7 +220,7 @@ namespace MyDungeon
                         Double decrate = Math.Round(100.0d * (1.0d - (0.5d * Randvar)));
                         Console.WriteLine($"{player.Name} 이(가) 몬스터들과의 사투 끝에 겨우 살아서 도망쳐나옵니다!");
                         Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★");
-                        Console.WriteLine("[탐험 결과]");
+                        Console.WriteLine("[탐험 결과]\n");
                         Console.WriteLine($"{player.Name} 이(가) 도주하는데 온힘을 쏟아 현재 체력의 {Math.Round(decrate)} % 만큼 감소 되었습니다.");
                         Console.WriteLine($"\n체력 {player.stat.Hp}->{(int)(player.stat.Hp * (0.5 * Randvar))}");
                         Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★");
@@ -224,7 +231,7 @@ namespace MyDungeon
                     case 3: // 함정 체력 -20
                         Console.WriteLine($"{player.Name} 이(가) 던전의 함정을 발동시켰습니다."  );
                         Console.WriteLine("=================================");
-                        Console.WriteLine("[탐험 결과]");
+                        Console.WriteLine("[탐험 결과]\n");
                         Console.WriteLine($"{player.Name} 이(가) 던전의 치명적인 함정으로 인해 {Math.Round(Randvar * 20)} 잃었습니다!");
                         Console.WriteLine($"\n체력 {player.stat.Hp}->{player.stat.Hp - Math.Round(Randvar * 20)}");
                         Console.WriteLine("=================================");
@@ -235,7 +242,7 @@ namespace MyDungeon
                     case 4: // 정신력으로 인한 최대체력감소
                         Console.WriteLine($"감당할 수 없는 강력한 몬스터가 나타나 {player.Name}이 도망칩니다!");
                         Console.WriteLine("=================================");
-                        Console.WriteLine("[탐험 결과]");
+                        Console.WriteLine("[탐험 결과]\n");
                         Console.WriteLine($"{player.Name} 이(가) 마음이 꺾여 최대체력이 영구적으로 {Math.Round(Randvar * 5)} 감소합니다!");
                         Console.WriteLine($"\n최대 체력 {player.stat.MaxHp}->{player.stat.MaxHp - Math.Round(Randvar *5) }");
                         Console.WriteLine("=================================");
@@ -250,7 +257,7 @@ namespace MyDungeon
                     case 5: // 무사고
                         Console.WriteLine($"{player.Name} 이(가) 배가고파 던전탐험을 포기합니다.");
                         Console.WriteLine("=================================");
-                        Console.WriteLine("[탐험 결과]");
+                        Console.WriteLine("[탐험 결과]\n");
                         Console.WriteLine("아무일도 일어나지 않습니다.");
                         Console.WriteLine("=================================");
                         player.stat.MaxHp = (int)(player.stat.MaxHp - Math.Round(Randvar * 5));
