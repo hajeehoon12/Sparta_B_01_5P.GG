@@ -100,7 +100,8 @@ namespace MyDungeon
 
                 default:
                     Console.WriteLine("\n☆====잘못된 입력입니다. 다시 입력해주세요====☆");
-                    player.CharInfo();
+                    Show_Inven(player);
+                    
                     break;
             }
         }
