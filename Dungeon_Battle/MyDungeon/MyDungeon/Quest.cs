@@ -4,13 +4,14 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyDungeon
 {
     public class Quest
     {
-
+        public bool questCompleat = false; // 1번 퀘스트 클리어 확인  체크
         public bool compleat = false; // 1번 퀘스트 완료 여부
         public bool accept; // 1번 퀘스트 수락 여부
         public string questItem; // 퀘스트 관련 아이템
@@ -36,7 +37,7 @@ namespace MyDungeon
             Console.WriteLine();
 
             
-            if (compleat)
+            if (questCompleat)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("1. 미니언 처치!!");
@@ -114,7 +115,9 @@ namespace MyDungeon
         }
         public void FirstQuest(bool compleat, Player character) // 첫번째 퀘스트
         {
-            
+
+
+
             if (!accept) // 퀘스트 수락을 받지 않은 상태
             {
                 Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
@@ -130,7 +133,7 @@ namespace MyDungeon
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.SetCursorPosition(37, 20);
-                Console.WriteLine($" \"{character.Name}\" 신참인가? 처음보는구만"); Thread.Sleep(1500);
+                Console.WriteLine($" \"{character.Name}\" 신참인가? 처음 보는구만"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 22);
                 Console.WriteLine("마을에서 조금 강하다고 길드에 와서"); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 24);
@@ -142,7 +145,7 @@ namespace MyDungeon
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("=================================================================================================");
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("퀘스트 목표 : 미니언 5마리 처치!! (0/5)\n");
+                Console.WriteLine($"퀘스트 목표 : 미니언 5마리 처치!! ({minionCount} /5)\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("=================================================================================================");
                 Console.WriteLine();
@@ -153,6 +156,11 @@ namespace MyDungeon
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
+            }
+
+            if (minionCount >= 1)
+            {
+                compleat = true;
             }
 
             if (accept && !compleat) // 퀘스트 수락은 했지만 퀘스트 조건은 달성하지 못한 상태
@@ -174,14 +182,23 @@ namespace MyDungeon
                 Console.SetCursorPosition(37, 22);
                 Console.WriteLine("미니언을 처치하지 못하고 온 것 같군..."); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 24);
-                Console.WriteLine("미니언은 던전에서도 가장 약한 몬스터지"); Thread.Sleep(1500);
+                Console.WriteLine($"자네가 처치한 미니언의 수는 ({minionCount} / 5)라네"); Thread.Sleep(2000);
                 Console.SetCursorPosition(37, 26);
                 Console.WriteLine("미니언을 처치하지 못한다면 모험가는 꿈도 꾸지 말게나!!"); Thread.Sleep(2000);
                 Console.Clear();
                 QuestScroll(player);
+
             }
 
-            if(accept && compleat)
+            if(accept && compleat && questCompleat)
+            {
+                Console.Clear();
+                Console.WriteLine("이미 완료된 퀘스트입니다."); Thread.Sleep(2000);
+                QuestScroll(player);
+            }
+
+
+            if (compleat)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -205,7 +222,6 @@ namespace MyDungeon
 
                 Console.WriteLine();
 
-
                 Console.SetCursorPosition(0, 44);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("======================================================================================================");
@@ -223,25 +239,35 @@ namespace MyDungeon
                 Console.WriteLine(">>");
             }
 
-            if (accept && compleat)
-            {
-                Console.Clear();
-                Console.WriteLine("이미 완료된 퀘스트입니다!");
-            }
 
             string select = Console.ReadLine();
-                if (select == "1")
-                {
+            if (select == "1")
+            {
                 if (!accept)
                 {
                     accept = true;
                     Console.Clear();
                     QuestScroll(player);
+                    minionCount = character.quest.minionCount++;
                 }
-                else if(accept &&  compleat) // 퀘스트 완료 > 보상 구현 
-                {
-                    QuestScroll(player);
-                }
+
+            else if (accept && compleat) // 퀘스트 완료 > 보상 구현 
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\n잠시 기다리게 이것을 가져가게나"); Thread.Sleep(2000);
+                player.ItemAmount_Change(new ItemData(0, "철검", 10, 0, 5000, 1, "철로 만든 검"), 1);
+                Console.WriteLine("\n☆★ 보상 : 철검 , Exp + 8 ★☆\n");
+                player.stat.Exp += 8;
+                player.stat.isLevelUp();
+                Console.WriteLine("[아이템 설명] : 철로 만든 검. 손질이 꽤나 잘 되어있다."); Thread.Sleep(3000);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine();
+                Console.WriteLine("앞으로도 기대 하겠네 !!"); Thread.Sleep(3000);
+                Console.Clear();
+                Console.WriteLine("[퀘스트 완료] : 미니언 처치!!");
+                questCompleat = true;
+                QuestScroll(player);
+            }
             }
             else if (select == "0")
                 {
