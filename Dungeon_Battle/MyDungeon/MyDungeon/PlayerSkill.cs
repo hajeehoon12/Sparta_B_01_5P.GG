@@ -122,7 +122,12 @@ namespace MyDungeon
         //도적 스킬
         public static void CriticalThrow(Player player, Monster monster) // 스킬 크리티컬 스로우
         {
-            int skillDamage = (int)(player.Critical() * 1.5f);
+            float addonDamage;  //추가 대미지
+            if (player.stat.Level > 5)  //레벨 5 이상이면 3.2배로
+                addonDamage = 3.2f;
+            else
+                addonDamage = 1.5f;
+            int skillDamage = (int)(player.Critical() * addonDamage);
 
             //연출...
 
