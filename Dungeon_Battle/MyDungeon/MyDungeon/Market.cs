@@ -36,8 +36,9 @@ namespace MyDungeon
             Market_Item.Add(new ItemData(2, "화려한목걸이", 15, 15, 30000, 1, "사용자에게 미지의 힘을 화려한 목걸이"));
 
             Market_Item.Add(new ItemData(4, "회복물약", 0, 0, 1000, 99, "사용자의 상처를 치유하고 활력이 돋게 하는 물약(체력 50회복)"));
+            Market_Item.Add(new ItemData(4, "마나물약", 0, 0, 1000, 99, "사용자의 마나를 회복 시켜주는 물약"));
+            Market_Item.Add(new ItemData(4, "공격력 상승의 물약", 0, 0, 1000, 99, "사용자의 공격력을 일시적으로 상승시켜주는 물약"));
 
-            
 
         }
 

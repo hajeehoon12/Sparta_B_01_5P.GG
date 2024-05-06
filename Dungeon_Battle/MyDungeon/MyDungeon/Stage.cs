@@ -216,7 +216,7 @@ namespace MyDungeon
 
             Console.WriteLine($"2. 스킬 (마나 20 사용) "); // - {player1.stat.job}
 
-            Console.WriteLine("3. 회복물약 사용 (체력 50 회복)");
+            Console.WriteLine("3. 물약 사용 ");
 
             Console.WriteLine();
 
@@ -391,7 +391,7 @@ namespace MyDungeon
                             {
                                 Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 심판 (적 전체에게 1.5배의 광역 데미지로 공격)");
+                                Console.WriteLine("1. 심판 (적 전체에게 2배의 광역 데미지로 공격)");
                                 
                                 Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
@@ -422,7 +422,7 @@ namespace MyDungeon
                             {
                                 Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 갓블레스 힐");
+                                Console.WriteLine("1. 갓블레스 힐 (공격력 합산의 2배만큼 체력회복, 크리티컬 미적용)");
                                 Console.WriteLine("2. 샤이닝 레이 (지정한 적에겐 크리티컬, 양옆의 적에게 1.2배의 데미지로 공격)");
                                 Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
@@ -455,7 +455,7 @@ namespace MyDungeon
                             {
                                 Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 소울 에로우 (적 전체에게 1.4배의 데미지로 광역공격)");
+                                Console.WriteLine("1. 소울 에로우 (적 전체에게 1.4배의 데미지로 광역공격, 27% 확률로 15의 추가데미지)");
                                 
                                 Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
@@ -485,7 +485,7 @@ namespace MyDungeon
                             {
                                 Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
-                                Console.WriteLine("1. 크리티컬 스로우 (단일 적에게 1.5배의 데미지로 두번 공격)");
+                                Console.WriteLine("1. 크리티컬 스로우 (단일 적에게 1.5배의 데미지로 두번 공격) (플레이어 레벨 5이상시 2.5배)");
                                 Console.WriteLine("2. 어벤져 (적 전체에게 1.6배의 데미지로 공격 - 크리티컬 적용불가) ");
                                 Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
@@ -541,51 +541,175 @@ namespace MyDungeon
                             break;
                     }
                     break;
-                case 3: // 플레이어 소모품 사용
+                case 3: // 플레이어 소모품 사용 , 물약선택창
 
+                    int potionType;
+                    bool isPotion = false;
                     bool usePotion = false; // 포션 사용검사
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    for (int i = 0; i < player1.inven.ItemInfo.Count; i++)
-                    {
-                        if (player1.inven.ItemInfo[i].ItemType == 4)
-                        {
-                            if (player1.inven.ItemInfo[i].Amount >= 1)
-                            {
-                                Console.WriteLine("");
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine($"{player1.Name} 이(가) 현재 회복물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
-                                player1.inven.ItemInfo[i].Amount -= 1;
-                                usePotion = true; // 포션사용
-                                if (player1.stat.Hp + 50 < player1.stat.MaxHp)
-                                {
-                                    Console.WriteLine($"회복물약 을(를) 사용하여 체력을 50 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
-                                    player1.stat.Hp += 50;
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"회복물약 을(를) 사용하여 체력을 {player1.stat.MaxHp - player1.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
-                                    player1.stat.Hp = player1.stat.MaxHp;
-                                }
 
-                                Console.WriteLine(""); Thread.Sleep(800);
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.Write($"플레이어 HP : {player1.stat.Hp} / {player1.stat.MaxHp}\n");
-                                Console.WriteLine();
+                    do
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\n[ 물약을 선택하세요 ]\n");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("0. 취소");
+                        Console.WriteLine("1. 회복 물약 (체력 50 회복)");
+                        Console.WriteLine("2. 마나 물약 (마나 50 회복 )");
+                        Console.WriteLine("3. 공격력 상승의 물약 (이번 전투에 한해 공격력 10 증가)");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("\n>> ");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        isPotion = int.TryParse(Console.ReadLine(), out potionType);
+                        if (isPotion)
+                        {
+                            if (potionType == 1 || potionType == 2 || potionType == 3 || potionType == 0)
                                 break;
-                            }
-                            else // 물약개수 동남
+                            else
                             {
-                                
-                                break;
+                                Console.WriteLine("입력이 잘못되었습니다.");
+                                isPotion = false;
                             }
                         }
+                    } while (!isPotion);
+                    Console.Clear();    //여기서 콘솔창 갱신
 
-                    }
-                    if (!usePotion) // 물약사용 실패
+                    if (potionType == 1) // 회복 물약 사용
                     {
-                        Console.WriteLine($"현재 인벤토리에 회복물약 이(가) 없습니다. 회복물약 사용이 취소됩니다.");
-                        BattleStart(); 
-                    } 
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        for (int i = 0; i < player1.inven.ItemInfo.Count; i++)
+                        {
+                            if (player1.inven.ItemInfo[i].ItemType == 4)
+                            {
+                                if (player1.inven.ItemInfo[i].Amount >= 1 && player1.inven.ItemInfo[i].ItemName == "회복물약")
+                                {
+                                    Console.WriteLine("");
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"{player1.Name} 이(가) 현재 회복물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
+                                    player1.inven.ItemInfo[i].Amount -= 1;
+                                    usePotion = true; // 포션사용
+                                    if (player1.stat.Hp + 50 < player1.stat.MaxHp)
+                                    {
+                                        Console.WriteLine($"회복물약 을(를) 사용하여 체력을 50 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                        player1.stat.Hp += 50;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"회복물약 을(를) 사용하여 체력을 {player1.stat.MaxHp - player1.stat.Hp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                        player1.stat.Hp = player1.stat.MaxHp;
+                                    }
+
+                                    Console.WriteLine(""); Thread.Sleep(800);
+                                    Console.ForegroundColor = ConsoleColor.Cyan;
+                                    Console.Write($"플레이어 HP : {player1.stat.Hp} / {player1.stat.MaxHp}\n");
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else // 물약개수 동남
+                                {
+
+                                    break;
+                                }
+                            }
+
+                        }
+                        if (!usePotion) // 물약사용 실패
+                        {
+                            Console.WriteLine($"현재 인벤토리에 회복물약 이(가) 없습니다. 회복물약 사용이 취소됩니다.");
+                            BattleStart();
+                        }
+                        // 회복 물약 사용
+                    }
+                    else if (potionType == 2) // 마나 물약 사용
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        for (int i = 0; i < player1.inven.ItemInfo.Count; i++)
+                        {
+                            //Console.WriteLine($"{player1.inven.ItemInfo[i].ItemName}"); // 디버깅용
+                            if (player1.inven.ItemInfo[i].ItemType == 4)
+                            {
+                                if (player1.inven.ItemInfo[i].Amount >= 1 && player1.inven.ItemInfo[i].ItemName == "마나물약")
+                                {
+                                    Console.WriteLine("");
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"{player1.Name} 이(가) 현재 마나물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
+                                    player1.inven.ItemInfo[i].Amount -= 1;
+                                    usePotion = true; // 포션사용
+                                    if (player1.stat.Mp + 30 < player1.stat.MaxMp)
+                                    {
+                                        Console.WriteLine($"마나물약 을(를) 사용하여 체력을 30 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                        player1.stat.Mp += 30;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"마나물약 을(를) 사용하여 체력을 {player1.stat.MaxMp - player1.stat.Mp} 만큼 회복했습니다. (남은 포션 : {player1.inven.ItemInfo[i].Amount})");
+                                        player1.stat.Mp = player1.stat.MaxMp;
+                                    }
+
+                                    Console.WriteLine(""); Thread.Sleep(800);
+                                    Console.ForegroundColor = ConsoleColor.Cyan;
+                                    Console.Write($"플레이어 MP : {player1.stat.Mp} / {player1.stat.MaxMp}\n");
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else // 물약개수 동남
+                                {
+
+                                    break;
+                                }
+                            }
+
+                        }
+                        if (!usePotion) // 물약사용 실패
+                        {
+                            Console.WriteLine($"현재 인벤토리에 마나물약 이(가) 없습니다. 마나물약 사용이 취소됩니다.");
+                            BattleStart();
+                        }
+                        // 마나 물약 사용
+                    }
+                    else if (potionType == 3)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        for (int i = 0; i < player1.inven.ItemInfo.Count; i++)
+                        {
+                            if (player1.inven.ItemInfo[i].ItemType == 4)
+                            {
+                                if (player1.inven.ItemInfo[i].Amount >= 1 && player1.inven.ItemInfo[i].ItemName == "공격력 상승의 물약")
+                                {
+                                    Console.WriteLine("");
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine($"{player1.Name} 이(가) 현재 공격력 상승의 물약 을(를) {player1.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
+                                    player1.inven.ItemInfo[i].Amount -= 1;
+                                    usePotion = true; // 포션사용
+
+                                    player1.stat.AttackInc += 10;
+
+
+                                    Console.WriteLine(""); Thread.Sleep(800);
+                                    Console.ForegroundColor = ConsoleColor.Cyan;
+                                    Console.Write($"플레이어 공격력 : {player1.stat.Attack + player1.stat.AttackInc} ->  {player1.stat.Attack + player1.stat.AttackInc + 10}\n");
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else // 물약개수 동남
+                                {
+
+                                    break;
+                                }
+                            }
+
+                        }
+                        if (!usePotion) // 물약사용 실패
+                        {
+                            Console.WriteLine($"현재 인벤토리에 공격력 상승의 물약 이(가) 없습니다. 공격력 상승의 물약 사용이 취소됩니다.");
+                            BattleStart();
+                        }
+                        // 공격력 물약 사용
+                    }
+                    else
+                    {
+                        BattleStart();
+                        // 포션선택취소
+                    }
                     break;
                 default: // 잘못된 값 입력
                     Console.Clear();

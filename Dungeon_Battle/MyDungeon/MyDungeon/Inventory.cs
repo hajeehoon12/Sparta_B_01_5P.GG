@@ -31,6 +31,8 @@ namespace MyDungeon
             ItemInfo.Add(new ItemData(1, "나무방패", 2, 2, 300, 1, "주먹질 정도나 막을 것 같은 낡은 나무 방패."));
             ItemInfo.Add(new ItemData(2, "낡은목걸이", 1, 1, 1000, 1, "툭 치면 부러질 것 같은 싸구려 목걸이"));
             ItemInfo.Add(new ItemData(4, "회복물약", 0, 0, 1000, 3, "사용자의 상처를 치유하고 활력이 돋게 하는 물약"));
+            //ItemInfo.Add(new ItemData(4, "마나물약", 0, 0, 1000, 3, "사용자의 마나를 회복 시켜주는 물약"));
+            //ItemInfo.Add(new ItemData(4, "공격력 상승의 물약", 0, 0, 1000, 3, "사용자의 공격력을 일시적으로 상승시켜주는 물약"));
 
         }
         public void Show_Inven(Player player) // 인벤토리 표시

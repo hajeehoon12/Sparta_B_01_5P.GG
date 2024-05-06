@@ -14,7 +14,7 @@ namespace MyDungeon
             int skilldamage = 0; // 스킬데미지 통일
             
 
-            skilldamage = (int)(player.Critical() * 1.5f);
+            skilldamage = (int)(player.Critical() * 1.8f);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Clear();
 
@@ -124,7 +124,7 @@ namespace MyDungeon
         {
             float addonDamage;  //추가 대미지
             if (player.stat.Level >= 5)  //레벨 5 이상이면 3.2배로
-                addonDamage = 3.2f;
+                addonDamage = 2.5f;
             else
                 addonDamage = 1.5f;
             int skillDamage = (int)(player.Critical() * addonDamage);
