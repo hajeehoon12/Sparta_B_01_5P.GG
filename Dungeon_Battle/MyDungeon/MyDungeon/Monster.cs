@@ -38,7 +38,7 @@ namespace MyDungeon
         {
             Name = name;
             Level = level;
-            Health = health;
+            Health = new Random().Next(health*17/20, health +23/20); // 몬스터 체력 85%~ 115% 랜덤조정
             Attack = attack;
             Avoid = 10;// 원래 회피율 10%; // 테스트를 위해 회피율 임시 조정
             //turn = 0;
@@ -202,7 +202,7 @@ namespace MyDungeon
     }
     class Minion : Monster  //미니언
     {
-        public Minion(string name) : base(name, 1, 35, 10)
+        public Minion(string name) : base(name, 1, 25, 10)
         {    
             add_Drop_Item();
         }
@@ -263,7 +263,7 @@ namespace MyDungeon
     class Worm : Monster   //공허충
     {
        
-        public Worm(string name) : base(name, 3, 50, 15) 
+        public Worm(string name) : base(name, 3, 35, 15) 
         {    
             add_Drop_Item();
         }
@@ -314,7 +314,7 @@ namespace MyDungeon
     class CannonMinion : Monster  //대포 미니언
     {
         
-        public CannonMinion(string name) : base(name, 5, 70, 20)
+        public CannonMinion(string name) : base(name, 5, 50, 20)
         {
             add_Drop_Item();
         }
@@ -362,7 +362,7 @@ namespace MyDungeon
 
     class baron : Monster // 바론
     {
-        public baron(string name) : base(name, 10, 999, 25)
+        public baron(string name) : base(name, 10, 500, 25)
         {
 
             add_Drop_Item();
