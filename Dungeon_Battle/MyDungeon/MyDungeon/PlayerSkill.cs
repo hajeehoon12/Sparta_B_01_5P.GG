@@ -300,6 +300,7 @@ namespace MyDungeon
             Console.Clear();    //여기서 콘솔창 갱신
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}]");
+            Console.WriteLine("샤이닝 레이로 인한 강제 크리티컬 발생!!");
             player.skillUsing = true;
             index = 0;
             foreach (Monster m in Monsters)
@@ -310,7 +311,11 @@ namespace MyDungeon
                     continue;   //이미 죽으면 넘어가는걸로
                 }
                 if (index == selectMonster) //선택 대상은 크리티컬 추가 어택
+                {
+                    
                     m.TakeDamage(player, skillDamage + player.Critical());
+                    
+                }
                 else
                     m.TakeDamage(player, skillDamage);
                 index++;

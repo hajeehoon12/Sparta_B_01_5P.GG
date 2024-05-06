@@ -202,7 +202,7 @@ namespace MyDungeon
     }
     class Minion : Monster  //미니언
     {
-        public Minion(string name) : base(name, 2, 15, 5)
+        public Minion(string name) : base(name, 1, 35, 10)
         {    
             add_Drop_Item();
         }
@@ -263,7 +263,7 @@ namespace MyDungeon
     class Worm : Monster   //공허충
     {
        
-        public Worm(string name) : base(name, 3, 10, 9) 
+        public Worm(string name) : base(name, 3, 50, 15) 
         {    
             add_Drop_Item();
         }
@@ -314,7 +314,7 @@ namespace MyDungeon
     class CannonMinion : Monster  //대포 미니언
     {
         
-        public CannonMinion(string name) : base(name, 5, 25, 8)
+        public CannonMinion(string name) : base(name, 5, 70, 20)
         {
             add_Drop_Item();
         }
@@ -362,7 +362,7 @@ namespace MyDungeon
 
     class baron : Monster // 바론
     {
-        public baron(string name) : base(name, 10, 70, 10)
+        public baron(string name) : base(name, 10, 999, 25)
         {
 
             add_Drop_Item();

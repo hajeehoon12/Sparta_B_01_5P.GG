@@ -31,7 +31,7 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write($"(보유 골드 : {player.stat.Gold} G) \n\n");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"현재 체력 : {player.stat.Hp}, 최대 체력 : {player.stat.MaxHp}");
+            Console.WriteLine($"체력 : {player.stat.Hp} / {player.stat.MaxHp}\n");
             Console.WriteLine("-1. 나가기");
             Console.WriteLine("0. 휴식하기 (잃은 체력의 절반 회복)");
             Console.WriteLine("1. 회복물약 사용 (체력을 최대 50회복) , 회복물약 1개 소모");
@@ -92,7 +92,7 @@ namespace MyDungeon
                     {
                         if (player.inven.ItemInfo[i].ItemType == 4)
                         {
-                            if (player.inven.ItemInfo[i].Amount >= 1)
+                            if (player.inven.ItemInfo[i].Amount >= 1 && player.inven.ItemInfo[i].ItemName == "회복물약")
                             {
                                 Console.WriteLine($"{player.Name} 이(가) 현재 {player.inven.ItemInfo[i].ItemName} 을(를) {player.inven.ItemInfo[i].Amount} 개 소지하고 있습니다. 1개를 소비합니다.");
                                 player.inven.ItemInfo[i].Amount -= 1;

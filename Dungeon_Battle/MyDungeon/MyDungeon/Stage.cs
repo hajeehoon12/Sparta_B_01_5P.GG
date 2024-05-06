@@ -106,10 +106,6 @@ namespace MyDungeon
             StageStart(select);
         }
 
-        //stage를 만들어서
-        // 1스테이지는 (공허충 최대 2마리 나머지 미니언)
-        // 2스테이지는 (대포 1마리 나머지는 미니언이나 공허충)
-        // 3스테이지는 (대포 최대 2마리 나머지는 미니언이나 공허충)
         public void StageStart(int stage)
         {
             inFight = false; // 초기화
@@ -118,25 +114,29 @@ namespace MyDungeon
                 monstersCount[i] = 0;   //몬스터 종류 수 초기
             
             int randomLength;
-            if (stage == 2 || stage == 3) //스테이지가 2,3이면
+            if (stage == 1) //스테이지가 2,3이면
             {
-                randomLength = new Random().Next(2, 5); //2~4마리 랜덤한 몬스터 생성
+                randomLength = new Random().Next(2, 4); //2~3 마리의 랜덤한 몬스터 생성
             }
-            else if (stage == 1)
+            else if (stage == 2)
             {
-                randomLength = new Random().Next(1, 5); //1~4마리의 랜덤한 몬스터 생성
+                randomLength = new Random().Next(3, 5); // 3~4마리의 랜덤 몬스터
+            }
+            else if (stage == 3)
+            {
+                randomLength = new Random().Next(4, 5); //4마리의 랜덤한 몬스터 생성
             }
             else
             {
-                randomLength = new Random().Next(1, 2); // 보스전 몬스터한마리만 생성
+                randomLength = new Random().Next(1, 2); // 보스전 보스 몬스터 한마리만 생성
             }
          
 
             for (int i = 0; i < randomLength; i++)
             {
-                switch (stage)  //몬스터 리스트에 몬스터 추가
+                switch (stage)  //몬스터 리스트에 순차적으로 몬스터를 추가
                 {
-                    case 1: //스테이지 1
+                    case 1: //스테이지 1 , 미니언과 공허충만
                         
                         if (monstersCount[(int)MonsterSpices.Worm] >= 2)    //공허충이 2마리가 넘어가면
                             //CreateMonster(MonsterSpices.baron);
@@ -146,18 +146,18 @@ namespace MyDungeon
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
 
                         break;
-                    case 2: //스테이지 2
-                        if (i == (randomLength - 1) && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면
+                    case 2: //스테이지 2 , 대포 한마리와 나머지는 미니언과 공허충만
+                        if (i == (randomLength - 1) && monstersCount[(int)MonsterSpices.CanonMinion] == 0)   //마지막 인덱스에서 대포가 없으면 , 대포 추가
                             CreateMonster(MonsterSpices.CanonMinion);
-                        else if (monstersCount[(int)MonsterSpices.CanonMinion] >= 1) //대포가 1마리 있으면
+                        else if (monstersCount[(int)MonsterSpices.CanonMinion] >= 1) //대포가 1마리 있으면 공허충과 미니언만 생산
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
                         else
                             CreateMonster((MonsterSpices)new Random().Next(0, 3));
                         break;
-                    case 3: //스테이지 3
-                        if (i > 1 && monstersCount[(int)MonsterSpices.CanonMinion] < 2)    //대포가 2마리 미만이면
+                    case 3: //스테이지 3 , 대포미니언 3마리와 랜덤한마리
+                        if (i > 1 && monstersCount[(int)MonsterSpices.CanonMinion] < 3)    //대포가 3마리 미만이면
                             CreateMonster(MonsterSpices.CanonMinion);
-                        else if (monstersCount[(int)MonsterSpices.CanonMinion] >= 2) //대포가 2마리 넘어가면
+                        else if (monstersCount[(int)MonsterSpices.CanonMinion] >= 2) //대포가 3마리 넘어가면 미니언과 공허충만 생산
                             CreateMonster((MonsterSpices)new Random().Next(0, 2));
                         else
                             CreateMonster((MonsterSpices)new Random().Next(0, 3));
