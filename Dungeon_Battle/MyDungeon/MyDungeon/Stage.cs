@@ -191,6 +191,15 @@ namespace MyDungeon
             }
             Console.ForegroundColor = ConsoleColor.White;
 
+            if (player1.stat.Mp + 10 <= player1.stat.MaxMp) // 매턴마나 마나 10회복
+            {
+                player1.stat.Mp += 10;
+            }
+            else
+            {
+                player1.stat.Mp = player1.stat.MaxMp;
+            }
+
             Console.WriteLine();
             foreach (Monster monster in monsterInStage)
             {
