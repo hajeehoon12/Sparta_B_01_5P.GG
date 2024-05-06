@@ -233,7 +233,7 @@ namespace MyDungeon
 
 
         static void Main()
-        {
+        {                         
             Console.SetBufferSize(200, 120);
             Console.SetWindowSize(120, 70); // 콘솔창 크기 조절
             
@@ -281,7 +281,7 @@ namespace MyDungeon
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(30, 40);
             
-            Console.WriteLine("2. 마법사 (공격력 + 10 , 치명타 확률 + 10 , 최대체력 - 20)\n");
+            Console.WriteLine("2. 마법사 (공격력 + 10 , 치명타 확률 + 10 , 최대체력 - 20, 최대마나 + 20)\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(30, 42);
             

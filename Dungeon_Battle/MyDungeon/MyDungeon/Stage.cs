@@ -34,7 +34,7 @@ namespace MyDungeon
             player1 = player;   // 실제 스테이터스에도 반영되는 것을 확인
             monsterInStage = new List<Monster>(4);
             Console.ForegroundColor = ConsoleColor.Yellow;
-
+            player1.stat.Mp = player1.stat.MaxMp;
             Console.WriteLine("\r\n ######  ########    ###     ######   ######## \r\n##    ##    ##      ## ##   ##    ##  ##       \r\n##          ##     ##   ##  ##        ##       \r\n ######     ##    ##     ## ##   #### ######   \r\n      ##    ##    ######### ##    ##  ##       \r\n##    ##    ##    ##     ## ##    ##  ##       \r\n ######     ##    ##     ##  ######   ######## \r\n");
 
             //스테이지 선택
@@ -208,14 +208,15 @@ namespace MyDungeon
             Console.WriteLine("\n[내 정보]");
             Console.WriteLine($"Lv.{player1.stat.Level} {player1.Name} ({player1.stat.job}) ");
             Console.WriteLine($"HP {player1.stat.Hp} / {player1.stat.MaxHp}");
+            Console.WriteLine($"Mp {player1.stat.Mp} / {player1.stat.MaxMp}");
             
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1. 공격");
 
-            Console.WriteLine($"2. 스킬 "); // - {player1.stat.job}
+            Console.WriteLine($"2. 스킬 (마나 20 사용) "); // - {player1.stat.job}
 
-            Console.WriteLine("3. 회복물약 사용 (체력 50회복)");
+            Console.WriteLine("3. 회복물약 사용 (체력 50 회복)");
 
             Console.WriteLine();
 
@@ -368,6 +369,21 @@ namespace MyDungeon
                 case 2: // 플레이어 스킬 사용 // 임시 광역기
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine();
+
+                    if (player1.stat.Mp >= 20)
+                    {
+                        player1.stat.Mp -= 20;
+                        Console.WriteLine("마나 20 소모");
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("마나 부족!! 으로 인한 스킬 사용 취소");
+                        BattleStart();
+                        
+                    }
+
+
                     switch(player1.stat.job)    //직업별로 사용하는 스킬
                     {   //원하는 스킬을 선택하도록
                         case "전사":
@@ -393,7 +409,12 @@ namespace MyDungeon
                             Console.Clear();    //여기서 콘솔창 갱신
                             if (skillNum == 1)
                                 PlayerSkill.OverHit(player1, monsterInStage);
-                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            else if (skillNum == 0)
+                            {
+                                Console.Clear();
+                                player1.stat.Mp += 20;
+                                BattleStart();
+                            }// 스킬 선택창으로 돌아감
 
                             break;
                         case "마법사":
@@ -402,7 +423,7 @@ namespace MyDungeon
                                 Console.WriteLine("[ 스킬을 선택하세요 ]\n");
                                 Console.WriteLine("0. 취소");
                                 Console.WriteLine("1. 갓블레스 힐");
-                                Console.WriteLine("2. 샤이닝 레이 (지정한 적과 양옆의 적에게 1.8배의 데미지로 공격)");
+                                Console.WriteLine("2. 샤이닝 레이 (지정한 적에겐 크리티컬, 양옆의 적에게 1.2배의 데미지로 공격)");
                                 Console.Write("\n>> ");
                                 isSkillRight = int.TryParse(Console.ReadLine(), out skillNum);
                                 if (isSkillRight)
@@ -417,11 +438,16 @@ namespace MyDungeon
                                 }
                             } while (!isSkillRight);
                             Console.Clear();    //여기서 콘솔창 갱신
-                            if(skillNum == 1)
+                            if (skillNum == 1)
                                 PlayerSkill.Heal(player1);
-                            else if(skillNum == 2)
+                            else if (skillNum == 2)
                                 PlayerSkill.ShiningRay(player1, monsterInStage);
-                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            else if (skillNum == 0)
+                            {
+                                Console.Clear();
+                                player1.stat.Mp += 20;
+                                BattleStart();
+                            }// 스킬 선택창으로 돌아감
                             break;
                         case "궁수":
                             
@@ -446,7 +472,12 @@ namespace MyDungeon
                             } while (!isSkillRight);
                             Console.Clear();    //여기서 콘솔창 갱신
                             if (skillNum == 1) PlayerSkill.SoulArrow(player1, monsterInStage);
-                            else if(skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            else if (skillNum == 0)
+                            {
+                                Console.Clear();
+                                player1.stat.Mp += 20;
+                                BattleStart();
+                            }// 스킬 선택창으로 돌아감
                             break;
 
                         case "도적":
@@ -466,7 +497,7 @@ namespace MyDungeon
                                     isSkillRight = false;
                                 }
                             } while (!isSkillRight);
-                            
+
                             if (skillNum == 1)  //크리티컬 스로우
                             {
                                 do
@@ -494,14 +525,19 @@ namespace MyDungeon
                                         IsRightEnemy = false;   // 같은 정수를 이외의 값을 입력하면 true로 저장되어 빠져나온다. 그래서 false로 설정
                                     }
                                 } while (!IsRightEnemy);
-                                
+
                             }
                             else if (skillNum == 2) //어벤져
                             {
                                 Console.Clear();
                                 PlayerSkill.Avenger(player1, monsterInStage);
                             }
-                            else if (skillNum == 0) BattleStart(); // 스킬 선택창으로 돌아감
+                            else if (skillNum == 0)
+                            {
+                                Console.Clear();
+                                player1.stat.Mp += 20;
+                                BattleStart();
+                            }// 스킬 선택창으로 돌아감
                             break;
                     }
                     break;

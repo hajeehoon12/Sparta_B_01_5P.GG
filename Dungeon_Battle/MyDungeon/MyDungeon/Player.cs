@@ -136,6 +136,7 @@ namespace MyDungeon
                 critical += 10;
                 stat.Hp -= 20;
                 stat.MaxHp -= 20;
+                stat.MaxMp += 20;
             }
             else if (stat.job == "도적") // 도적일 경우 세팅
             {

@@ -27,8 +27,8 @@ namespace MyDungeon
                 case 1:
                     monster.Health += 10;
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\"공허충\" 이 [웅크리기]을(를) 합니다!");
-                    Console.WriteLine("\"공허충\" 이 최대 체력을 증가시킵니다.");
+                    Console.WriteLine("\n\"공허충\" 이 [웅크리기]을(를) 합니다!");
+                    Console.WriteLine("\n\"공허충\" 이 최대 체력을 증가시킵니다.");
                     break;
                 default:
                     monster.HitDamage(player, monster);
@@ -50,23 +50,23 @@ namespace MyDungeon
                     player.stat.Hp -= 30;
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine();
-                    Console.WriteLine($"\"머포미니언\" 이 플레이어에게 [대포 발사]을(를) 합니다!");
+                    Console.WriteLine($"\n\"머포미니언\" 이 플레이어에게 [대포 발사]을(를) 합니다!");
                     Console.WriteLine($"{player.Name} 에게 고정데미지가 들어옵니다.");
                     Console.WriteLine($"{player.Name} 의 체력 {player.stat.Hp + 30} -> {player.stat.Hp}");
                     break;
                 case 1:
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\"머포미니언\" 이 [에너지]을(를) 모으기 시작합니다!!");
+                    Console.WriteLine("\n\"머포미니언\" 이 [에너지]을(를) 모으기 시작합니다!!");
 
                     break;
                 case 2:
-                    Console.WriteLine("\"머포미니언\" 의 에너지포!");
+                    Console.WriteLine("\n\"머포미니언\" 의 에너지포!");
                     monster.Attack *= 3;
                     monster.HitDamage(player, monster);
                     monster.Attack /= 3;
                     break;
                 default:
-                    Console.WriteLine("\"머포미니언\" 의 2연타 공격!!");
+                    Console.WriteLine("\n\"머포미니언\" 의 2연타 공격!!");
                     monster.HitDamage(player, monster);
                     monster.HitDamage(player, monster);
                     break;
@@ -89,7 +89,7 @@ namespace MyDungeon
                     
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine();
-                    Console.WriteLine($"\"미니언\" 이 플레이어에게 분노합니다!");
+                    Console.WriteLine($"\n\"미니언\" 이 플레이어에게 분노합니다!");
                     Console.WriteLine($"미니언의 공격력이 다음턴까지 두배 증가합니다.");
                     if (attackbuff)
                     {
@@ -101,7 +101,7 @@ namespace MyDungeon
                 case 1:
                     
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine($"\"미니언\"이 한눈 팔려 공격을 하지 않습니다!");
+                    Console.WriteLine($"\n\"미니언\"이 한눈 팔려 공격을 하지 않습니다!");
                     if (attackbuff)
                     {
                         monster.Attack /= 2;

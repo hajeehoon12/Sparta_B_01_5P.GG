@@ -120,6 +120,7 @@ namespace MyDungeon
                     {
                         character.quest.minionCount++;
                     }
+                    character.stat.Mp += 10; // 몬스터 처치시 플레이어 마나회복 + 10
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
 

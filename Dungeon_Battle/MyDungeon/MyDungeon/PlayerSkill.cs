@@ -242,8 +242,14 @@ namespace MyDungeon
         public static void Heal(Player player)  // 스킬 갓 블레스 힐 (패시브)
         {
             //플레이어의 체력을 회복
-            int healPower = player.stat.MaxHp / 10;
-            player.Health += healPower;
+            int healPower = (player.stat.AttackInc + (int)player.stat.Attack) * 2;
+            player.stat.Hp += healPower;
+
+            if (player.stat.Hp > player.stat.MaxHp)
+            {
+                healPower = player.stat.MaxHp - player.stat.Hp;
+                player.stat.Hp = player.stat.MaxHp; 
+            }
 
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -287,7 +293,7 @@ namespace MyDungeon
             while (!isRightMonster);
 
             //딜 시작
-            int skillDamage = (int)(player.Attack * 1.8f);
+            int skillDamage = (int)(player.Attack * 1.2f);
 
             //연출
 

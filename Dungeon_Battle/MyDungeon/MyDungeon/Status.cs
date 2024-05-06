@@ -23,6 +23,8 @@ namespace MyDungeon
         public int DefInc { get; set; }
         public string job { get; set; }
 
+        public int Mp { get; set; }
+        public int MaxMp { get; set; }
 
         
 
@@ -39,6 +41,7 @@ namespace MyDungeon
             player = player1;
             AttackInc = 0;
             DefInc = 0;
+            MaxMp = 50;
 
         }
 
@@ -54,6 +57,7 @@ namespace MyDungeon
             Console.WriteLine($"공격력 : {Attack}");
             Console.WriteLine($"방어력 : {Defense}");
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
+            Console.WriteLine($"마 나 : {MaxMp} / {MaxMp}");
             Console.WriteLine($"치명타 확률 : {player.critical} + ({player.increaseCritical}) %");
             Console.WriteLine($"치명타 데미지 : {player.criticalDmg * 100} + ({player.increaseCritical}) %");
             Console.WriteLine($"회피율 : {player.avoid} + ({player.increaseAvoid}) %");
@@ -77,6 +81,7 @@ namespace MyDungeon
             Console.WriteLine($"공격력 : {Attack}");
             Console.WriteLine($"방어력 : {Defense}");
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
+            Console.WriteLine($"마 나 : {MaxMp} / {MaxMp}");
             Console.WriteLine($"치명타 확률 : {player.critical} + ({player.increaseCritical}) %");
             Console.WriteLine($"치명타 데미지 : {player.criticalDmg * 100} + ({player.increaseCritical}) %");
             Console.WriteLine($"회피율 : {player.avoid} + ({player.increaseAvoid}) %");
@@ -116,6 +121,7 @@ namespace MyDungeon
                 Console.WriteLine($"방어력 : {Defense}");
             }
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
+            Console.WriteLine($"마 나 : {MaxMp} / {MaxMp}");
 
             if (player.increaseCritical == 0)
             {
@@ -179,7 +185,7 @@ namespace MyDungeon
                 Console.WriteLine($"방어력 : {Defense}");
             }
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
-
+            Console.WriteLine($"마 나 : {MaxMp} / {MaxMp}");
             if (player.increaseCritical == 0)
             {
                 Console.WriteLine($"치명타 확률 : {player.critical} %");
@@ -259,7 +265,7 @@ namespace MyDungeon
                 Console.WriteLine($"Lv. {Level - 1} -> {Level}");
                 Console.WriteLine($"공격력 {Attack - 1} -> {Attack}");
                 Console.WriteLine($"방어력 {Defense-2} -> {Defense}\n");
-                Console.WriteLine($"최대체력 {MaxHp - 20} -> {MaxHp + 20}");
+                Console.WriteLine($"최대체력 {MaxHp - 20} -> {MaxHp}");
 
             }
         }
