@@ -240,7 +240,7 @@ namespace MyDungeon
                 {
                     //맞출때 일정확률로 추가타
                     int randomDamage = new Random().Next(0, 15);    //추가타를 때릴 수 있는 일정 확률
-                    int addonDamage = randomDamage < 4 ? 5 : 1; //4/15의 확률로 5만큼 데미지 추가
+                    int addonDamage = randomDamage < 4 ? 20 : 1; //4/15의 확률로 5만큼 데미지 추가
                     Monsters[i].TakeDamage(player, skillDamage + addonDamage);
                 }
             }
