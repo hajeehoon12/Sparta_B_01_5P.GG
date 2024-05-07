@@ -200,6 +200,17 @@ namespace MyDungeon
                 player1.stat.Mp = player1.stat.MaxMp;
             }
 
+            if (player1.stat.Hp <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\r\n##    ##  #######  ##     ##    ##        #######   ######  ######## \r\n ##  ##  ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n  ####   ##     ## ##     ##    ##       ##     ## ##       ##       \r\n   ##    ##     ## ##     ##    ##       ##     ##  ######  ######   \r\n   ##    ##     ## ##     ##    ##       ##     ##       ## ##       \r\n   ##    ##     ## ##     ##    ##       ##     ## ##    ## ##       \r\n   ##     #######   #######     ########  #######   ######  ######## \r\n");
+                Console.WriteLine("\n3초 뒤에 자동으로 메인 화면으로 돌아갑니다."); Thread.Sleep(1000);
+                Console.WriteLine($"{player1.Name} 의 체력 0 -> 1");
+                Thread.Sleep(3000);
+                player1.program.SelectAct(player1);
+            }
+
+
             Console.WriteLine();
             foreach (Monster monster in monsterInStage)
             {

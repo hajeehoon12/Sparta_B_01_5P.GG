@@ -118,10 +118,10 @@ namespace MyDungeon
             quest = new Quest();
 
 
-           critical = 15;                  // 크리티컬 확률 // 기본은 15%
-        criticalDmg = 1.6f;          // 크리티컬 데미지
-         increaseCritical = 0;         // 크리티컬 확률 추가
-        increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
+            critical = 15;                  // 크리티컬 확률 // 기본은 15%
+            criticalDmg = 1.6f;          // 크리티컬 데미지
+            increaseCritical = 0;         // 크리티컬 확률 추가
+            increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
 
         //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
