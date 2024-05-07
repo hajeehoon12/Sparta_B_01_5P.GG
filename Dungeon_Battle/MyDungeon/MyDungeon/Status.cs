@@ -45,6 +45,12 @@ namespace MyDungeon
 
         }
 
+        public void setStat(Player player1)
+        {
+            player = player1;
+            player.Name = player1.Name;
+        }
+
         public void Show_dungeon_stat()
         {
 
@@ -123,7 +129,7 @@ namespace MyDungeon
             Console.WriteLine($"체 력 : {Hp} / {MaxHp}");
             Console.WriteLine($"마 나 : {MaxMp} / {MaxMp}");
 
-            if (player.increaseCritical == 0)
+            if (player.increaseCritical == 0 || player.increaseCritical != null)
             {
                 Console.WriteLine($"치명타 확률 : {player.critical} %");
             }

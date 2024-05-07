@@ -67,7 +67,7 @@ namespace MyDungeon
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\n[휴식 결과]\n");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"체력 {player.stat.Hp} -> {player.stat.MaxHp}");
+                        Console.WriteLine($"체력 {player.stat.Hp} -> {((player.stat.MaxHp - player.stat.Hp) / 2 )+player.stat.Hp}");
                         Console.WriteLine($"Gold {player.stat.Gold} G-> {player.stat.Gold - price} ");
                         player.stat.Hp += (player.stat.MaxHp-player.stat.Hp)/2;
                         player.stat.Gold -= price;

@@ -39,7 +39,7 @@ namespace MyDungeon
             
             if (questCompleat)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.Write("1. 미니언 처치!!");
                 Console.Write(" [완료됨]");
             }
@@ -145,7 +145,7 @@ namespace MyDungeon
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("=================================================================================================");
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"퀘스트 목표 : 미니언 5마리 처치!! ({minionCount} /5)\n");
+                Console.WriteLine($"퀘스트 목표 : 미니언 1마리 처치!! ({minionCount} /1)\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("=================================================================================================");
                 Console.WriteLine();
@@ -182,7 +182,7 @@ namespace MyDungeon
                 Console.SetCursorPosition(37, 22);
                 Console.WriteLine("미니언을 처치하지 못하고 온 것 같군..."); Thread.Sleep(1500);
                 Console.SetCursorPosition(37, 24);
-                Console.WriteLine($"자네가 처치한 미니언의 수는 ({minionCount} / 5)라네"); Thread.Sleep(2000);
+                Console.WriteLine($"자네가 처치한 미니언의 수는 ({minionCount} / 1)라네"); Thread.Sleep(2000);
                 Console.SetCursorPosition(37, 26);
                 Console.WriteLine("미니언을 처치하지 못한다면 모험가는 꿈도 꾸지 말게나!!"); Thread.Sleep(2000);
                 Console.Clear();
@@ -608,7 +608,7 @@ namespace MyDungeon
                     case 1: // 퀘스트 수락, 방패 지급
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("\n어디 보자... 여기 있네. 내가 가장 소중히 여기는 방패니까 조심히 다루게나!!"); Thread.Sleep(1500);
-                        player.ItemAmount_Change(new ItemData(2, "낡은 수련용 방패", 0, 2, 50, 1, "돈을 주고서나 팔아야 겨우 팔릴것 같은 싸구려 방패"), 1);
+                        player.ItemAmount_Change(new ItemData(1, "낡은 수련용 방패", 0, 2, 50, 1, "돈을 주고서나 팔아야 겨우 팔릴것 같은 싸구려 방패"), 1);
                         Console.WriteLine("\n☆★낡은 수련용 방패 지급 완료!★☆\n");
 
                         Console.WriteLine("[아이템 설명] : 돈을 주고서나 팔아야 겨우 팔릴것 같은 싸구려 방패"); Thread.Sleep(1500);
@@ -687,7 +687,7 @@ namespace MyDungeon
                     case 1: // 퀘스트 완료, 새방패 지급
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("\n어디 보자... 여기 있네. 내가 가장 소중히 여기는 방패니까 조심히 다루게나!!"); Thread.Sleep(2000);
-                        player.ItemAmount_Change(new ItemData(2, "[혁매님]의 순찰방패", 0, 20, 5000, 1, "상대가 캠을 키지 않으면 이상한 노래가 나올것만 같은 무서운 방패"), 1);
+                        player.ItemAmount_Change(new ItemData(1, "[혁매님]의 순찰방패", 0, 20, 5000, 1, "상대가 캠을 키지 않으면 이상한 노래가 나올것만 같은 무서운 방패"), 1);
                         Console.WriteLine("\n☆★ 보상 : [혁매님]의 순찰방패 , Exp + 5 ★☆\n");
                         player.stat.Exp += 5;
                         player.stat.isLevelUp();

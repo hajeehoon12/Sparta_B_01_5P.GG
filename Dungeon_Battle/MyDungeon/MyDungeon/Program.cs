@@ -36,6 +36,8 @@ namespace MyDungeon
 
         private void LoadGameData(Player player)
         {
+            Player player1;
+            
             Console.WriteLine("\r\n##        #######     ###    ########  \r\n##       ##     ##   ## ##   ##     ## \r\n##       ##     ##  ##   ##  ##     ## \r\n##       ##     ## ##     ## ##     ## \r\n##       ##     ## ######### ##     ## \r\n##       ##     ## ##     ## ##     ## \r\n########  #######  ##     ## ########  \r\n");
             Console.WriteLine("불러올 플레이어명을 입력하세요.\n>>");
             string temp_name = Console.ReadLine();
@@ -52,13 +54,17 @@ namespace MyDungeon
             if (File.Exists(_filePath)) // 해당 경로에 저장된 것이 있었으면
             {
                 string _playerJson = File.ReadAllText(_filePath);
-                player = JsonConvert.DeserializeObject<Player>(_playerJson);
+                player1= new Player(temp_name);
+                player1 = JsonConvert.DeserializeObject<Player>(_playerJson);
+                
+                player1.stat.setStat(player1);
+                player1.Name = temp_name;
                 Console.WriteLine($"{temp_name} 의 게임 데이터를 불러옵니다."); // 저장된 플레이어 데이터의 플레이어명
 
                 Thread.Sleep(1000);
                 Console.WriteLine($"플레이어명 : {temp_name} 의 게임 데이터를 불러오는데 성공했습니다!!");
                 Console.WriteLine("\r\n ######     ###    ##     ## ######## \r\n##    ##   ## ##   ##     ## ##       \r\n##        ##   ##  ##     ## ##       \r\n ######  ##     ## ##     ## ######   \r\n      ## #########  ##   ##  ##       \r\n##    ## ##     ##   ## ##   ##       \r\n ######  ##     ##    ###    ######## \r\n");
-                SelectAct(player);
+                SelectAct(player1);
 
             }
             else
@@ -193,6 +199,7 @@ namespace MyDungeon
                     break;
                 case 8:
                     LoadGameData(player);
+                    SelectAct(player);
                     break;
                 case 9:
                     Console.ForegroundColor = ConsoleColor.Yellow;

@@ -21,7 +21,7 @@ namespace MyDungeon
 
     [Serializable] public class Player : ICharacter
     {
-        public string Name { get; } // 저장용
+        public string Name { get; set; } // 저장용
         public Status stat; // 상태창 저장용
         Market market;
         Dungeon dungeon;
@@ -36,10 +36,10 @@ namespace MyDungeon
         public bool skillUsing = false; // 스킬사용중 여부
 
 
-        public int critical = 15;                  // 크리티컬 확률 // 기본은 15%
-        public float criticalDmg = 1.6f;          // 크리티컬 데미지
-        public int increaseCritical = 0;         // 크리티컬 확률 추가
-        public float increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
+        public int critical { get; set; }                  // 크리티컬 확률 // 기본은 15%
+        public float criticalDmg { get; set; }       // 크리티컬 데미지
+        public int increaseCritical { get; set; }       // 크리티컬 확률 추가
+        public float increaseCriticalDmg { get; set; } // 크리티컬 데미지추가
 
         public int avoid = 10;
         public int increaseAvoid = 0;
@@ -116,11 +116,16 @@ namespace MyDungeon
             camp = new Camp();
             program = new Program();
             quest = new Quest();
-            
-            
-            //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
 
-        }
+
+           critical = 15;                  // 크리티컬 확률 // 기본은 15%
+        criticalDmg = 1.6f;          // 크리티컬 데미지
+         increaseCritical = 0;         // 크리티컬 확률 추가
+        increaseCriticalDmg = 0f;  // 크리티컬 데미지추가
+
+        //stat.Show_stat(); // 생성할 때, 캐릭터 정보를 출력 //현재 기능 비활성화
+
+    }
 
         public void PlayerSet()
         {

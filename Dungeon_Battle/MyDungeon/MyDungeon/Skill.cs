@@ -134,6 +134,7 @@ namespace MyDungeon
         static public void BaronPattern(Player player, Monster monster)
         {
             int monsterAct = 0;
+            int MaxHealth = monster.Health;
 
             monsterAct = monster.turn % 7;
 
@@ -207,9 +208,9 @@ namespace MyDungeon
                     Console.WriteLine($"Boss[바론] 의 [자가 수복]"); Thread.Sleep(800);
 
                     Console.WriteLine($"{monster.Name} 이 자신의 잃은 체력의 절반만큼 회복합니다!"); Thread.Sleep(800);
-                    Console.WriteLine($"{monster.Name} 의 체력 {monster.Health} -> {(70-monster.Health)/2 + monster.Health}"); Thread.Sleep(800);
+                    Console.WriteLine($"{monster.Name} 의 체력 {monster.Health} -> {(MaxHealth-monster.Health)/2 + monster.Health}"); Thread.Sleep(800);
 
-                    monster.Health += (70 - monster.Health) / 2; 
+                    monster.Health += (MaxHealth - monster.Health) / 2; 
 
                     break;
                 case 6:
