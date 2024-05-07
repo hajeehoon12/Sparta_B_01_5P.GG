@@ -27,7 +27,7 @@ namespace MyDungeon
 
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name} 의 심판!! [데미지 : {skilldamage}]");
+            Console.WriteLine($"{player.Name} 의 심판!! [데미지 : {skilldamage}]"); Thread.Sleep(800);
             player.skillUsing = true;
             foreach (Monster monster in Monsters)
             {
@@ -132,7 +132,7 @@ namespace MyDungeon
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\n{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 크리티컬 스로우!! [데미지 : {skillDamage}]"); Thread.Sleep(800);
             player.skillUsing = true;
             if (monster.Health > 0)
                 monster.TakeDamage(player, skillDamage);
@@ -149,7 +149,7 @@ namespace MyDungeon
             //연출...
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\n{player.Name}의 어벤져!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 어벤져!! [데미지 : {skillDamage}]"); Thread.Sleep(800);
             player.skillUsing = true;
             foreach (Monster monster in Monsters)
             {
@@ -221,7 +221,7 @@ namespace MyDungeon
 
             Console.Clear();    //여기서 콘솔창 갱신
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\n{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"\n{player.Name}의 소울 애로우!! [데미지 : {skillDamage}]"); Thread.Sleep(800);
             player.skillUsing = true;
             firstMonsterIndex = selectMonster == 0 ? 0 : selectMonster - 1; //selectMonster가 첫 인덱스이면 0
             lastMonsterIndex = selectMonster == Monsters.Count - 1 ? Monsters.Count - 1 : selectMonster + 1; //selectMonster가 마지막 인덱스이면 마지막
@@ -265,7 +265,7 @@ namespace MyDungeon
             player.skillUsing = true;
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}]\n");
+            Console.WriteLine($"{player.Name}의 갓 블레스 힐!! [체력 : +{healPower}]\n"); Thread.Sleep(800);
             player.skillUsing = false;
         }
         public static void ShiningRay(Player player, List<Monster> Monsters)    //샤이닝 레이
@@ -310,7 +310,7 @@ namespace MyDungeon
 
             Console.Clear();    //여기서 콘솔창 갱신
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}]");
+            Console.WriteLine($"{player.Name}의 샤이닝 레이!! [데미지 : {skillDamage}]"); Thread.Sleep(800);
             Console.WriteLine("샤이닝 레이로 인한 강제 크리티컬 발생!!");
             player.skillUsing = true;
             index = 0;

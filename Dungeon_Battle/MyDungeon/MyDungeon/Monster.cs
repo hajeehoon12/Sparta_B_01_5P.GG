@@ -94,7 +94,7 @@ namespace MyDungeon
             {
                 damage = 0;
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"\nLv. {Level} {Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");
+                Console.WriteLine($"\nLv. {Level} {Name}이(가) 날렵한 몸놀림으로 {character.Name} 의 공격을 회피했습니다..\n\n");Thread.Sleep(800);
                 Console.WriteLine($"Lv.{Level} {Name}");
                 //체력 삭감 전
                 Console.WriteLine($"HP {Health} -> {Health}");
@@ -124,7 +124,7 @@ namespace MyDungeon
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Dead");
 
-                    Console.WriteLine($"Lv. {Level} {Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!");
+                    Console.WriteLine($"Lv. {Level} {Name} 이(가) {character.Name} 에게 결정적인 일격을 맞고 쓰러졌습니다!!"); Thread.Sleep(800);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Reward(character); // 플레이어에게 보상 증여
                     Console.ForegroundColor = ConsoleColor.White;
@@ -155,8 +155,8 @@ namespace MyDungeon
             {
                 damage = 0;
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{character.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다.. [데미지 : 0]\n");
-                
+                Console.WriteLine($"{character.Name}이(가) 놀라운 반사신경으로 공격을 회피했습니다.. [데미지 : 0]\n"); Thread.Sleep(800);
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"\nLv.{character.stat.Level} {character.Name}");
                 //체력 삭감 전

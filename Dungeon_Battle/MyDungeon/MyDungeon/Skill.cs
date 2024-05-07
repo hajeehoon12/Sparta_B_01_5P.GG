@@ -60,12 +60,14 @@ namespace MyDungeon
 
                     break;
                 case 2:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\n\"머포미니언\" 의 에너지포!");
                     monster.Attack *= 3;
                     monster.HitDamage(player, monster);
                     monster.Attack /= 3;
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\n\"머포미니언\" 의 2연타 공격!!");
                     monster.HitDamage(player, monster);
                     monster.HitDamage(player, monster);
